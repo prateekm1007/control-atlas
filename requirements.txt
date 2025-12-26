@@ -1,0 +1,8 @@
+MDAnalysis
+numpy
+scipy
+networkx
+pyemma
+matplotlib
+pyyaml
+scikit-learn

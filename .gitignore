@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.xtc
+*.dcd
+*.log
+*.npy
+*.csv
+*.png
+data/raw/
+data/processed/
