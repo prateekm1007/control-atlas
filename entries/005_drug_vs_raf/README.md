@@ -1,12 +1,27 @@
-# Atlas Entry #005: The Blockade (Competition Overlay)
+# Atlas Entry #005: The Blockade (AMG 510 vs RAF)
 
-**Visual Proof of Mechanism**
+**"Two Objects, One Space"**
 
-## Intent
-Demonstrate steric exclusion by aligning drug-bound KRAS with effector-bound KRAS-RAF.
+## 1. Biological Intent
+This entry visualizes the mechanism of action (MoA) for KRAS G12C inhibitors.
+It proves **mutual exclusivity**: The conformation locked by AMG 510 is sterically incompatible with RAF-RBD binding.
 
-## Technical
-Alignment via `match #2/A to #1/A`.
+* **Primary State:** KRAS G12C + AMG 510 (PDB: `6OIM`)
+* **Competitor:** RAF-RBD (from PDB: `4G0N`)
+* **Key Insight:** Drug binding enforces a topology that physically rejects effector recruitment.
 
-## Interpretation
-Drug-enforced topology rejects RAF binding.
+## 2. Technical Implementation
+* **Superposition:** Effector-bound Ras aligned to drug-bound Ras
+* **Filtering:** Ras from 4G0N hidden; RAF retained as phantom
+* **Visual Language:**
+  * Gray — Drug-bound KRAS
+  * Red — AMG 510
+  * Tan — RAF-RBD
+  * Orange — Steric clash zone
+
+## 3. Automation
+* **Script:** `entry_005_overlay_competition_auto.cxc`
+* **Logic:** Load → Match → Filter → Clash Detection → Render
+
+---
+*Provenance: Control-Atlas v0.1*
