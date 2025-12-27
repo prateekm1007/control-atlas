@@ -1,0 +1,52 @@
+# Atlas Entry #008 — The Undruggable Surface (G12D)
+# FINAL — ChimeraX 1.11 VERIFIED
+
+open https://files.rcsb.org/download/4DSN.pdb
+
+delete solvent
+delete ions
+
+########################################
+# SURFACE
+########################################
+
+surface
+transparency 0
+
+########################################
+# MOLECULAR LIPOPHILICITY POTENTIAL
+########################################
+
+# Compute MLP on surface vertices
+mlp
+
+# THE ONLY VALID COLORING SYNTAX
+color byattribute mlp surfaces palette cyan:white:goldenrod range -3,3
+
+########################################
+# FOCUS: SWITCH II REGION
+########################################
+
+select :60-70
+view sel
+zoom 1.5
+
+########################################
+# LABELS
+########################################
+
+2dlabels create "KRAS G12D — Surface Physics" xpos 0.5 ypos 0.92 color white size 32
+2dlabels create "Shallow & Polar (Undruggable)" xpos 0.5 ypos 0.08 color cyan size 24
+
+lighting soft
+set bgColor black
+wait 20
+
+########################################
+# SAVE
+########################################
+
+save "C:\Users\Administrator\control-atlas\entries\008_undruggable_g12d\Atlas_Entry_008_Surface_Physics.png" \
+     width 3840 height 2160 supersample 3
+
+exit
