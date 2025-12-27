@@ -2,9 +2,5 @@ venv/
 __pycache__/
 *.xtc
 *.dcd
-*.log
-*.npy
-*.csv
-*.png
-data/raw/
-data/processed/
+data/raw/*.xtc
+data/raw/*.dcd
