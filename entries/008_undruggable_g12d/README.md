@@ -35,3 +35,19 @@ The final visualization follows the correct ChimeraX-native workflow:
 3. Surface vertex coloring by `mlp`
 
 This ensures the image is both accurate and reproducible.
+
+## 4. Reviewer Note (Tooling Nuance)
+
+Surface hydrophobicity in ChimeraX was computed using the built-in **MLP (Molecular Lipophilicity Potential)** calculation.
+
+Due to strict command grammar and evolving syntax in **ChimeraX ≥1.11**, surface coloring must target
+**surface vertex attributes**, not model-level attributes. Several commonly cited commands
+(e.g. `surfacecolor`, `color byattribute mlp #1`) are invalid in ChimeraX despite appearing in older
+UCSF Chimera documentation.
+
+The final visualization follows the correct ChimeraX-native workflow:
+1. SES surface generation
+2. MLP computation
+3. Coloring surface vertices by the `mlp` attribute
+
+This note is included to ensure reproducibility and to prevent confusion for future users or reviewers.
