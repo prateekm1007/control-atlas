@@ -1,5 +1,4 @@
-# Atlas Entry #006 — The Variant Gap (G12C vs G12D)
-# Visualizing the chemical divergence at Residue 12
+# Atlas Entry #006 — The Variant Gap (G12C vs G12D) [PATCHED]
 
 # Load G12C (The Solved Target)
 open https://files.rcsb.org/download/6OIM.pdb
@@ -13,58 +12,40 @@ delete ions
 ########################################
 # ALIGNMENT
 ########################################
-
-# Align G12D (#2) onto G12C (#1)
 match #2 to #1
 
 ########################################
-# STYLING: Context (The Protein Scaffold)
+# STYLING
 ########################################
-
-# G12C (Ghost / Context)
-cartoon #1
-color #1 slategray
-transparency #1 80
-
-# G12D (Solid / Focus)
-cartoon #2
-color #2 cornflowerblue
-transparency #2 60
+cartoon #1; color #1 slategray; transparency #1 80
+cartoon #2; color #2 cornflowerblue; transparency #2 60
 
 ########################################
 # THE FOCUS: Residue 12
 ########################################
-
-# Show side chains for Residue 12 on both
 show #1:12 atoms
 show #2:12 atoms
-
-# Style as sticks
 style :12 stick
-
-# Color by element to highlight chemistry
-# Sulfur (G12C) = Yellow, Oxygen (G12D) = Red
 color byhetero
 
-# Add a label to make it obvious
 2dlabels create "G12C (Sulfur)" xpos 0.3 ypos 0.8 color yellow size 25
 2dlabels create "G12D (Oxygen)" xpos 0.7 ypos 0.8 color red size 25
 
 ########################################
-# SCENE
+# SCENE (Safe Zoom)
 ########################################
-
 lighting soft
 set bgColor black
-view orient
 
-# Zoom into the critical residue
-zoom :12 2.0
+# Center on Residue 12 (Safe)
+select :12
+view sel
 
-# FORCE DRAW (Safety for capture)
+# Pull back slightly for context (Safe)
+zoom 0.6
+
 wait 20
 
-# SAVE (Absolute Path)
 save "C:\Users\Administrator\control-atlas\entries\006_g12c_vs_g12d\Atlas_Entry_006_Variant_Gap.png" width 3840 height 2160 supersample 3
 
 exit
