@@ -1,0 +1,70 @@
+# Atlas Entry #013 — Motif Extraction (M-001: The Switch)
+# Isolating the control logic from the scaffold
+
+# Load Source (KRAS G12C)
+open https://files.rcsb.org/download/6OIM.pdb
+
+delete solvent
+delete ions
+
+########################################
+# DEFINITION (Vetter & Wittinghofer)
+########################################
+
+# Explicit Chain Selection (Hardened)
+# Select Switch I & II on Chain A
+select #1/A:30-38
+select add #1/A:60-76
+name switch_motif
+
+########################################
+# EXTRACTION (The Phase 2 Shift)
+########################################
+
+# Invert selection to grab the scaffold
+select ~switch_motif
+
+# Delete the scaffold (Purge the noise)
+delete sel
+
+# Now only the switches remain.
+# Save this geometric object to the Library.
+# Explicit atom scope for safety.
+save "C:\Users\Administrator\control-atlas\library\motifs\M001_Switch_GTPase.pdb" models #1
+
+########################################
+# VISUALIZATION (The "Parts Bin" View)
+########################################
+
+# Style the isolated part as a high-tech component
+cartoon
+style stick
+color byhetero
+color carbon lime
+
+# Add a ghost bounding box or surface to show volume
+surface
+transparency 80
+color lime
+
+########################################
+# ORIENTATION
+########################################
+
+view orient
+zoom 1.2
+
+########################################
+# LABELS
+########################################
+
+2dlabels create "M-001: GTPase Switch" xpos 0.5 ypos 0.9 color lime size 30
+2dlabels create "Extracted Geometry" xpos 0.5 ypos 0.1 color white size 20
+
+lighting soft
+set bgColor black
+wait 20
+
+save "C:\Users\Administrator\control-atlas\entries\013_motif_extraction\Atlas_Entry_013_Motif_Extraction.png" width 3840 height 2160 supersample 3
+
+exit
