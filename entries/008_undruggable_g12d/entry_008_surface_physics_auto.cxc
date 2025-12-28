@@ -1,52 +1,48 @@
 # Atlas Entry #008 — The Undruggable Surface (G12D)
-# FINAL — ChimeraX 1.11 VERIFIED
+# Visualizing surface physics (Hydrophobicity)
 
+# Load G12D
 open https://files.rcsb.org/download/4DSN.pdb
 
 delete solvent
 delete ions
 
 ########################################
-# SURFACE
+# SURFACE GENERATION
 ########################################
 
+# Show surface for the protein
 surface
 transparency 0
 
 ########################################
-# MOLECULAR LIPOPHILICITY POTENTIAL
+# PHYSICS MAPPING (Hydrophobicity)
 ########################################
 
-# Compute MLP on surface vertices
-mlp
-
-# THE ONLY VALID COLORING SYNTAX
-color byattribute mlp surfaces palette cyan:white:goldenrod range -3,3
+# Color surface by hydrophobicity (kdHydrophobicity)
+# Range: -4.5 (Polar/Cyan) to 4.5 (Hydrophobic/Gold)
+color sample surface #1 attribute kdHydrophobicity palette cyan:white:goldenrod range -4.5,4.5
 
 ########################################
-# FOCUS: SWITCH II REGION
+# FOCUS: The Missing Pocket
 ########################################
 
+# Orient towards Switch II (approx residues 60-70)
 select :60-70
 view sel
 zoom 1.5
 
 ########################################
-# LABELS
+# LABELS & POLISH
 ########################################
 
-2dlabels create "KRAS G12D — Surface Physics" xpos 0.5 ypos 0.92 color white size 32
-2dlabels create "Shallow & Polar (Undruggable)" xpos 0.5 ypos 0.08 color cyan size 24
+2dlabels create "G12D Surface Physics" xpos 0.5 ypos 0.9 color white size 30
+2dlabels create "Shallow & Polar (Cyan)" xpos 0.5 ypos 0.1 color cyan size 25
 
 lighting soft
 set bgColor black
 wait 20
 
-########################################
-# SAVE
-########################################
-
-save "C:\Users\Administrator\control-atlas\entries\008_undruggable_g12d\Atlas_Entry_008_Surface_Physics.png" \
-     width 3840 height 2160 supersample 3
+save "C:\Users\Administrator\control-atlas\entries\008_undruggable_g12d\Atlas_Entry_008_Surface_Physics.png" width 3840 height 2160 supersample 3
 
 exit
