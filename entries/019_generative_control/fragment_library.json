@@ -1,0 +1,28 @@
+{
+  "cores": [
+    { "name": "Quinazoline", "mw": 130, "regions": ["buried_core"], "aromatic": true, "hba": 2, "hbd": 0 },
+    { "name": "Pyridopyrimidine", "mw": 131, "regions": ["buried_core"], "aromatic": true, "hba": 3, "hbd": 0, "note": "Sotorasib core" },
+    { "name": "Indole", "mw": 117, "regions": ["buried_core"], "aromatic": true, "hba": 0, "hbd": 1 },
+    { "name": "Purine", "mw": 120, "regions": ["buried_core"], "aromatic": true, "hba": 4, "hbd": 1 },
+    { "name": "Benzene", "mw": 78, "regions": ["buried_core"], "aromatic": true, "hba": 0, "hbd": 0 },
+    { "name": "Piperidine", "mw": 85, "regions": ["buried_core"], "aromatic": false, "fail_reason": "Not aromatic" }
+  ],
+  "anchors": [
+    { "name": "Isopropyl", "mw": 43, "regions": ["concave_wall"], "hydrophobic": true, "volume": 60 },
+    { "name": "Methyl", "mw": 15, "regions": ["concave_wall"], "hydrophobic": true, "volume": 20 },
+    { "name": "Fluorine", "mw": 19, "regions": ["concave_wall"], "hydrophobic": false, "volume": 10 },
+    { "name": "Phenyl", "mw": 77, "regions": ["concave_wall"], "hydrophobic": true, "volume": 100, "fail_reason": "Steric clash w/ GLY60" }
+  ],
+  "warheads": [
+    { "name": "Acrylamide", "mw": 71, "regions": ["warhead_zone"], "electrophile": true, "reactive": true },
+    { "name": "VinylSulfonamide", "mw": 107, "regions": ["warhead_zone"], "electrophile": true, "reactive": true },
+    { "name": "Chloroacetamide", "mw": 93, "regions": ["warhead_zone"], "electrophile": true, "reactive": true },
+    { "name": "Propyl", "mw": 43, "regions": ["warhead_zone"], "electrophile": false, "reactive": false, "fail_reason": "Not electrophile" }
+  ],
+  "tails": [
+    { "name": "MethylPiperazine", "mw": 100, "regions": ["solvent_tail"], "polar": true, "hba": 2 },
+    { "name": "Morpholine", "mw": 87, "regions": ["solvent_tail"], "polar": true, "hba": 2 },
+    { "name": "Dimethylamine", "mw": 45, "regions": ["solvent_tail"], "polar": true, "hba": 1 },
+    { "name": "t-Butyl", "mw": 57, "regions": ["solvent_tail"], "polar": false, "fail_reason": "Too hydrophobic" }
+  ]
+}
