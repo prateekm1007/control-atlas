@@ -4,42 +4,52 @@
 Entry 016 LOCKED (Physics Gate)
 
 ## Objective
-Model the constrained deformation manifold of physics-validated control pockets.
-
-## Core Question
-What deformations are allowed between closed, intermediate, and open control states?
+Quantify the constrained deformation manifold of physics-validated control pockets.
 
 ## Input States
-- 5P21 — Native closed (H-Ras)
-- 6GOD — GTP-bound intermediate
+- 4OBE — GDP closed (KRAS)
+- 6GOD — GTP intermediate (KRAS)
 - 6OIM — Drug-bound open (AMG-510)
-
-## Alignment Frame
-G-domain core (exclude Switch I / II)
+- 5P21 — Native reference (H-Ras)
 
 ## Metrics
-- Pocket volume
-- Concavity index
-- SASA (Switch II)
-- Pocket centroid displacement
-
-## Method
-1. Align cores
-2. Extract pocket metrics
-3. Compute PCA / distance matrix
-4. Visualize low-dimensional manifold
-
-## Success Criteria
-- Continuous closed → open trajectory
-- Drug-bound state occupies distinct region
-- Manifold explains mutant selectivity
-
-## Abort Condition
-If states overlap → pocket definition invalid
+- Spread (pocket openness)
+- Max extent (diameter)
+- Z-range (vertical opening)
+- Compactness proxy
 
 ## Status
-[ ] Structures loaded
-[ ] Alignment complete
-[ ] Metrics extracted
-[ ] Manifold computed
-[ ] Visualization rendered
+[ ] Extraction complete
+[ ] Manifold separation confirmed
+
+---
+
+## Entry 015a — CLOSED ❌
+**Backbone dispersion metrics insufficient**
+
+### Falsified
+Backbone Cα spread does not encode control state.
+
+### Confirmed
+Control pockets occupy a constrained geometric region.
+
+---
+
+## Entry 015b — ACTIVE ✅
+**Pocket-Frame Manifold**
+
+### Objective
+Measure how control states reshape pocket physics, not backbone geometry.
+
+### Metrics
+1. Exposure (neighbor-based SASA proxy)
+2. Pocket volume (convex hull)
+3. Hydrophobic surface fraction
+
+### Lock Criteria
+- Drug_open shows highest exposure and volume
+- GDP_closed shows lowest
+- Intermediate states cluster between
+
+### Abort Condition
+No separation → pocket definition incorrect
