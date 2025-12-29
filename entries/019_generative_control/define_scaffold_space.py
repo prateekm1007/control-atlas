@@ -52,6 +52,8 @@ def validate_assembly(core, anchor, warhead, tail, grammar):
     # 3. Quantitative Limits (Approximate MW Check)
     # Note: Full MW requires linker atoms, here we sum fragments
     total_mw = core['mw'] + anchor['mw'] + warhead['mw'] + tail['mw']
+                    LINKER_PADDING = 50 # Conservative allowance for linkers/subs
+                    total_mw += LINKER_PADDING
     mw_limits = grammar['quantitative_limits']['molecular_weight']
     
     if not (mw_limits['min'] <= total_mw <= mw_limits['max']):
