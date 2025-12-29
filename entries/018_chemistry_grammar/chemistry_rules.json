@@ -1,0 +1,69 @@
+{
+  "pocket": {
+    "volume": 2231.4,
+    "exposure": 36.63,
+    "hydrophobic_pct": 18.8,
+    "state": "drug_open",
+    "target": "KRAS_G12C",
+    "key_residue": "CYS12"
+  },
+  "rules": {
+    "core_scaffold": {
+      "requirement": "rigid_aromatic",
+      "reason": "fills concave pocket",
+      "examples": [
+        "quinazoline",
+        "pyrimidine",
+        "indole"
+      ]
+    },
+    "anchor_group": {
+      "requirement": "hydrophobic",
+      "reason": "matches 18.8% nonpolar surface",
+      "examples": [
+        "methyl",
+        "isopropyl",
+        "cyclopropyl"
+      ]
+    },
+    "polar_contact": {
+      "requirement": "h_bond_acceptor",
+      "reason": "engages polar rim (GLU, ASP)",
+      "examples": [
+        "carbonyl",
+        "sulfonyl",
+        "ether"
+      ]
+    },
+    "warhead": {
+      "requirement": "electrophile",
+      "reason": "covalent to CYS12",
+      "examples": [
+        "acrylamide",
+        "vinyl_sulfonamide",
+        "chloroacetamide"
+      ]
+    },
+    "solubility": {
+      "requirement": "polar_tail",
+      "reason": "exposed region tolerates polarity",
+      "examples": [
+        "piperazine",
+        "morpholine",
+        "hydroxyl"
+      ]
+    }
+  },
+  "validation": {
+    "Sotorasib": {
+      "core": "pyridopyrimidine",
+      "warhead": "acrylamide",
+      "matches_rules": true
+    },
+    "Adagrasib": {
+      "core": "pyrrolopyrimidine",
+      "warhead": "acrylamide",
+      "matches_rules": true
+    }
+  }
+}
