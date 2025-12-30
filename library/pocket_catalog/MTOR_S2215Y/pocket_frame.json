@@ -38,24 +38,17 @@
       ]
     ],
     "lining_residues": [
-      2210,
-      2211,
-      2212,
-      2213,
-      2214,
-      2215,
-      2216,
-      2217,
-      2218
+      2210
     ]
   },
   "quality": {
-    "physics_consistency": 0.55,
+    "physics_consistency": 0.25,
     "notes": "Scaffold only \u2014 awaiting physics computation",
-    "status": "CANDIDATE",
+    "status": "REJECTED",
     "issues": [
+      "Volume too small (0 < 300)",
       "Low hydrophobicity (0 < 10)",
-      "Insufficient atoms (9)"
+      "Insufficient atoms (1)"
     ]
   }
 }

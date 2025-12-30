@@ -1,7 +1,7 @@
 {
-  "volume_A3": 3156.7,
-  "exposure": 27.53,
-  "hydrophobic_pct": 15.8,
-  "atom_count": 163,
+  "volume_A3": 0.2,
+  "exposure": 10.25,
+  "hydrophobic_pct": 0.0,
+  "atom_count": 4,
   "status": "computed"
 }

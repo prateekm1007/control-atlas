@@ -1,4 +1,7 @@
 {
-  "status": "failed",
-  "error": "No atoms found for residues"
+  "volume_A3": 551.1,
+  "exposure": 0.0,
+  "hydrophobic_pct": 100.0,
+  "atom_count": 16,
+  "status": "computed"
 }

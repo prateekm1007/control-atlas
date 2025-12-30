@@ -11,7 +11,7 @@
     "classification": "KinaseHinge",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "5Y3A"
+      "2JIT"
     ]
   },
   "frame": {
@@ -38,26 +38,17 @@
       ]
     ],
     "lining_residues": [
-      743,
-      744,
-      745,
-      746,
-      790,
-      791,
-      792,
-      793,
-      794,
-      795,
-      796,
-      797
+      766
     ]
   },
   "quality": {
-    "physics_consistency": 0.0,
+    "physics_consistency": 0.25,
     "notes": "Scaffold only \u2014 awaiting physics computation",
     "status": "REJECTED",
     "issues": [
-      "Physics not computed"
+      "Too buried (0.0 < 10)",
+      "Too hydrophobic (100.0 > 60)",
+      "Insufficient atoms (16)"
     ]
   }
 }

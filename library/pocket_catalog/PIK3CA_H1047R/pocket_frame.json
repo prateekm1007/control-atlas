@@ -38,20 +38,18 @@
       ]
     ],
     "lining_residues": [
-      1043,
-      1044,
-      1045,
-      1046,
-      1047,
-      1048,
-      1049,
-      1050
+      1043
     ]
   },
   "quality": {
-    "physics_consistency": 0.9,
+    "physics_consistency": 0.05,
     "notes": "Scaffold only \u2014 awaiting physics computation",
-    "status": "VALIDATED",
-    "issues": []
+    "status": "REJECTED",
+    "issues": [
+      "Volume too small (7.3 < 300)",
+      "Too buried (5.25 < 10)",
+      "Too hydrophobic (100.0 > 60)",
+      "Insufficient atoms (8)"
+    ]
   }
 }
