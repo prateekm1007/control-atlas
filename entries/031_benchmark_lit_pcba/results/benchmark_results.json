@@ -1,0 +1,18 @@
+[
+  {
+    "target": "IDH1",
+    "ef_1pct": 3.0,
+    "tnr": 0.7,
+    "fpr": 0.3,
+    "actives_recovered": 1,
+    "inactives_rejected": 7
+  },
+  {
+    "target": "TP53",
+    "ef_1pct": 3.0,
+    "tnr": 0.7,
+    "fpr": 0.3,
+    "actives_recovered": 1,
+    "inactives_rejected": 7
+  }
+]
