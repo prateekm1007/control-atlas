@@ -1,0 +1,398 @@
+{
+  "version": "1.0",
+  "description": "Universal druggability rules derived from 15 validated oncogenic pockets",
+  "pocket_classes": {
+    "SwitchII": {
+      "targets": [
+        "KRAS_G12C",
+        "KRAS_G12D",
+        "HRAS_G12V",
+        "NRAS_Q61R"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 2727.8,
+          "std": 849.5,
+          "range": [
+            1619.1,
+            3856.0
+          ]
+        },
+        "exposure": {
+          "mean": 31.7,
+          "std": 2.49,
+          "range": [
+            27.53,
+            33.96
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 16.7,
+          "std": 0.9,
+          "range": [
+            15.8,
+            17.6
+          ]
+        },
+        "n_targets": 4
+      }
+    },
+    "KinaseHinge": {
+      "targets": [
+        "BRAF_V600E",
+        "EGFR_L858R",
+        "ALK_F1174L",
+        "RET_M918T"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 1954.2,
+          "std": 233.6,
+          "range": [
+            1590.3,
+            2214.0
+          ]
+        },
+        "exposure": {
+          "mean": 18.39,
+          "std": 4.31,
+          "range": [
+            13.14,
+            23.96
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 40.2,
+          "std": 11.1,
+          "range": [
+            23.1,
+            50.0
+          ]
+        },
+        "n_targets": 4
+      }
+    },
+    "ActivationLoop": {
+      "targets": [
+        "KIT_D816V",
+        "PDGFRA_D842V"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 774.8,
+          "std": 57.7,
+          "range": [
+            717.1,
+            832.5
+          ]
+        },
+        "exposure": {
+          "mean": 22.7,
+          "std": 1.47,
+          "range": [
+            21.24,
+            24.17
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 44.4,
+          "std": 0.0,
+          "range": [
+            44.4,
+            44.4
+          ]
+        },
+        "n_targets": 2
+      }
+    },
+    "DNABinding": {
+      "targets": [
+        "TP53_R175H",
+        "TP53_R248Q"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 3991.8,
+          "std": 55.8,
+          "range": [
+            3936.0,
+            4047.6
+          ]
+        },
+        "exposure": {
+          "mean": 19.85,
+          "std": 0.52,
+          "range": [
+            19.33,
+            20.37
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 18.2,
+          "std": 0.0,
+          "range": [
+            18.2,
+            18.2
+          ]
+        },
+        "n_targets": 2
+      }
+    },
+    "PHDomain": {
+      "targets": [
+        "AKT1_E17K"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 842.3,
+          "std": 0.0,
+          "range": [
+            842.3,
+            842.3
+          ]
+        },
+        "exposure": {
+          "mean": 21.81,
+          "std": 0.0,
+          "range": [
+            21.81,
+            21.81
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 22.2,
+          "std": 0.0,
+          "range": [
+            22.2,
+            22.2
+          ]
+        },
+        "n_targets": 1
+      }
+    },
+    "Kinase": {
+      "targets": [
+        "PIK3CA_H1047R"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 535.1,
+          "std": 0.0,
+          "range": [
+            535.1,
+            535.1
+          ]
+        },
+        "exposure": {
+          "mean": 34.36,
+          "std": 0.0,
+          "range": [
+            34.36,
+            34.36
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 25.0,
+          "std": 0.0,
+          "range": [
+            25.0,
+            25.0
+          ]
+        },
+        "n_targets": 1
+      }
+    },
+    "PhosphoSite": {
+      "targets": [
+        "CTNNB1_S45F"
+      ],
+      "physics": {
+        "volume": {
+          "mean": 904.5,
+          "std": 0.0,
+          "range": [
+            904.5,
+            904.5
+          ]
+        },
+        "exposure": {
+          "mean": 26.92,
+          "std": 0.0,
+          "range": [
+            26.92,
+            26.92
+          ]
+        },
+        "hydrophobicity": {
+          "mean": 37.5,
+          "std": 0.0,
+          "range": [
+            37.5,
+            37.5
+          ]
+        },
+        "n_targets": 1
+      }
+    }
+  },
+  "universal_rules": {
+    "volume_range": [
+      535.1,
+      4047.6
+    ],
+    "exposure_range": [
+      13.14,
+      34.36
+    ],
+    "hydrophobicity_range": [
+      15.8,
+      50.0
+    ],
+    "common_requirements": {
+      "aromatic_core": true,
+      "hbd_max": 4,
+      "rotatable_bonds_max": 10,
+      "warhead_optional": true,
+      "warhead_types": [
+        "acrylamide",
+        "vinyl_sulfonamide",
+        "chloroacetamide"
+      ]
+    }
+  },
+  "class_specific_rules": {
+    "SwitchII": {
+      "core_size": "large",
+      "max_rings": 5,
+      "mw_range": [
+        450,
+        650
+      ],
+      "polar_tolerance": "high",
+      "hba_range": [
+        4,
+        10
+      ],
+      "solubility_group": "required",
+      "hydrophobic_anchor": "weak",
+      "clogp_range": [
+        1,
+        4
+      ]
+    },
+    "KinaseHinge": {
+      "core_size": "medium",
+      "max_rings": 4,
+      "mw_range": [
+        350,
+        550
+      ],
+      "polar_tolerance": "low",
+      "hba_range": [
+        2,
+        6
+      ],
+      "solubility_group": "optional",
+      "hydrophobic_anchor": "strong",
+      "clogp_range": [
+        3,
+        6
+      ]
+    },
+    "ActivationLoop": {
+      "core_size": "small",
+      "max_rings": 3,
+      "mw_range": [
+        250,
+        450
+      ],
+      "polar_tolerance": "medium",
+      "hba_range": [
+        3,
+        8
+      ],
+      "solubility_group": "recommended",
+      "hydrophobic_anchor": "strong",
+      "clogp_range": [
+        3,
+        6
+      ]
+    },
+    "DNABinding": {
+      "core_size": "large",
+      "max_rings": 5,
+      "mw_range": [
+        450,
+        650
+      ],
+      "polar_tolerance": "low",
+      "hba_range": [
+        2,
+        6
+      ],
+      "solubility_group": "optional",
+      "hydrophobic_anchor": "weak",
+      "clogp_range": [
+        1,
+        4
+      ]
+    },
+    "PHDomain": {
+      "core_size": "small",
+      "max_rings": 3,
+      "mw_range": [
+        250,
+        450
+      ],
+      "polar_tolerance": "medium",
+      "hba_range": [
+        3,
+        8
+      ],
+      "solubility_group": "recommended",
+      "hydrophobic_anchor": "weak",
+      "clogp_range": [
+        1,
+        4
+      ]
+    },
+    "Kinase": {
+      "core_size": "small",
+      "max_rings": 3,
+      "mw_range": [
+        250,
+        450
+      ],
+      "polar_tolerance": "high",
+      "hba_range": [
+        4,
+        10
+      ],
+      "solubility_group": "required",
+      "hydrophobic_anchor": "weak",
+      "clogp_range": [
+        1,
+        4
+      ]
+    },
+    "PhosphoSite": {
+      "core_size": "small",
+      "max_rings": 3,
+      "mw_range": [
+        250,
+        450
+      ],
+      "polar_tolerance": "medium",
+      "hba_range": [
+        3,
+        8
+      ],
+      "solubility_group": "recommended",
+      "hydrophobic_anchor": "medium",
+      "clogp_range": [
+        2,
+        5
+      ]
+    }
+  }
+}
