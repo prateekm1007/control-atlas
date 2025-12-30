@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Universal Gatekeeper (Entry 020 - Generalized)
-Accepts ANY target with computed physics and validates candidates.
+Universal Gatekeeper (Entry 020 – v1.0 CLEAN)
+Deterministic, contract-safe, physics-gated validator.
 """
 
-import sys
 import os
 import json
 import argparse
@@ -12,57 +11,97 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors, Lipinski
 
 CATALOG = os.path.expanduser("~/control-atlas/library/pocket_catalog")
-GRAMMAR = os.path.join(CATALOG, "pan_target_grammar.json")
+GRAMMAR_PATH = os.path.join(CATALOG, "pan_target_grammar.json")
+
+# -----------------------------
+# Helpers
+# -----------------------------
+
+def load_json(path):
+    with open(path) as f:
+        return json.load(f)
+
+def normalize(status, reasons=None, metrics=None):
+    return {
+        "status": status,
+        "reasons": reasons or [],
+        "metrics": metrics or {}
+    }
+
+# -----------------------------
+# Grammar + Physics
+# -----------------------------
 
 def load_grammar():
-    with open(GRAMMAR) as f: return json.load(f)
+    return load_json(GRAMMAR_PATH)
 
-def get_target_rules(target_name):
+def load_physics(target):
+    path = os.path.join(CATALOG, target, "physics_metrics.json")
+    if not os.path.exists(path):
+        return None
+    data = load_json(path)
+    return data if data.get("status") == "computed" else None
+
+def get_rules(target):
     grammar = load_grammar()
-    # Check if target has specific class prediction
-    pred_path = os.path.join(CATALOG, target_name, "grammar_prediction.json")
+    pred_path = os.path.join(CATALOG, target, "grammar_prediction.json")
+
     if os.path.exists(pred_path):
-        with open(pred_path) as f: pred = json.load(f)
-        p_class = pred.get("pocket_class")
-        if p_class and p_class in grammar["class_specific_rules"]:
-            return grammar["class_specific_rules"][p_class]
-    
-    # Fallback to universal defaults
+        pred = load_json(pred_path)
+        cls = pred.get("pocket_class")
+        if cls and cls in grammar["class_specific_rules"]:
+            return grammar["class_specific_rules"][cls]
+
     return {
         "mw_range": [300, 600],
         "polar_tolerance": "medium"
     }
 
+# -----------------------------
+# Validation
+# -----------------------------
+
 def validate(smiles, target):
-    rules = get_target_rules(target)
+    physics = load_physics(target)
+    if not physics:
+        return normalize(
+            "UNSUPPORTED_TARGET",
+            ["No physics computed for target"]
+        )
+
     mol = Chem.MolFromSmiles(smiles)
-    if not mol: return {"status": "ERROR", "reason": "Invalid SMILES"}
-    
+    if not mol:
+        return normalize("ERROR", ["Invalid SMILES"])
+
+    rules = get_rules(target)
+
     mw = Descriptors.MolWt(mol)
     hbd = Lipinski.NumHDonors(mol)
-    
+
     reasons = []
-    
-    # MW Check
-    min_mw, max_mw = rules.get("mw_range", [0, 1000])
-    if not (min_mw <= mw <= max_mw):
-        reasons.append(f"MW {mw:.1f} outside {min_mw}-{max_mw}")
-        
-    # Polar Check
+    lo, hi = rules.get("mw_range", [0, 2000])
+    if not (lo <= mw <= hi):
+        reasons.append(f"MW {mw:.1f} outside {lo}-{hi}")
+
     if rules.get("polar_tolerance") == "low" and hbd > 2:
-        reasons.append(f"HBD {hbd} too high for low-polar pocket")
-        
+        reasons.append(f"HBD {hbd} exceeds low-polar tolerance")
+
     status = "VALID" if not reasons else "REJECT"
-    return {"status": status, "reasons": reasons, "metrics": {"mw": mw, "hbd": hbd}}
+    return normalize(status, reasons, {"mw": mw, "hbd": hbd})
+
+# -----------------------------
+# CLI
+# -----------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--target", required=True)
-    parser.add_argument("--smiles", required=True)
-    args = parser.parse_args()
-    
+    p = argparse.ArgumentParser()
+    p.add_argument("--target", required=True)
+    p.add_argument("--smiles", required=True)
+    args = p.parse_args()
+
     res = validate(args.smiles, args.target)
+
     print(f"Target: {args.target}")
     print(f"Verdict: {res['status']}")
-    if res['reasons']:
-        for r in res['reasons']: print(f"  X {r}")
+    for r in res["reasons"]:
+        print(f"  X {r}")
