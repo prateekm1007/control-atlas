@@ -1,36 +1,23 @@
 #!/usr/bin/env python3
 """
-Entry 033 — AlphaFold DB Ingress & Indexing
+Entry 033 — AlphaFold DB Ingress
 
-1. Fetch PDBs
-2. Filter by global pLDDT (>70)
-3. Detect pockets (Entry 027)
-4. Index VALIDATED/CANDIDATE pockets
+1. Fetch PDBs (by UniProt ID list)
+2. Filter by pLDDT (Global Confidence)
+3. Run Entry 027 (Pocket Detection)
+4. Save VALIDATED pockets to the Atlas Index
 """
 
 import argparse
 import json
 import sys
-import importlib.util
 from pathlib import Path
-
-# Dynamic import helper
-def load_module(name, path):
-    spec = importlib.util.spec_from_file_location(name, path)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
+from concurrent.futures import ThreadPoolExecutor
 
 BASE = Path(__file__).resolve().parents[2] / "entries"
+sys.path.insert(0, str(BASE / "027_pocket_detection"))
 
-# Load Entry 027
-pocket_module = load_module(
-    "pocket_detector", 
-    BASE / "027_pocket_detection" / "pocket_detector.py"
-)
-PocketDetector = pocket_module.PocketDetector
-
+from pocket_detector import PocketDetector
 from fetch_afdb import fetch_structure
 
 # Index Directory
@@ -44,6 +31,7 @@ def get_plddt_from_pdb(pdb_path):
         for line in f:
             if line.startswith("ATOM") and " CA " in line:
                 try:
+                    # AFDB puts pLDDT in B-factor col (60-66)
                     scores.append(float(line[60:66]))
                 except: pass
     if not scores: return 0.0
@@ -58,6 +46,8 @@ def process_protein(uniprot_id, data_dir, min_plddt=70.0):
         return {"id": uniprot_id, "status": "DOWNLOAD_FAILED"}
     
     # 2. Structure Confidence Check
+    # AFDB uses 0-100 scale. Control Atlas uses 0-1 internal scale mostly, 
+    # but let's normalize to 0-1 for the PocketDetector.
     raw_plddt = get_plddt_from_pdb(pdb_path)
     
     if raw_plddt < min_plddt:
@@ -70,29 +60,23 @@ def process_protein(uniprot_id, data_dir, min_plddt=70.0):
     conf_normalized = raw_plddt / 100.0
     
     # 3. Pocket Detection (Entry 027)
-    detector = PocketDetector(max_pockets=5)
+    detector = PocketDetector(max_pockets=3)
     result = detector.detect(pdb_path, structure_confidence=conf_normalized)
     
     if result["status"] != "SUCCESS":
         return {"id": uniprot_id, "status": "POCKET_DETECTION_ERROR", "error": result["error"]}
     
-    # 4. Filter & Index (Keep VALIDATED and CANDIDATE)
-    indexable_pockets = [
-        p for p in result["pockets"] 
-        if p["status"] in ("VALIDATED", "CANDIDATE")
-    ]
+    # 4. Filter & Index
+    valid_pockets = [p for p in result["pockets"] if p["status"] == "VALIDATED"]
     
-    if not indexable_pockets:
-        return {"id": uniprot_id, "status": "NO_INDEXABLE_POCKETS", "candidates": len(result["pockets"])}
+    if not valid_pockets:
+        return {"id": uniprot_id, "status": "NO_DRUGGABLE_POCKETS", "candidates": len(result["pockets"])}
     
     # Save to Index
     index_entry = {
         "uniprot_id": uniprot_id,
         "plddt_global": raw_plddt,
-        "pockets": indexable_pockets,
-        "source": "AlphaFoldDB",
-        "fpocket_version": "4.0", # Hardcoded for now, should be dynamic
-        "ingest_timestamp": "2025-12-31" 
+        "pockets": valid_pockets
     }
     
     index_path = ATLAS_DIR / f"{uniprot_id}.json"
@@ -102,12 +86,13 @@ def process_protein(uniprot_id, data_dir, min_plddt=70.0):
     return {
         "id": uniprot_id, 
         "status": "INDEXED", 
-        "pockets": len(indexable_pockets)
+        "pockets": len(valid_pockets)
     }
 
 def main():
     parser = argparse.ArgumentParser(description="AFDB Ingress")
-    parser.add_argument("--ids", required=True, help="Text file with UniProt IDs")
+    parser.add_argument("--ids", required=True, help="Text file with UniProt IDs (one per line)")
+    parser.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
     
     data_dir = Path(__file__).parent / "data"
@@ -119,6 +104,7 @@ def main():
     print(f"[*] Processing {len(uniprot_ids)} targets from AlphaFold DB...")
     
     results = []
+    # Sequential for safety in demo, ThreadPool for speed in prod
     for uid in uniprot_ids:
         print(f" -> Processing {uid}...")
         res = process_protein(uid, data_dir)
