@@ -1,0 +1,18 @@
+{
+  "sequence_length": 62,
+  "stages": {
+    "structure": {
+      "pdb_path": "/home/prateekm1/control-atlas/entries/028_structure_prediction/cache/cab22644326d170c.pdb",
+      "confidence": 0.932
+    },
+    "pockets": {
+      "count": 2
+    },
+    "screening": {
+      "valid": 2,
+      "candidate": 0,
+      "reject": 4
+    }
+  },
+  "total_time": 0.4
+}

@@ -1,55 +1,38 @@
 #!/usr/bin/env python3
 """
 Entry 028 — Structure Prediction Ingress
-
-Swappable, uncertainty-aware structure prediction with mandatory caching.
-Uses dynamic imports to bypass numeric entry directory constraints.
 """
 
 import argparse
 import json
-import sys
-import importlib.util
 from pathlib import Path
 
-# ---- Dynamic import helpers ----
-BASE = Path(__file__).resolve().parent
+try:
+    from backends.esmfold import predict_structure as esmfold_predict
+    from backends.cache import get_cached, save_to_cache
+except ImportError:
+    from .backends.esmfold import predict_structure as esmfold_predict
+    from .backends.cache import get_cached, save_to_cache
 
-def _load(module_path: Path, module_name: str):
-    spec = importlib.util.spec_from_file_location(module_name, module_path)
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = mod
-    spec.loader.exec_module(mod)
-    return mod
-
-esmfold_mod = _load(
-    BASE / "backends/esmfold.py",
-    "entry028_esmfold"
-)
-
-cache_mod = _load(
-    BASE / "backends/cache.py",
-    "entry028_cache"
-)
-
-predict_structure = esmfold_mod.predict_structure
-get_cached = cache_mod.get_cached
-save_to_cache = cache_mod.save_to_cache
-# --------------------------------
 
 class StructureProvider:
-    def __init__(self, backend="esmfold", cache_dir=None):
+    def __init__(self, backend: str = "esmfold", cache_dir: Path = None):
         self.backend = backend
-        self.cache_dir = cache_dir or (BASE / "cache")
+        self.cache_dir = cache_dir or (Path(__file__).parent / "cache")
 
     def predict(self, sequence: str) -> dict:
         sequence = sequence.upper().strip()
 
         cached = get_cached(sequence, self.cache_dir)
         if cached:
+            print(f"[*] Cache hit")
             return cached
 
-        if self.backend != "esmfold":
+        print(f"[*] Calling {self.backend} API...")
+
+        if self.backend == "esmfold":
+            result = esmfold_predict(sequence)
+        else:
             return {
                 "status": "ERROR",
                 "pdb_path": None,
@@ -57,11 +40,10 @@ class StructureProvider:
                 "confidence_per_residue": [],
                 "source": self.backend,
                 "cached": False,
-                "error": "Unknown backend"
+                "error": f"Unknown backend: {self.backend}"
             }
 
-        result = predict_structure(sequence)
-        if result["status"] != "SUCCESS":
+        if result["status"] == "ERROR":
             return {
                 "status": "ERROR",
                 "pdb_path": None,
@@ -91,19 +73,26 @@ class StructureProvider:
             "error": None
         }
 
-def main():
-    ap = argparse.ArgumentParser(description="Structure Prediction (Entry 028)")
-    ap.add_argument("--sequence", required=True)
-    ap.add_argument("--json", action="store_true")
-    args = ap.parse_args()
 
-    sp = StructureProvider()
-    out = sp.predict(args.sequence)
+def main():
+    parser = argparse.ArgumentParser(description="Structure Prediction (Entry 028)")
+    parser.add_argument("--sequence", required=True)
+    parser.add_argument("--backend", default="esmfold")
+    parser.add_argument("--json", action="store_true")
+    args = parser.parse_args()
+
+    provider = StructureProvider(backend=args.backend)
+    result = provider.predict(args.sequence)
 
     if args.json:
-        print(json.dumps(out, indent=2))
+        print(json.dumps(result, indent=2))
     else:
-        print(out)
+        if result["status"] == "SUCCESS":
+            print(f"[+] Structure: {result['pdb_path']}")
+            print(f"[+] Confidence: {result['confidence_global']:.1%}")
+        else:
+            print(f"[!] Failed: {result['error']}")
+
 
 if __name__ == "__main__":
     main()
