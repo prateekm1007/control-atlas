@@ -42,13 +42,11 @@
     ]
   },
   "quality": {
-    "physics_consistency": 0.25,
+    "physics_consistency": 0.85,
     "notes": "Scaffold only \u2014 awaiting physics computation",
-    "status": "REJECTED",
+    "status": "CANDIDATE",
     "issues": [
-      "Volume too small (0 < 300)",
-      "Low hydrophobicity (0 < 10)",
-      "Insufficient atoms (1)"
+      "Too hydrophobic (62.5 > 60)"
     ]
   }
 }

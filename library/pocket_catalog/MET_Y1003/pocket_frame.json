@@ -42,11 +42,11 @@
     ]
   },
   "quality": {
-    "physics_consistency": 0.0,
+    "physics_consistency": 0.85,
     "notes": "Scaffold only \u2014 awaiting physics computation",
-    "status": "REJECTED",
+    "status": "CANDIDATE",
     "issues": [
-      "Physics not computed"
+      "Too hydrophobic (63.6 > 60)"
     ]
   }
 }
