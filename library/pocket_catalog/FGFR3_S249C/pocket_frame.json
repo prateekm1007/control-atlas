@@ -51,6 +51,10 @@
   },
   "quality": {
     "physics_consistency": 0.0,
-    "notes": "Scaffold only \u2014 awaiting physics computation"
+    "notes": "Scaffold only \u2014 awaiting physics computation",
+    "status": "REJECTED",
+    "issues": [
+      "Physics not computed"
+    ]
   }
 }

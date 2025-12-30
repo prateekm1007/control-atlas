@@ -1,0 +1,29 @@
+{
+  "volume_A3": {
+    "min": 300,
+    "max": 5000,
+    "optimal": [
+      800,
+      3000
+    ]
+  },
+  "exposure": {
+    "min": 10,
+    "max": 50,
+    "optimal": [
+      15,
+      40
+    ]
+  },
+  "hydrophobic_pct": {
+    "min": 10,
+    "max": 60,
+    "optimal": [
+      15,
+      50
+    ]
+  },
+  "atom_count": {
+    "min": 50
+  }
+}

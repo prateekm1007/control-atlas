@@ -50,7 +50,11 @@
     ]
   },
   "quality": {
-    "physics_consistency": 0.0,
-    "notes": "Scaffold only \u2014 awaiting physics computation"
+    "physics_consistency": 0.75,
+    "notes": "Scaffold only \u2014 awaiting physics computation",
+    "status": "CANDIDATE",
+    "issues": [
+      "Too buried (5.53 < 10)"
+    ]
   }
 }
