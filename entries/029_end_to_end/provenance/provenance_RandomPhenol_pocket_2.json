@@ -1,0 +1,55 @@
+{
+  "provenance_version": "1.0.0",
+  "timestamp": "2025-12-30T21:48:32.708422+00:00",
+  "control_atlas_version": "1.0.0",
+  "grammar_version": "1.2",
+  "input": {
+    "sequence_length": 62,
+    "sequence_hash": "cab22644326d",
+    "compound_id": "RandomPhenol",
+    "smiles": "CC1=CC=CC=C1O",
+    "smiles_hash": "19b4b8e0fb4d"
+  },
+  "decision": {
+    "status": "REJECT",
+    "confidence": 0.027,
+    "reasons": [
+      "fragment_too_small"
+    ]
+  },
+  "chain": {
+    "structure": {
+      "source": "cache",
+      "confidence": 0.932,
+      "pdb_hash": "29257e8d3b03",
+      "cached": true
+    },
+    "pocket": {
+      "id": "pocket_2",
+      "status": "CANDIDATE",
+      "confidence": 0.295,
+      "volume": 497.4,
+      "hydrophobic_pct": 0.667,
+      "exposure": 0.684
+    },
+    "physics": {
+      "thresholds": {
+        "volume_min": 150.0,
+        "volume_max": 1500.0,
+        "hydrophobic_min": 0.3,
+        "hydrophobic_max": 0.9,
+        "residue_min": 8
+      },
+      "checks_passed": [],
+      "checks_failed": [
+        "fragment_too_small"
+      ]
+    }
+  },
+  "reproducibility": {
+    "deterministic": true,
+    "grammar_hash": "77ac319bfe19",
+    "physics_version": "1.0",
+    "control_atlas_version": "1.0.0"
+  }
+}

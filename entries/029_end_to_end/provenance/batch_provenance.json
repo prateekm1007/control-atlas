@@ -1,0 +1,39 @@
+{
+  "provenance_version": "1.0.0",
+  "batch_id": "e0077d4b54a5",
+  "timestamp": "2025-12-30T21:48:32.710659+00:00",
+  "control_atlas_version": "1.0.0",
+  "grammar_version": "1.2",
+  "input_summary": {
+    "sequence_length": 62,
+    "sequence_hash": "cab22644326d",
+    "compounds_screened": 3,
+    "pockets_screened": 2
+  },
+  "structure": {
+    "source": "cache",
+    "confidence": 0.932
+  },
+  "results_summary": {
+    "total_screens": 6,
+    "valid": 2,
+    "candidate": 0,
+    "reject": 4,
+    "rejection_rate": 0.667
+  },
+  "physics_config": {
+    "thresholds": {
+      "volume_min": 150.0,
+      "volume_max": 1500.0,
+      "hydrophobic_min": 0.3,
+      "hydrophobic_max": 0.9,
+      "residue_min": 8
+    },
+    "version": "1.0"
+  },
+  "reproducibility": {
+    "deterministic": true,
+    "all_inputs_hashed": true,
+    "grammar_hash": "77ac319bfe19"
+  }
+}
