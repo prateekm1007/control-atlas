@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Entry 029 — End-to-End Sequence Screening Pipeline
+With Decision Provenance Export (Entry 030)
 """
 
 import argparse
@@ -12,14 +13,15 @@ from time import time
 
 BASE = Path(__file__).resolve().parents[2] / "entries"
 
-# Add module directories to path BEFORE importing
 sys.path.insert(0, str(BASE / "028_structure_prediction"))
 sys.path.insert(0, str(BASE / "027_pocket_detection"))
 sys.path.insert(0, str(BASE / "020_candidate_validation"))
+sys.path.insert(0, str(BASE / "030_provenance"))
 
 from structure_provider import StructureProvider
 from pocket_detector import PocketDetector
 from universal_gatekeeper import UniversalGatekeeper
+from provenance import generate_provenance, generate_batch_provenance, save_provenance
 
 
 def parse_smi(smi_path):
@@ -40,10 +42,10 @@ def main():
     parser.add_argument("--smi", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--max-pockets", type=int, default=3)
+    parser.add_argument("--provenance-dir", help="Directory for provenance records")
     parser.add_argument("--json-trace", help="Optional trace output")
     args = parser.parse_args()
 
-    trace = {"sequence_length": len(args.sequence), "stages": {}}
     t0 = time()
 
     # STAGE 1: Structure
@@ -62,8 +64,6 @@ def main():
     struct_conf = sr["confidence_global"]
     print(f"[+] Structure: {pdb_path}")
     print(f"[+] Confidence: {struct_conf:.1%}")
-
-    trace["stages"]["structure"] = {"pdb_path": pdb_path, "confidence": struct_conf}
 
     # STAGE 2: Pockets
     print("\n" + "="*60)
@@ -87,8 +87,6 @@ def main():
     for p in pockets:
         print(f"    - {p['pocket_id']}: {p['status']} (conf: {p['confidence']:.2f})")
 
-    trace["stages"]["pockets"] = {"count": len(pockets)}
-
     # STAGE 3: Screening
     print("\n" + "="*60)
     print("STAGE 3: Compound Screening")
@@ -109,6 +107,7 @@ def main():
 
     fields = ["compound_id", "smiles", "pocket", "status", "confidence", "reason"]
     results = []
+    provenance_records = []
 
     for cid, smi in compounds:
         for p in pockets:
@@ -117,14 +116,37 @@ def main():
                 r = gk.validate(tid, smi)
                 m = r.get("metrics", {}) or {}
                 conf = struct_conf * p["confidence"] * m.get("confidence", 0)
+                
+                decision = {
+                    "status": r.get("status", "ERROR"),
+                    "confidence": round(conf, 3),
+                    "reasons": r.get("reasons", [])
+                }
+                
                 results.append({
                     "compound_id": cid,
                     "smiles": smi,
                     "pocket": p["pocket_id"],
-                    "status": r.get("status", "ERROR"),
-                    "confidence": round(conf, 3),
-                    "reason": "; ".join(r.get("reasons", []))
+                    "status": decision["status"],
+                    "confidence": decision["confidence"],
+                    "reason": "; ".join(decision["reasons"])
                 })
+                
+                # Generate provenance
+                if args.provenance_dir:
+                    prov = generate_provenance(
+                        sequence=args.sequence,
+                        compound_id=cid,
+                        smiles=smi,
+                        decision=decision,
+                        structure_result=sr,
+                        pocket_data=p,
+                        checks_passed=[],
+                        checks_failed=decision["reasons"]
+                    )
+                    provenance_records.append(prov)
+                    save_provenance(prov, Path(args.provenance_dir), cid)
+                    
             except Exception as e:
                 results.append({
                     "compound_id": cid, "smiles": smi, "pocket": p["pocket_id"],
@@ -147,9 +169,19 @@ def main():
     print(f"[+] Output: {args.out}")
     print(f"    VALID: {v} | CANDIDATE: {c} | REJECT: {rj}")
 
+    # Save batch provenance
+    if args.provenance_dir:
+        batch_prov = generate_batch_provenance(args.sequence, sr, results, pockets)
+        batch_path = Path(args.provenance_dir) / "batch_provenance.json"
+        with open(batch_path, "w") as f:
+            json.dump(batch_prov, f, indent=2)
+        print(f"[+] Provenance: {args.provenance_dir}/")
+
     if args.json_trace:
-        trace["total_time"] = round(dt, 2)
-        trace["stages"]["screening"] = {"valid": v, "candidate": c, "reject": rj}
+        trace = {
+            "total_time": round(dt, 2),
+            "valid": v, "candidate": c, "reject": rj
+        }
         with open(args.json_trace, "w") as f:
             json.dump(trace, f, indent=2)
 
