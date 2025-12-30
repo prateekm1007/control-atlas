@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "identity": {
+    "target": "string",
+    "mutation": "string",
+    "domain": "string",
+    "uniprot_id": "string"
+  },
+  "pocket": {
+    "pocket_id": "string",
+    "classification": "string",
+    "reference_state": "enum (apo, active, drug_bound)",
+    "source_pdbs": ["string"]
+  },
+  "frame": {
+    "origin": ["float", "float", "float"],
+    "axes": [
+      ["float", "float", "float"],
+      ["float", "float", "float"],
+      ["float", "float", "float"]
+    ],
+    "lining_residues": ["int"]
+  },
+  "quality": {
+    "physics_consistency": "float (0-1)",
+    "notes": "string"
+  }
+}

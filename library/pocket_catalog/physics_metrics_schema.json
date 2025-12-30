@@ -1,0 +1,7 @@
+{
+  "volume_A3": "float",
+  "sasa_A2": "float",
+  "hydrophobic_fraction": "float",
+  "concavity_index": "float",
+  "polarity_gradient": ["float", "float", "float"]
+}
