@@ -13,17 +13,17 @@ WORKDIR /app
 # Copy project files
 COPY . /app/control-atlas
 
-# Install Python dependencies
+# Install Python dependencies (PINNED for RDKit compatibility)
 RUN pip install --no-cache-dir \
-    numpy \
-    prody \
-    rdkit-pypi
+    "numpy<2" \
+    rdkit-pypi \
+    prody
 
-# Set environment path
-ENV PYTHONPATH="${PYTHONPATH}:/app/control-atlas"
+# Set Python path explicitly (no undefined var usage)
+ENV PYTHONPATH=/app/control-atlas
 
 # Set entrypoint to Universal Gatekeeper
 ENTRYPOINT ["python3", "/app/control-atlas/entries/020_candidate_validation/universal_gatekeeper.py"]
 
-# Default command (help)
+# Default command
 CMD ["--help"]
