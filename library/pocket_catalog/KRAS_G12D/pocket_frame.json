@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "identity": {
     "target": "KRAS",
-    "mutation": "G12C",
+    "mutation": "G12D",
     "domain": "SwitchII",
     "uniprot_id": "P01116"
   },
@@ -11,7 +11,7 @@
     "classification": "SwitchII",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "6GJ8"
     ]
   },
   "frame": {

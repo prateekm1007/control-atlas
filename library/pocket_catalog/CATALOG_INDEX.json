@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "targets": [
+    {
+      "id": "KRAS_G12C",
+      "domain": "SwitchII",
+      "state": "drug_bound",
+      "lining_count": 19
+    }
+  ]
+}

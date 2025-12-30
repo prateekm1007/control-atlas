@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
+    "target": "HRAS",
+    "mutation": "G12V",
     "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "uniprot_id": "P01112"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
+    "pocket_id": "HRAS_SwitchII",
     "classification": "SwitchII",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "4Q21"
     ]
   },
   "frame": {
@@ -54,9 +54,7 @@
       73,
       74,
       75,
-      76,
-      95,
-      96
+      76
     ]
   },
   "quality": {

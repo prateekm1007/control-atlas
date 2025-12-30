@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "TP53",
+    "mutation": "R175H",
+    "domain": "DNABinding",
+    "uniprot_id": "P04637"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "TP53_DNABinding",
+    "classification": "DNABinding",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "2OCJ"
     ]
   },
   "frame": {
@@ -38,25 +38,17 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      220,
+      245,
+      248,
+      249
     ]
   },
   "quality": {

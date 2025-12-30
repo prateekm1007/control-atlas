@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "PIK3CA",
+    "mutation": "H1047R",
+    "domain": "Kinase",
+    "uniprot_id": "P42336"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "PIK3CA_Kinase",
+    "classification": "Kinase",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "3HHM"
     ]
   },
   "frame": {
@@ -38,25 +38,14 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048,
+      1049,
+      1050
     ]
   },
   "quality": {

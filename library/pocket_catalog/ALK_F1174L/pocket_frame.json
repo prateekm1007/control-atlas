@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "ALK",
+    "mutation": "F1174L",
+    "domain": "KinaseHinge",
+    "uniprot_id": "Q9UM73"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "ALK_KinaseHinge",
+    "classification": "KinaseHinge",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "4ANS"
     ]
   },
   "frame": {
@@ -38,25 +38,16 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      1150,
+      1151,
+      1152,
+      1153,
+      1174,
+      1175,
+      1176,
+      1196,
+      1197,
+      1198
     ]
   },
   "quality": {

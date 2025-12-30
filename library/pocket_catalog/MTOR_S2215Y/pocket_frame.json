@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "MTOR",
+    "mutation": "S2215Y",
+    "domain": "FRBDomain",
+    "uniprot_id": "P42345"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "MTOR_FRBDomain",
+    "classification": "FRBDomain",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "4DRJ"
     ]
   },
   "frame": {
@@ -38,25 +38,15 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      2210,
+      2211,
+      2212,
+      2213,
+      2214,
+      2215,
+      2216,
+      2217,
+      2218
     ]
   },
   "quality": {

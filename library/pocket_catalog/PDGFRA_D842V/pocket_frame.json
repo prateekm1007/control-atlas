@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "PDGFRA",
+    "mutation": "D842V",
+    "domain": "ActivationLoop",
+    "uniprot_id": "P16234"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "PDGFRA_ActivationLoop",
+    "classification": "ActivationLoop",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "5GRN"
     ]
   },
   "frame": {
@@ -38,25 +38,15 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      838,
+      839,
+      840,
+      841,
+      842,
+      843,
+      844,
+      845,
+      846
     ]
   },
   "quality": {

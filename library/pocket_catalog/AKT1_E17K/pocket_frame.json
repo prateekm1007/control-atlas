@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
   "identity": {
-    "target": "KRAS",
-    "mutation": "G12C",
-    "domain": "SwitchII",
-    "uniprot_id": "P01116"
+    "target": "AKT1",
+    "mutation": "E17K",
+    "domain": "PHDomain",
+    "uniprot_id": "P31749"
   },
   "pocket": {
-    "pocket_id": "KRAS_SwitchII",
-    "classification": "SwitchII",
+    "pocket_id": "AKT1_PHDomain",
+    "classification": "PHDomain",
     "reference_state": "drug_bound",
     "source_pdbs": [
-      "6OIM"
+      "3O96"
     ]
   },
   "frame": {
@@ -38,25 +38,15 @@
       ]
     ],
     "lining_residues": [
-      60,
-      61,
-      62,
-      63,
-      64,
-      65,
-      66,
-      67,
-      68,
-      69,
-      70,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      95,
-      96
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
     ]
   },
   "quality": {
