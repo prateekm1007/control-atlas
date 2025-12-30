@@ -1,1 +1,4 @@
-{}
+{
+  "status": "failed",
+  "error": "No atoms found for residues"
+}
