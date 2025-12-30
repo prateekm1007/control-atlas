@@ -1,7 +1,8 @@
 {
-  "volume_A3": 7.3,
-  "exposure": 5.25,
-  "hydrophobic_pct": 100.0,
-  "atom_count": 8,
+  "volume_A3": 1168.2,
+  "exposure": 25.45,
+  "hydrophobic_pct": 54.5,
+  "atom_count": 58,
+  "centroid_source": "ligand",
   "status": "computed"
 }
