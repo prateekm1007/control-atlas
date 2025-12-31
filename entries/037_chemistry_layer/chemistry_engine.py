@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 from dataclasses import dataclass
 
-# Link to Architecture
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "entries/036_unified_architecture"))
 from core_interfaces import Layer, Constraint
 
@@ -17,16 +16,16 @@ from conformer_gen import generate_conformers
 
 @dataclass
 class ChemistryResult:
-    status: str # PASS, FAIL
+    status: str # PASS, FAIL, WARNING
     reasons: list
     metrics: dict
 
 class ChemistryLayer(Layer):
     """
     Evaluates:
-    1. Intrinsic Tractability (QED, Alerts)
+    1. Intrinsic Tractability (QED as Warning)
     2. Pocket Compatibility (Polarity Match)
-    3. Conformer Feasibility (Dynamics)
+    3. Conformer Feasibility (Existence check)
     """
     
     def evaluate(self, context: dict) -> ChemistryResult:
@@ -38,47 +37,58 @@ class ChemistryLayer(Layer):
             return ChemistryResult("FAIL", ["Invalid SMILES"], {})
             
         reasons = []
+        warnings = []
         metrics = {}
         
-        # 1. Intrinsic Tractability (QED)
+        # 1. Intrinsic Tractability (QED) -> WARNING ONLY
+        # QED encodes historical bias. We warn but do not reject.
         qed = QED.qed(mol)
         metrics["qed"] = round(qed, 2)
         if qed < 0.2:
-            reasons.append(f"QED too low ({qed:.2f})")
+            warnings.append(f"Low QED ({qed:.2f}) - potentially intractable")
             
-        # 2. Molecular Weight vs Pocket Volume
+        # 2. Molecular Weight vs Pocket Volume -> HEURISTIC CONSTRAINT
         mw = Descriptors.MolWt(mol)
         metrics["mw"] = round(mw, 1)
-        pocket_vol = pocket_metrics.get("volume", 500.0) # Default if missing
+        pocket_vol = pocket_metrics.get("volume", 500.0)
         
-        # Heuristic: Ligand MW ~ 0.5-1.5x Pocket Vol (rough density approx)
+        # Crude density approximation. 
+        # Future: Replace with fragment occupancy or water displacement.
         if mw > pocket_vol * 1.5:
-            reasons.append(f"Molecule too large for pocket ({mw} vs {pocket_vol})")
+            reasons.append(f"Molecule likely too large for pocket ({mw} vs {pocket_vol})")
             
-        # 3. Polarity Mismatch (LogP vs Hydrophobicity)
+        # 3. Polarity Mismatch (LogP vs Hydrophobicity) -> HARD CONSTRAINT
+        # High LogP in low-hydrophobicity pocket = Energetic penalty
         logp = Descriptors.MolLogP(mol)
         metrics["logp"] = round(logp, 2)
         pocket_hydro = pocket_metrics.get("hydrophobic_pct", 0.5)
         
-        # If pocket is very polar (low hydro), LogP should be low
-        if pocket_hydro < 0.3 and logp > 4.0:
-            reasons.append(f"Greasy molecule in polar pocket (LogP {logp} vs Hydro {pocket_hydro})")
+        if pocket_hydro < 0.3 and logp > 4.5:
+            reasons.append(f"Polarity Mismatch: Greasy ligand ({logp}) in polar pocket ({pocket_hydro})")
             
-        # 4. Dynamics Check (Conformers)
-        # If rigid constraints failed, check if ANY conformer could plausibly fit
-        # (Simplified: Just ensure we CAN generate conformers)
+        # 4. Dynamics Check (Conformers) -> EXISTENTIAL CONSTRAINT
+        # Checks if molecule can exist in 3D (sanity), not if it fits pocket (yet).
         confs = generate_conformers(mol, num_confs=5)
         if not confs:
-            reasons.append("Sterically impossible (no valid conformers)")
+            reasons.append("Sterically impossible (no valid conformers generated)")
             
-        status = "FAIL" if reasons else "PASS"
-        return ChemistryResult(status, reasons, metrics)
+        # Decision Logic
+        if reasons:
+            status = "FAIL"
+        elif warnings:
+            status = "WARNING"
+        else:
+            status = "PASS"
+            
+        return ChemistryResult(status, reasons + warnings, metrics)
 
-# CLI for testing
 if __name__ == "__main__":
-    test_smiles = "CC(C)(C)NC1=NC=NC2=C1N=CN2" # Sotorasib core
+    # Test Case: Sotorasib core vs Generic Pocket
+    test_smiles = "CC(C)(C)NC1=NC=NC2=C1N=CN2" 
     test_pocket = {"volume": 400.0, "hydrophobic_pct": 0.6}
     
     engine = ChemistryLayer()
     result = engine.evaluate({"smiles": test_smiles, "pocket_metrics": test_pocket})
-    print(result)
+    print(f"Status: {result.status}")
+    print(f"Metrics: {result.metrics}")
+    print(f"Reasons: {result.reasons}")
