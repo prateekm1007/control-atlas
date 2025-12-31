@@ -1,0 +1,69 @@
+{
+  "uniprot_id": "P09619",
+  "protein_family": "kinase",
+  "plddt_global": 72.4,
+  "pockets": [
+    {
+      "pocket_id": "pocket_32",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.041,
+      "volume": 644.1,
+      "exposure": 0.959,
+      "hydrophobic_pct": 0.4,
+      "confidence": 0.03,
+      "residue_count": 10,
+      "residues": [
+        "A:ASP267",
+        "A:SER736",
+        "A:ASP263",
+        "A:LEU266",
+        "A:PHE264",
+        "A:MET268",
+        "A:ARG695",
+        "A:HIS698",
+        "A:ARG273",
+        "A:LEU265"
+      ],
+      "center": [
+        4.93,
+        5.58,
+        -1.17
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_70",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 401.5,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.462,
+      "confidence": 0.001,
+      "residue_count": 13,
+      "residues": [
+        "A:TYR562",
+        "A:GLU563",
+        "A:PRO584",
+        "A:ILE564",
+        "A:ASP583",
+        "A:SER643",
+        "A:SER650",
+        "A:MET585",
+        "A:LYS567",
+        "A:TRP566",
+        "A:ALA647",
+        "A:ARG561",
+        "A:GLN646"
+      ],
+      "center": [
+        -31.25,
+        -3.56,
+        -9.42
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

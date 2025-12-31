@@ -1,0 +1,100 @@
+{
+  "uniprot_id": "P04626",
+  "protein_family": "kinase",
+  "plddt_global": 78.3,
+  "pockets": [
+    {
+      "pocket_id": "pocket_56",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.007,
+      "volume": 804.5,
+      "exposure": 0.993,
+      "hydrophobic_pct": 0.625,
+      "confidence": 0.005,
+      "residue_count": 8,
+      "residues": [
+        "A:CYS630",
+        "A:ILE628",
+        "A:PRO627",
+        "A:PRO612",
+        "A:MET611",
+        "A:CYS626",
+        "A:THR631",
+        "A:TRP614"
+      ],
+      "center": [
+        -56.01,
+        21.28,
+        26.79
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_51",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.003,
+      "volume": 641.1,
+      "exposure": 0.997,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.002,
+      "residue_count": 18,
+      "residues": [
+        "A:LYS749",
+        "A:PHE798",
+        "A:PRO745",
+        "A:GLU741",
+        "A:ARG797",
+        "A:ARG796",
+        "A:LEU752",
+        "A:MET696",
+        "A:ARG740",
+        "A:ILE698",
+        "A:VAL738",
+        "A:ARG697",
+        "A:LEU739",
+        "A:ASN748",
+        "A:LYS737",
+        "A:THR743",
+        "A:CYS799",
+        "A:LEU699"
+      ],
+      "center": [
+        -14.84,
+        72.07,
+        20.9
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_18",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 401.7,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.002,
+      "residue_count": 9,
+      "residues": [
+        "A:GLN81",
+        "A:ALA293",
+        "A:HIS257",
+        "A:THR105",
+        "A:LEU149",
+        "A:PHE258",
+        "A:ARG103",
+        "A:LEU256",
+        "A:GLY292"
+      ],
+      "center": [
+        4.52,
+        8.59,
+        -19.46
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}
