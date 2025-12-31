@@ -42,7 +42,8 @@ class KnowledgeGraph:
                                 value=step['evidence'])
 
     def export_json(self, path):
-        data = nx.node_link_data(self.graph)
+        # FIX: Explicit edges kwarg to silence FutureWarning
+        data = nx.node_link_data(self.graph, edges="links")
         with open(path, "w") as f:
             json.dump(data, f, indent=2)
             
