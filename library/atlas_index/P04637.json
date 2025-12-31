@@ -1,0 +1,43 @@
+{
+  "uniprot_id": "P04637",
+  "plddt_global": 75.0501272264631,
+  "pockets": [
+    {
+      "pocket_id": "pocket_11",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 456.6,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.0,
+      "residue_count": 16,
+      "residues": [
+        "A:PRO219",
+        "A:THR231",
+        "A:LEU201",
+        "A:THR230",
+        "A:TYR220",
+        "A:VAL197",
+        "A:ILE232",
+        "A:GLY199",
+        "A:GLU198",
+        "A:VAL218",
+        "A:LEU145",
+        "A:HIS233",
+        "A:VAL157",
+        "A:ASN200",
+        "A:ARG202",
+        "A:GLU221"
+      ],
+      "center": [
+        -8.31,
+        -1.36,
+        13.55
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB",
+  "model_version": "v6"
+}

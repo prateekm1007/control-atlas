@@ -1,0 +1,99 @@
+{
+  "uniprot_id": "P01116",
+  "plddt_global": 92.5746276595744,
+  "pockets": [
+    {
+      "pocket_id": "pocket_2",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 202.9,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.417,
+      "confidence": 0.0,
+      "residue_count": 12,
+      "residues": [
+        "A:ASP108",
+        "A:MET111",
+        "A:LYS169",
+        "A:ILE139",
+        "A:GLY138",
+        "A:LYS165",
+        "A:HIS166",
+        "A:GLU107",
+        "A:PRO110",
+        "A:GLU162",
+        "A:VAL109",
+        "A:TYR137"
+      ],
+      "center": [
+        -0.62,
+        -6.59,
+        11.55
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_6",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.034,
+      "volume": 463.1,
+      "exposure": 0.966,
+      "hydrophobic_pct": 0.308,
+      "confidence": 0.031,
+      "residue_count": 13,
+      "residues": [
+        "A:ASP108",
+        "A:ASP105",
+        "A:HIS166",
+        "A:GLY75",
+        "A:SER106",
+        "A:LYS167",
+        "A:ILE163",
+        "A:LYS104",
+        "A:PRO110",
+        "A:VAL109",
+        "A:THR74",
+        "A:GLU76",
+        "A:MET170"
+      ],
+      "center": [
+        -6.11,
+        -0.58,
+        13.6
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_7",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 270.6,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.001,
+      "residue_count": 9,
+      "residues": [
+        "A:LYS5",
+        "A:TYR71",
+        "A:ASP54",
+        "A:GLY75",
+        "A:SER39",
+        "A:LEU6",
+        "A:LEU56",
+        "A:THR74",
+        "A:VAL7"
+      ],
+      "center": [
+        -10.89,
+        5.4,
+        3.91
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB",
+  "model_version": "v6"
+}

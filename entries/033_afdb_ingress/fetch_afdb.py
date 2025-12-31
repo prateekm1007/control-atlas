@@ -1,38 +1,87 @@
 #!/usr/bin/env python3
-""" Fetch structures from AlphaFold DB (2025 format). """
+"""
+Fetch structures from AlphaFold DB using API.
+Converts CIF to PDB for fpocket compatibility.
+"""
 import requests
-import gzip
-import shutil
 from pathlib import Path
 
-AFDB_BASE = "https://alphafold.ebi.ac.uk/files"
+API_BASE = "https://alphafold.ebi.ac.uk/api/prediction"
 
-def fetch_structure(uniprot_id: str, output_dir: Path) -> str | None:
-    """ Download and decompress AFDB structure. Returns path or None. """
+def cif_to_pdb(cif_path: Path) -> Path:
+    """Convert CIF to PDB using gemmi."""
+    pdb_path = cif_path.with_suffix(".pdb")
+    if pdb_path.exists():
+        return pdb_path
+    
+    try:
+        import gemmi
+        structure = gemmi.read_structure(str(cif_path))
+        structure.write_pdb(str(pdb_path))
+        print(f"    Converted to PDB: {pdb_path.name}")
+        return pdb_path
+    except ImportError:
+        # Fallback: try obabel
+        import subprocess
+        result = subprocess.run(
+            ["obabel", str(cif_path), "-O", str(pdb_path)],
+            capture_output=True
+        )
+        if result.returncode == 0:
+            print(f"    Converted to PDB (obabel): {pdb_path.name}")
+            return pdb_path
+        else:
+            print(f"[!] CIF→PDB conversion failed")
+            return None
+    except Exception as e:
+        print(f"[!] Conversion error: {e}")
+        return None
+
+def fetch_structure(uniprot_id: str, output_dir: Path) -> str:
+    """Fetch structure and return PDB path."""
+    output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    for version in ["v4", "v3", "v2", "v1"]:
-        filename_gz = f"AF-{uniprot_id}-F1-model_{version}.pdb.gz"
-        url = f"{AFDB_BASE}/{filename_gz}"
-        gz_path = output_dir / filename_gz
-        pdb_path = output_dir / f"AF-{uniprot_id}-F1-model_{version}.pdb"
+    api_url = f"{API_BASE}/{uniprot_id.upper()}"
+    try:
+        response = requests.get(api_url, timeout=60)
+        if response.status_code != 200:
+            print(f"[!] API failed for {uniprot_id}: HTTP {response.status_code}")
+            return None
         
-        if pdb_path.exists():
+        data = response.json()
+        if not data:
+            print(f"[!] No models for {uniprot_id}")
+            return None
+        
+        model = data[0]
+        cif_url = model.get("cifUrl")
+        
+        if not cif_url:
+            print(f"[!] No CIF URL for {uniprot_id}")
+            return None
+        
+        cif_path = output_dir / Path(cif_url).name
+        pdb_path = cif_path.with_suffix(".pdb")
+        
+        # Return cached PDB if exists
+        if pdb_path.exists() and pdb_path.stat().st_size > 10000:
             return str(pdb_path)
         
-        try:
-            response = requests.get(url, timeout=60)
-            if response.status_code == 200:
-                with open(gz_path, "wb") as f:
-                    f.write(response.content)
-                with gzip.open(gz_path, 'rb') as f_in:
-                    with open(pdb_path, 'wb') as f_out:
-                        shutil.copyfileobj(f_in, f_out)
-                gz_path.unlink()  # cleanup gz
-                return str(pdb_path)
-        except Exception as e:
-            print(f"[!] Error for {uniprot_id} v{version}: {e}")
-            continue
-    
-    print(f"[!] Failed to download {uniprot_id}")
-    return None
+        # Download CIF
+        cif_response = requests.get(cif_url, timeout=120)
+        if cif_response.status_code != 200:
+            print(f"[!] CIF download failed for {uniprot_id}")
+            return None
+            
+        with open(cif_path, "wb") as f:
+            f.write(cif_response.content)
+        print(f"[+] Downloaded CIF: {cif_path.name}")
+        
+        # Convert to PDB
+        pdb_path = cif_to_pdb(cif_path)
+        return str(pdb_path) if pdb_path else None
+        
+    except Exception as e:
+        print(f"[!] Error for {uniprot_id}: {e}")
+        return None
