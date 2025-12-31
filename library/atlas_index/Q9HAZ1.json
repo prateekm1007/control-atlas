@@ -1,0 +1,36 @@
+{
+  "uniprot_id": "Q9HAZ1",
+  "protein_family": "kinase",
+  "plddt_global": 78.5,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_4",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.073,
+      "volume": 478.0,
+      "exposure": 0.927,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.057,
+      "residue_count": 8,
+      "residues": [
+        "A:GLN398",
+        "A:ASN413",
+        "A:ILE396",
+        "A:PRO395",
+        "A:GLN414",
+        "A:ILE401",
+        "A:GLU390",
+        "A:LEU415"
+      ],
+      "center": [
+        -24.94,
+        11.71,
+        17.76
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

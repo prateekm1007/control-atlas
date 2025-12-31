@@ -1,0 +1,124 @@
+{
+  "uniprot_id": "Q02763",
+  "protein_family": "kinase",
+  "plddt_global": 84.4,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_33",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 456.9,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:MET24",
+        "A:ARG107",
+        "A:HIS52",
+        "A:PRO51",
+        "A:ARG105",
+        "A:ASP389",
+        "A:GLU53",
+        "A:VAL106",
+        "A:TRP49"
+      ],
+      "center": [
+        -19.97,
+        -2.05,
+        5.18
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_54",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 627.3,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:LYS858",
+        "A:TYR899",
+        "A:GLU859",
+        "A:ARG856",
+        "A:MET857",
+        "A:GLN837",
+        "A:GLU832",
+        "A:TYR860",
+        "A:TYR897"
+      ],
+      "center": [
+        34.9,
+        17.99,
+        0.58
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_68",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 332.8,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.003,
+      "residue_count": 12,
+      "residues": [
+        "A:TRP375",
+        "A:ASP402",
+        "A:LYS351",
+        "A:ILE345",
+        "A:PRO376",
+        "A:SER373",
+        "A:PHE404",
+        "A:MET348",
+        "A:HIS403",
+        "A:LEU377",
+        "A:THR349",
+        "A:GLY374"
+      ],
+      "center": [
+        -40.6,
+        19.82,
+        -2.82
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_82",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.005,
+      "volume": 1136.3,
+      "exposure": 0.995,
+      "hydrophobic_pct": 0.333,
+      "confidence": 0.004,
+      "residue_count": 9,
+      "residues": [
+        "A:ARG1076",
+        "A:LEU1070",
+        "A:GLU1081",
+        "A:GLN1087",
+        "A:PRO1083",
+        "A:TYR1080",
+        "A:SER1091",
+        "A:ARG1082",
+        "A:GLN1073"
+      ],
+      "center": [
+        3.78,
+        -10.17,
+        -9.92
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

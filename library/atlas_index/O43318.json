@@ -9,21 +9,21 @@
       "rank": 3,
       "status": "CANDIDATE",
       "druggability_score": 0.0,
-      "volume": 288.7,
+      "volume": 282.8,
       "exposure": 1.0,
       "hydrophobic_pct": 0.444,
       "confidence": 0.0,
       "residue_count": 9,
       "residues": [
+        "A:GLU296",
         "A:PRO292",
-        "A:THR126",
         "A:LYS351",
-        "A:GLY293",
-        "A:ALA127",
-        "A:ALA128",
         "A:ARG347",
         "A:PHE291",
-        "A:GLU296"
+        "A:ALA127",
+        "A:GLY293",
+        "A:THR126",
+        "A:ALA128"
       ],
       "center": [
         0.03,

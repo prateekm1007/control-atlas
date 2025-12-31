@@ -1,0 +1,101 @@
+{
+  "uniprot_id": "P07948",
+  "protein_family": "kinase",
+  "plddt_global": 86.5,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_7",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 215.5,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.429,
+      "confidence": 0.003,
+      "residue_count": 14,
+      "residues": [
+        "A:LYS274",
+        "A:ASP215",
+        "A:TYR285",
+        "A:TRP219",
+        "A:TRP78",
+        "A:LEU284",
+        "A:HIS75",
+        "A:ALA218",
+        "A:ARG283",
+        "A:GLU77",
+        "A:TRP214",
+        "A:ASP217",
+        "A:LYS216",
+        "A:GLN277"
+      ],
+      "center": [
+        -22.26,
+        -5.51,
+        -7.84
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_31",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 496.3,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.6,
+      "confidence": 0.001,
+      "residue_count": 10,
+      "residues": [
+        "A:PHE384",
+        "A:ILE386",
+        "A:ARG348",
+        "A:TRP388",
+        "A:LYS387",
+        "A:PRO385",
+        "A:ASN428",
+        "A:ILE421",
+        "A:ALA382",
+        "A:LYS383"
+      ],
+      "center": [
+        7.44,
+        5.45,
+        -22.55
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_5",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 269.1,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.455,
+      "confidence": 0.002,
+      "residue_count": 11,
+      "residues": [
+        "A:ASP215",
+        "A:TRP78",
+        "A:HIS57",
+        "A:PRO58",
+        "A:PHE91",
+        "A:ASP59",
+        "A:ALA218",
+        "A:TYR245",
+        "A:ASP60",
+        "A:ASP217",
+        "A:LYS216"
+      ],
+      "center": [
+        -30.0,
+        -3.27,
+        -4.91
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

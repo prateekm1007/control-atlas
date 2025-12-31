@@ -1,0 +1,37 @@
+{
+  "uniprot_id": "Q13470",
+  "protein_family": "kinase",
+  "plddt_global": 73.6,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_4",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.02,
+      "volume": 504.6,
+      "exposure": 0.98,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.015,
+      "residue_count": 9,
+      "residues": [
+        "A:GLN378",
+        "A:CYS223",
+        "A:PRO382",
+        "A:ARG227",
+        "A:ALA220",
+        "A:LEU224",
+        "A:GLU384",
+        "A:GLY381",
+        "A:LEU377"
+      ],
+      "center": [
+        0.79,
+        10.67,
+        -16.24
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

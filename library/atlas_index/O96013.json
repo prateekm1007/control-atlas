@@ -1,0 +1,36 @@
+{
+  "uniprot_id": "O96013",
+  "protein_family": "kinase",
+  "plddt_global": 71.3,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_23",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 416.1,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.375,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:SER93",
+        "A:MET92",
+        "A:PRO296",
+        "A:THR95",
+        "A:VAL94",
+        "A:ARG298",
+        "A:SER97",
+        "A:ARG96"
+      ],
+      "center": [
+        -23.96,
+        -10.64,
+        -16.7
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

@@ -1,0 +1,36 @@
+{
+  "uniprot_id": "Q96GD4",
+  "protein_family": "kinase",
+  "plddt_global": 79.7,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_16",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 362.3,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:SER342",
+        "A:VAL343",
+        "A:HIS133",
+        "A:LEU335",
+        "A:ASP186",
+        "A:HIS134",
+        "A:ALA339",
+        "A:PRO135"
+      ],
+      "center": [
+        -16.66,
+        11.6,
+        -8.47
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

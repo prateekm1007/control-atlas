@@ -9,7 +9,7 @@
       "rank": 1,
       "status": "CANDIDATE",
       "druggability_score": 0.011,
-      "volume": 935.3,
+      "volume": 918.5,
       "exposure": 0.989,
       "hydrophobic_pct": 0.333,
       "confidence": 0.009,
@@ -17,13 +17,13 @@
       "residues": [
         "A:LYS296",
         "A:GLN297",
-        "A:GLU137",
+        "A:PHE301",
         "A:HIS136",
         "A:GLN174",
-        "A:PHE301",
         "A:TYR204",
         "A:ARG133",
-        "A:PRO298"
+        "A:PRO298",
+        "A:GLU137"
       ],
       "center": [
         -24.55,
@@ -37,23 +37,23 @@
       "rank": 5,
       "status": "CANDIDATE",
       "druggability_score": 0.002,
-      "volume": 349.4,
+      "volume": 337.6,
       "exposure": 0.998,
       "hydrophobic_pct": 0.364,
       "confidence": 0.002,
       "residue_count": 11,
       "residues": [
-        "A:ILE141",
+        "A:GLY175",
         "A:ASP173",
-        "A:VAL172",
-        "A:ILE140",
-        "A:HIS136",
-        "A:ALA200",
         "A:THR199",
+        "A:VAL172",
+        "A:ILE141",
+        "A:HIS136",
+        "A:GLN174",
         "A:LYS139",
         "A:SER176",
-        "A:GLY175",
-        "A:GLN174"
+        "A:ILE140",
+        "A:ALA200"
       ],
       "center": [
         -29.3,

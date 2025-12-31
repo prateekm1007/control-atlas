@@ -1,0 +1,97 @@
+{
+  "uniprot_id": "P35462",
+  "protein_family": "kinase",
+  "plddt_global": 81.0,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_12",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 234.3,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.636,
+      "confidence": 0.003,
+      "residue_count": 11,
+      "residues": [
+        "A:MET153",
+        "A:ARG149",
+        "A:LEU119",
+        "A:ILE126",
+        "A:CYS122",
+        "A:THR130",
+        "A:VAL157",
+        "A:ASP127",
+        "A:LEU160",
+        "A:ALA156",
+        "A:ALA123"
+      ],
+      "center": [
+        0.17,
+        -8.9,
+        9.99
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_5",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.005,
+      "volume": 288.0,
+      "exposure": 0.995,
+      "hydrophobic_pct": 0.833,
+      "confidence": 0.004,
+      "residue_count": 12,
+      "residues": [
+        "A:LEU302",
+        "A:THR204",
+        "A:TYR208",
+        "A:VAL205",
+        "A:PHE305",
+        "A:TYR212",
+        "A:PHE201",
+        "A:ILE306",
+        "A:VAL213",
+        "A:GLY303",
+        "A:ALA209",
+        "A:ALA299"
+      ],
+      "center": [
+        -11.39,
+        -7.71,
+        -0.17
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_9",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 297.5,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:MET297",
+        "A:ARG290",
+        "A:ILE355",
+        "A:PHE353",
+        "A:ASN354",
+        "A:ALA294",
+        "A:GLU356",
+        "A:LYS293"
+      ],
+      "center": [
+        -16.08,
+        3.59,
+        12.41
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

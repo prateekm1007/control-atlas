@@ -1,0 +1,36 @@
+{
+  "uniprot_id": "Q9HC98",
+  "protein_family": "kinase",
+  "plddt_global": 84.0,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_13",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 378.1,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.75,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:LEU122",
+        "A:LEU191",
+        "A:LEU193",
+        "A:LYS74",
+        "A:ILE120",
+        "A:TYR108",
+        "A:LEU97",
+        "A:ASP190"
+      ],
+      "center": [
+        2.0,
+        3.76,
+        -11.71
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

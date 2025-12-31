@@ -1,0 +1,106 @@
+{
+  "uniprot_id": "P17252",
+  "protein_family": "kinase",
+  "plddt_global": 86.9,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_16",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 513.0,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.364,
+      "confidence": 0.0,
+      "residue_count": 11,
+      "residues": [
+        "A:PRO397",
+        "A:PHE453",
+        "A:GLU588",
+        "A:ARG457",
+        "A:ASP395",
+        "A:LYS456",
+        "A:ARG592",
+        "A:LYS396",
+        "A:ILE449",
+        "A:GLU606",
+        "A:PHE452"
+      ],
+      "center": [
+        7.72,
+        -9.8,
+        -11.73
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_2",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 462.2,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.311,
+      "confidence": 0.0,
+      "residue_count": 45,
+      "residues": [
+        "A:ASP55",
+        "A:CYS53",
+        "A:GLU437",
+        "A:THR54",
+        "A:ALA595",
+        "A:ASP154",
+        "A:LEU278",
+        "A:ASN138",
+        "A:CYS50",
+        "A:MET153",
+        "A:ASN279",
+        "A:THR113",
+        "A:SER560",
+        "A:LYS276",
+        "A:ASP116",
+        "A:ARG159",
+        "A:THR156",
+        "A:MET137",
+        "A:ARG599",
+        "A:GLY152"
+      ],
+      "center": [
+        -5.51,
+        -7.45,
+        16.24
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_8",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 454.2,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.001,
+      "residue_count": 9,
+      "residues": [
+        "A:LEU643",
+        "A:GLN377",
+        "A:ASP652",
+        "A:ASP649",
+        "A:ASP373",
+        "A:ASN647",
+        "A:VAL644",
+        "A:ILE648",
+        "A:ILE376"
+      ],
+      "center": [
+        32.02,
+        13.88,
+        -28.01
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

@@ -1,0 +1,116 @@
+{
+  "uniprot_id": "P36896",
+  "protein_family": "kinase",
+  "plddt_global": 84.1,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_17",
+      "rank": 1,
+      "status": "VALIDATED",
+      "druggability_score": 0.828,
+      "volume": 1061.9,
+      "exposure": 0.172,
+      "hydrophobic_pct": 0.385,
+      "confidence": 0.696,
+      "residue_count": 13,
+      "residues": [
+        "A:GLN252",
+        "A:LEU195",
+        "A:PHE198",
+        "A:LEU186",
+        "A:SER193",
+        "A:LEU197",
+        "A:SER191",
+        "A:GLY194",
+        "A:SER189",
+        "A:GLN200",
+        "A:SER187",
+        "A:GLY192",
+        "A:PRO196"
+      ],
+      "center": [
+        -5.25,
+        -3.36,
+        -26.97
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_8",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 442.1,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.32,
+      "confidence": 0.002,
+      "residue_count": 25,
+      "residues": [
+        "A:ALA482",
+        "A:CYS400",
+        "A:ILE403",
+        "A:LEU488",
+        "A:ASP396",
+        "A:THR389",
+        "A:HIS317",
+        "A:LYS491",
+        "A:GLU384",
+        "A:ALA487",
+        "A:ALA316",
+        "A:GLY481",
+        "A:ASN391",
+        "A:HIS394",
+        "A:SER313",
+        "A:LEU485",
+        "A:ILE390",
+        "A:ASN480",
+        "A:THR486",
+        "A:ARG484"
+      ],
+      "center": [
+        -13.33,
+        -12.23,
+        -1.74
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_39",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 524.6,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.353,
+      "confidence": 0.0,
+      "residue_count": 17,
+      "residues": [
+        "A:VAL363",
+        "A:ILE322",
+        "A:ASP368",
+        "A:GLN252",
+        "A:PRO329",
+        "A:VAL323",
+        "A:LYS328",
+        "A:THR253",
+        "A:GLY327",
+        "A:ARG359",
+        "A:GLU321",
+        "A:VAL254",
+        "A:ASP361",
+        "A:HIS360",
+        "A:GLU249",
+        "A:ALA362",
+        "A:GLY324"
+      ],
+      "center": [
+        -8.98,
+        -14.31,
+        -16.18
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

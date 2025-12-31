@@ -1,0 +1,48 @@
+{
+  "uniprot_id": "Q7L7X3",
+  "protein_family": "kinase",
+  "plddt_global": 74.2,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_58",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 478.9,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.367,
+      "confidence": 0.003,
+      "residue_count": 98,
+      "residues": [
+        "A:ASN846",
+        "A:LEU80",
+        "A:LEU116",
+        "A:GLU217",
+        "A:GLU76",
+        "A:SER848",
+        "A:GLU117",
+        "A:ARG221",
+        "A:LEU234",
+        "A:MET673",
+        "A:LEU664",
+        "A:SER837",
+        "A:PHE226",
+        "A:LEU158",
+        "A:ALA677",
+        "A:SER113",
+        "A:GLN71",
+        "A:LEU195",
+        "A:PHE39",
+        "A:LYS153"
+      ],
+      "center": [
+        -2.86,
+        -2.14,
+        -4.88
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

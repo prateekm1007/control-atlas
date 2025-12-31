@@ -1,0 +1,39 @@
+{
+  "uniprot_id": "P23443",
+  "protein_family": "kinase",
+  "plddt_global": 72.5,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_15",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 242.2,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.636,
+      "confidence": 0.0,
+      "residue_count": 11,
+      "residues": [
+        "A:PHE511",
+        "A:GLU187",
+        "A:PRO368",
+        "A:ILE189",
+        "A:ARG186",
+        "A:THR194",
+        "A:ILE514",
+        "A:GLN183",
+        "A:PHE369",
+        "A:MET191",
+        "A:PHE190"
+      ],
+      "center": [
+        -3.78,
+        21.27,
+        8.57
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

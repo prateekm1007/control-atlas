@@ -1,0 +1,108 @@
+{
+  "uniprot_id": "Q13163",
+  "protein_family": "kinase",
+  "plddt_global": 79.2,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_24",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 251.3,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.378,
+      "confidence": 0.0,
+      "residue_count": 37,
+      "residues": [
+        "A:GLY175",
+        "A:LEU290",
+        "A:VAL180",
+        "A:SER287",
+        "A:LYS195",
+        "A:ALA193",
+        "A:LEU172",
+        "A:THR319",
+        "A:GLY246",
+        "A:GLY173",
+        "A:ASP301",
+        "A:CYS300",
+        "A:VAL309",
+        "A:MET244",
+        "A:SER248",
+        "A:ASN288",
+        "A:VAL251",
+        "A:ARG441",
+        "A:ASP283",
+        "A:ASN176"
+      ],
+      "center": [
+        -6.46,
+        2.23,
+        6.54
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_3",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 496.6,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.455,
+      "confidence": 0.003,
+      "residue_count": 11,
+      "residues": [
+        "A:LEU102",
+        "A:GLU100",
+        "A:PRO101",
+        "A:GLU63",
+        "A:ASP64",
+        "A:TYR84",
+        "A:VAL89",
+        "A:THR88",
+        "A:TYR85",
+        "A:GLN103",
+        "A:GLN92"
+      ],
+      "center": [
+        -26.08,
+        -15.46,
+        -30.26
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_7",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.003,
+      "volume": 367.2,
+      "exposure": 0.997,
+      "hydrophobic_pct": 0.455,
+      "confidence": 0.002,
+      "residue_count": 11,
+      "residues": [
+        "A:GLN444",
+        "A:TYR252",
+        "A:GLN445",
+        "A:ARG253",
+        "A:GLU440",
+        "A:LYS254",
+        "A:LEU438",
+        "A:VAL251",
+        "A:TRP433",
+        "A:ALA437",
+        "A:ARG441"
+      ],
+      "center": [
+        1.5,
+        17.56,
+        3.78
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

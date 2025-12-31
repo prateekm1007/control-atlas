@@ -1,0 +1,122 @@
+{
+  "uniprot_id": "Q14012",
+  "protein_family": "kinase",
+  "plddt_global": 79.9,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_25",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 293.2,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.556,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:TRP10",
+        "A:PRO8",
+        "A:GLU6",
+        "A:VAL69",
+        "A:ASN65",
+        "A:HIS71",
+        "A:LYS72",
+        "A:ILE84",
+        "A:ALA68"
+      ],
+      "center": [
+        -17.78,
+        -9.59,
+        14.04
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_19",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.004,
+      "volume": 584.6,
+      "exposure": 0.996,
+      "hydrophobic_pct": 0.875,
+      "confidence": 0.003,
+      "residue_count": 8,
+      "residues": [
+        "A:VAL189",
+        "A:PHE227",
+        "A:LEU231",
+        "A:LEU175",
+        "A:ALA178",
+        "A:CYS179",
+        "A:LEU190",
+        "A:VAL174"
+      ],
+      "center": [
+        -19.03,
+        0.07,
+        -16.04
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_33",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 177.3,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.364,
+      "confidence": 0.0,
+      "residue_count": 11,
+      "residues": [
+        "A:GLU109",
+        "A:GLY100",
+        "A:PHE307",
+        "A:ARG106",
+        "A:THR310",
+        "A:LEU152",
+        "A:GLY101",
+        "A:ARG314",
+        "A:ALA311",
+        "A:ALA306",
+        "A:ASP105"
+      ],
+      "center": [
+        -4.15,
+        18.99,
+        5.18
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_4",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.007,
+      "volume": 405.8,
+      "exposure": 0.993,
+      "hydrophobic_pct": 0.333,
+      "confidence": 0.006,
+      "residue_count": 9,
+      "residues": [
+        "A:TYR184",
+        "A:THR177",
+        "A:LEU142",
+        "A:ARG140",
+        "A:THR181",
+        "A:SER203",
+        "A:ASP141",
+        "A:LYS143",
+        "A:VAL185"
+      ],
+      "center": [
+        -12.24,
+        1.98,
+        -8.48
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

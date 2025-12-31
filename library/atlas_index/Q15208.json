@@ -1,0 +1,97 @@
+{
+  "uniprot_id": "Q15208",
+  "protein_family": "kinase",
+  "plddt_global": 84.8,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_34",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 246.6,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.667,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:VAL114",
+        "A:PHE153",
+        "A:PRO170",
+        "A:PHE168",
+        "A:SER222",
+        "A:ILE404",
+        "A:HIS113",
+        "A:ILE401",
+        "A:GLU167"
+      ],
+      "center": [
+        -0.58,
+        -8.27,
+        -14.95
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_6",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 1064.5,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.3,
+      "confidence": 0.001,
+      "residue_count": 10,
+      "residues": [
+        "A:GLU392",
+        "A:LYS223",
+        "A:SER222",
+        "A:SER398",
+        "A:ALA395",
+        "A:ARG393",
+        "A:PRO394",
+        "A:HIS225",
+        "A:ILE399",
+        "A:ARG391"
+      ],
+      "center": [
+        -1.04,
+        -15.48,
+        -1.57
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_8",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.14,
+      "volume": 458.4,
+      "exposure": 0.86,
+      "hydrophobic_pct": 0.333,
+      "confidence": 0.119,
+      "residue_count": 12,
+      "residues": [
+        "A:PRO170",
+        "A:ARG391",
+        "A:GLU392",
+        "A:LYS223",
+        "A:ASP221",
+        "A:LEU147",
+        "A:SER222",
+        "A:LEU169",
+        "A:PHE168",
+        "A:LYS227",
+        "A:GLU167",
+        "A:HIS225"
+      ],
+      "center": [
+        2.36,
+        -9.66,
+        -4.39
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

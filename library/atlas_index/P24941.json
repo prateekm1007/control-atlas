@@ -1,0 +1,78 @@
+{
+  "uniprot_id": "P24941",
+  "protein_family": "kinase",
+  "plddt_global": 88.5,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_4",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.003,
+      "volume": 479.2,
+      "exposure": 0.997,
+      "hydrophobic_pct": 0.429,
+      "confidence": 0.003,
+      "residue_count": 14,
+      "residues": [
+        "A:THR47",
+        "A:VAL154",
+        "A:GLY153",
+        "A:GLY43",
+        "A:ARG36",
+        "A:THR41",
+        "A:ASP38",
+        "A:PHE152",
+        "A:ARG150",
+        "A:PRO45",
+        "A:LEU37",
+        "A:GLU51",
+        "A:ALA48",
+        "A:ALA151"
+      ],
+      "center": [
+        12.5,
+        -18.01,
+        -4.76
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_17",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 279.7,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.353,
+      "confidence": 0.0,
+      "residue_count": 17,
+      "residues": [
+        "A:THR158",
+        "A:THR165",
+        "A:SER207",
+        "A:PRO204",
+        "A:VAL163",
+        "A:THR160",
+        "A:LEU166",
+        "A:ASP206",
+        "A:HIS161",
+        "A:VAL164",
+        "A:TYR159",
+        "A:ARG157",
+        "A:GLY205",
+        "A:ARG169",
+        "A:GLU162",
+        "A:GLU208",
+        "A:TRP167"
+      ],
+      "center": [
+        3.22,
+        -9.3,
+        12.78
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

@@ -1,0 +1,102 @@
+{
+  "uniprot_id": "Q13043",
+  "protein_family": "kinase",
+  "plddt_global": 76.4,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_8",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 489.4,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.625,
+      "confidence": 0.002,
+      "residue_count": 8,
+      "residues": [
+        "A:THR255",
+        "A:LYS259",
+        "A:THR243",
+        "A:VAL258",
+        "A:LEU262",
+        "A:PRO242",
+        "A:PHE244",
+        "A:PRO241"
+      ],
+      "center": [
+        12.11,
+        6.56,
+        -14.64
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_10",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 153.0,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.375,
+      "confidence": 0.001,
+      "residue_count": 8,
+      "residues": [
+        "A:LEU174",
+        "A:ARG148",
+        "A:THR175",
+        "A:TYR201",
+        "A:GLN173",
+        "A:GLU198",
+        "A:MET178",
+        "A:GLY200"
+      ],
+      "center": [
+        -6.99,
+        21.78,
+        -11.75
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_11",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.015,
+      "volume": 398.1,
+      "exposure": 0.985,
+      "hydrophobic_pct": 0.458,
+      "confidence": 0.011,
+      "residue_count": 59,
+      "residues": [
+        "A:SER109",
+        "A:GLY106",
+        "A:TYR104",
+        "A:LEU36",
+        "A:SER40",
+        "A:GLY186",
+        "A:MET102",
+        "A:PHE168",
+        "A:LEU174",
+        "A:VAL184",
+        "A:GLY172",
+        "A:GLY169",
+        "A:LEU116",
+        "A:VAL44",
+        "A:CYS105",
+        "A:THR187",
+        "A:ASP149",
+        "A:TYR201",
+        "A:TRP190",
+        "A:MET178"
+      ],
+      "center": [
+        -7.42,
+        10.22,
+        -1.63
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

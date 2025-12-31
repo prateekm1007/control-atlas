@@ -1,0 +1,108 @@
+{
+  "uniprot_id": "P08631",
+  "protein_family": "kinase",
+  "plddt_global": 83.9,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_11",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 359.8,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.37,
+      "confidence": 0.001,
+      "residue_count": 54,
+      "residues": [
+        "A:ASP315",
+        "A:SER392",
+        "A:SER520",
+        "A:LEU511",
+        "A:PRO161",
+        "A:ASP153",
+        "A:CYS241",
+        "A:PRO246",
+        "A:ASP193",
+        "A:ALA363",
+        "A:ILE359",
+        "A:PRO354",
+        "A:SER244",
+        "A:ARG151",
+        "A:GLU155",
+        "A:ASN131",
+        "A:ILE149",
+        "A:PRO240",
+        "A:LYS357",
+        "A:GLN523"
+      ],
+      "center": [
+        -16.63,
+        3.52,
+        0.43
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_2",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.006,
+      "volume": 604.1,
+      "exposure": 0.994,
+      "hydrophobic_pct": 0.429,
+      "confidence": 0.005,
+      "residue_count": 14,
+      "residues": [
+        "A:TRP114",
+        "A:HIS93",
+        "A:TRP250",
+        "A:PRO249",
+        "A:HIS321",
+        "A:TYR281",
+        "A:TYR89",
+        "A:GLU251",
+        "A:HIS284",
+        "A:THR285",
+        "A:GLN247",
+        "A:LYS286",
+        "A:LYS248",
+        "A:ILE92"
+      ],
+      "center": [
+        -1.08,
+        -11.29,
+        10.01
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_8",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 320.8,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.375,
+      "confidence": 0.001,
+      "residue_count": 8,
+      "residues": [
+        "A:ASP80",
+        "A:GLU79",
+        "A:VAL136",
+        "A:SER138",
+        "A:ILE81",
+        "A:ARG135",
+        "A:ASP137",
+        "A:ILE82"
+      ],
+      "center": [
+        -13.77,
+        3.14,
+        27.35
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

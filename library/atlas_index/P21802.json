@@ -1,0 +1,107 @@
+{
+  "uniprot_id": "P21802",
+  "protein_family": "kinase",
+  "plddt_global": 74.3,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_22",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 319.9,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.3,
+      "confidence": 0.0,
+      "residue_count": 10,
+      "residues": [
+        "A:ARG579",
+        "A:GLU596",
+        "A:MET640",
+        "A:ASN638",
+        "A:TYR575",
+        "A:GLN597",
+        "A:ASP602",
+        "A:GLN609",
+        "A:SER605",
+        "A:MET598"
+      ],
+      "center": [
+        3.46,
+        3.12,
+        16.33
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_51",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 330.1,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.417,
+      "confidence": 0.0,
+      "residue_count": 48,
+      "residues": [
+        "A:PHE492",
+        "A:LEU633",
+        "A:GLY646",
+        "A:GLY663",
+        "A:ASP644",
+        "A:LYS526",
+        "A:ARG630",
+        "A:ARG625",
+        "A:CYS491",
+        "A:LYS517",
+        "A:ALA643",
+        "A:ARG664",
+        "A:PRO666",
+        "A:LEU665",
+        "A:VAL562",
+        "A:GLY570",
+        "A:ILE548",
+        "A:SER568",
+        "A:LYS485",
+        "A:LYS569"
+      ],
+      "center": [
+        -9.89,
+        -3.26,
+        -1.71
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_3",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 217.5,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.545,
+      "confidence": 0.0,
+      "residue_count": 11,
+      "residues": [
+        "A:ILE329",
+        "A:VAL294",
+        "A:TYR328",
+        "A:LEU312",
+        "A:ASP336",
+        "A:LYS310",
+        "A:THR333",
+        "A:TYR340",
+        "A:LEU327",
+        "A:LYS292",
+        "A:GLU335"
+      ],
+      "center": [
+        -23.69,
+        20.86,
+        14.62
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}
