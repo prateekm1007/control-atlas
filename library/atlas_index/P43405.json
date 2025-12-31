@@ -1,0 +1,121 @@
+{
+  "uniprot_id": "P43405",
+  "protein_family": "kinase",
+  "plddt_global": 84.5,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_42",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 164.9,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.375,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:ALA412",
+        "A:ARG520",
+        "A:ASN524",
+        "A:GLU407",
+        "A:LEU519",
+        "A:GLU523",
+        "A:LEU413",
+        "A:ASP410"
+      ],
+      "center": [
+        23.0,
+        1.35,
+        -28.46
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_50",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.398,
+      "volume": 1180.6,
+      "exposure": 0.602,
+      "hydrophobic_pct": 0.455,
+      "confidence": 0.336,
+      "residue_count": 11,
+      "residues": [
+        "A:THR236",
+        "A:LEU237",
+        "A:THR161",
+        "A:LEU226",
+        "A:ASP235",
+        "A:THR160",
+        "A:ALA162",
+        "A:TYR203",
+        "A:TRP238",
+        "A:LYS220",
+        "A:HIS163"
+      ],
+      "center": [
+        -30.72,
+        -3.02,
+        4.22
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_2",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 739.3,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:ARG359",
+        "A:SER350",
+        "A:PRO351",
+        "A:ARG434",
+        "A:LEU427",
+        "A:MET435",
+        "A:GLN425",
+        "A:TYR352",
+        "A:ASP428"
+      ],
+      "center": [
+        0.92,
+        -11.94,
+        -18.11
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_46",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 435.5,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.0,
+      "residue_count": 8,
+      "residues": [
+        "A:LEU276",
+        "A:LEU341",
+        "A:GLU339",
+        "A:ALA340",
+        "A:PRO336",
+        "A:GLN337",
+        "A:ARG273",
+        "A:ASP344"
+      ],
+      "center": [
+        -18.09,
+        -0.62,
+        -14.38
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

@@ -1,0 +1,99 @@
+{
+  "uniprot_id": "P31749",
+  "protein_family": "kinase",
+  "plddt_global": 83.4,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_9",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.012,
+      "volume": 418.0,
+      "exposure": 0.988,
+      "hydrophobic_pct": 0.333,
+      "confidence": 0.01,
+      "residue_count": 12,
+      "residues": [
+        "A:PRO405",
+        "A:ALA126",
+        "A:ARG403",
+        "A:GLU122",
+        "A:ASP400",
+        "A:PHE407",
+        "A:ARG404",
+        "A:HIS406",
+        "A:LYS121",
+        "A:HIS158",
+        "A:GLN156",
+        "A:VAL125"
+      ],
+      "center": [
+        -23.56,
+        6.81,
+        13.39
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_18",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 457.9,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.002,
+      "residue_count": 12,
+      "residues": [
+        "A:LEU140",
+        "A:SER143",
+        "A:LEU151",
+        "A:ALA414",
+        "A:TYR412",
+        "A:PRO146",
+        "A:SER415",
+        "A:ALA150",
+        "A:GLN141",
+        "A:THR417",
+        "A:HIS145",
+        "A:ARG144"
+      ],
+      "center": [
+        -11.47,
+        -12.49,
+        -2.23
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_20",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.007,
+      "volume": 626.9,
+      "exposure": 0.993,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.006,
+      "residue_count": 9,
+      "residues": [
+        "A:LYS127",
+        "A:LYS120",
+        "A:ALA126",
+        "A:GLN51",
+        "A:GLU122",
+        "A:VAL44",
+        "A:VAL123",
+        "A:LEU48",
+        "A:GLY47"
+      ],
+      "center": [
+        -14.89,
+        10.22,
+        21.17
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

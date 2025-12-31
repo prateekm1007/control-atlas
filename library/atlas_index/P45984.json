@@ -1,0 +1,114 @@
+{
+  "uniprot_id": "P45984",
+  "protein_family": "kinase",
+  "plddt_global": 84.7,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_16",
+      "rank": 2,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 556.7,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.444,
+      "confidence": 0.001,
+      "residue_count": 9,
+      "residues": [
+        "A:GLU73",
+        "A:GLN37",
+        "A:ARG69",
+        "A:ALA36",
+        "A:SER58",
+        "A:PRO60",
+        "A:LEU57",
+        "A:HIS66",
+        "A:ALA70"
+      ],
+      "center": [
+        -11.59,
+        1.48,
+        0.72
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_11",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.002,
+      "volume": 216.2,
+      "exposure": 0.998,
+      "hydrophobic_pct": 0.526,
+      "confidence": 0.002,
+      "residue_count": 19,
+      "residues": [
+        "A:PRO184",
+        "A:ASN179",
+        "A:THR178",
+        "A:ARG174",
+        "A:THR175",
+        "A:TYR202",
+        "A:ARG192",
+        "A:GLY199",
+        "A:ILE197",
+        "A:ARG150",
+        "A:ARG189",
+        "A:MET200",
+        "A:GLY201",
+        "A:MET182",
+        "A:MET181",
+        "A:VAL196",
+        "A:PHE180",
+        "A:ILE148",
+        "A:ALA176"
+      ],
+      "center": [
+        -11.81,
+        0.28,
+        -18.47
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_9",
+      "rank": 4,
+      "status": "CANDIDATE",
+      "druggability_score": 0.001,
+      "volume": 281.1,
+      "exposure": 0.999,
+      "hydrophobic_pct": 0.619,
+      "confidence": 0.001,
+      "residue_count": 21,
+      "residues": [
+        "A:THR188",
+        "A:LEU198",
+        "A:PRO184",
+        "A:PHE225",
+        "A:GLN226",
+        "A:PRO233",
+        "A:ARG192",
+        "A:VAL187",
+        "A:ILE197",
+        "A:ASP229",
+        "A:VAL186",
+        "A:ILE231",
+        "A:THR228",
+        "A:ARG189",
+        "A:GLY227",
+        "A:ARG230",
+        "A:TYR190",
+        "A:LEU232",
+        "A:TRP209",
+        "A:ILE224"
+      ],
+      "center": [
+        -3.94,
+        13.4,
+        -16.56
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

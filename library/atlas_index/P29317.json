@@ -1,0 +1,98 @@
+{
+  "uniprot_id": "P29317",
+  "protein_family": "kinase",
+  "plddt_global": 89.1,
+  "plddt_source": "CIF_gemmi",
+  "pockets": [
+    {
+      "pocket_id": "pocket_13",
+      "rank": 1,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 371.7,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.556,
+      "confidence": 0.0,
+      "residue_count": 9,
+      "residues": [
+        "A:GLU252",
+        "A:LEU204",
+        "A:TRP253",
+        "A:PRO202",
+        "A:ALA24",
+        "A:GLY251",
+        "A:GLN25",
+        "A:GLN206",
+        "A:ALA23"
+      ],
+      "center": [
+        2.55,
+        1.85,
+        -15.21
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_24",
+      "rank": 3,
+      "status": "CANDIDATE",
+      "druggability_score": 0.0,
+      "volume": 421.6,
+      "exposure": 1.0,
+      "hydrophobic_pct": 0.5,
+      "confidence": 0.0,
+      "residue_count": 12,
+      "residues": [
+        "A:TYR130",
+        "A:ARG82",
+        "A:LEU138",
+        "A:GLN135",
+        "A:PHE134",
+        "A:ALA124",
+        "A:GLU125",
+        "A:PHE139",
+        "A:ARG175",
+        "A:ASN133",
+        "A:TYR179",
+        "A:SER126"
+      ],
+      "center": [
+        35.45,
+        2.25,
+        -26.34
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "pocket_id": "pocket_5",
+      "rank": 5,
+      "status": "CANDIDATE",
+      "druggability_score": 0.067,
+      "volume": 218.7,
+      "exposure": 0.933,
+      "hydrophobic_pct": 0.636,
+      "confidence": 0.06,
+      "residue_count": 11,
+      "residues": [
+        "A:ARG159",
+        "A:ASN57",
+        "A:ASP155",
+        "A:VAL161",
+        "A:MET66",
+        "A:THR101",
+        "A:LEU192",
+        "A:MET59",
+        "A:PHE156",
+        "A:ILE64",
+        "A:ILE58"
+      ],
+      "center": [
+        13.86,
+        14.53,
+        -48.71
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source": "AlphaFoldDB_v6"
+}

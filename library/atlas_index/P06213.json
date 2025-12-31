@@ -9,20 +9,20 @@
       "rank": 4,
       "status": "CANDIDATE",
       "druggability_score": 0.0,
-      "volume": 367.7,
+      "volume": 376.3,
       "exposure": 1.0,
       "hydrophobic_pct": 0.5,
       "confidence": 0.0,
       "residue_count": 8,
       "residues": [
         "A:SER806",
+        "A:LEU807",
+        "A:VAL808",
+        "A:LYS800",
         "A:LYS804",
         "A:GLU799",
         "A:VAL802",
-        "A:VAL808",
-        "A:VAL801",
-        "A:LEU807",
-        "A:LYS800"
+        "A:VAL801"
       ],
       "center": [
         11.24,
@@ -36,21 +36,21 @@
       "rank": 5,
       "status": "CANDIDATE",
       "druggability_score": 0.0,
-      "volume": 183.7,
+      "volume": 184.3,
       "exposure": 1.0,
       "hydrophobic_pct": 0.444,
       "confidence": 0.0,
       "residue_count": 9,
       "residues": [
-        "A:LEU991",
+        "A:VAL1212",
         "A:GLU1206",
-        "A:LYS1278",
-        "A:THR1214",
         "A:PRO1277",
         "A:ASN1276",
-        "A:ALA993",
         "A:SER1216",
-        "A:VAL1212"
+        "A:ALA993",
+        "A:LEU991",
+        "A:THR1214",
+        "A:LYS1278"
       ],
       "center": [
         -30.2,
