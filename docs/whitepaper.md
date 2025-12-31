@@ -1,64 +1,71 @@
-# The Case for Deterministic Rejection in Computational Discovery
-**Control Atlas Technical Whitepaper**  
-*Version 1.0 — December 2025*
+# Control Atlas
+## A Unified Framework for Constraint-Based Navigation in Drug Discovery
 
-## Executive Summary
-Modern drug discovery suffers from a "False Positive Crisis." Generative AI and ultra-large library docking produce millions of candidates, but wet-lab validation capacity remains flat. The bottleneck is no longer *generation*; it is *triage*.
+### Abstract
+Drug discovery pipelines fail disproportionately due to prolonged exploration of chemically and biologically infeasible hypotheses rather than an inability to generate candidate molecules. We present **Control Atlas**, a constraint-based, physics-first computational framework that formalizes *falsification* as the primary driver of search-space reduction. Instead of ranking candidates by predicted activity, Control Atlas incrementally collapses infeasible regions of protein–ligand space using deterministic physical, chemical, and biological constraints, yielding a mathematically defined **navigation signal** representing robustness rather than probability of success.
 
-**Control Atlas** is a deterministic rejection engine designed to sit upstream of expensive workflows (docking, MD, FEP). Unlike tools that optimize for scoring hits, Control Atlas optimizes for **explainable rejection**—preventing wasted compute and synthesis on compounds that violate fundamental physics.
+---
 
-## 1. The Problem: "Maybe" Kills Projects
-Current tools (Schrödinger, OpenEye, ML models) function as **ranking engines**. They output scores, probabilities, and poses. They rarely say "NO."
-- **Docking:** Forces a pose even for bad compounds.
-- **ML Models:** Output `0.85` confidence without structural reasoning.
-- **Result:** Chemists waste cycles manually filtering obvious failures.
+## 1. Conceptual Motivation
+Modern computational drug discovery systems predominantly operate in a **generative or scoring paradigm**:
+* docking scores
+* ML-predicted affinities
+* end-to-end black-box predictions
 
-## 2. The Solution: Deterministic Rejection
-Control Atlas inverts the paradigm. It functions as a hard gatekeeper.
-- **Input:** Any protein sequence + Any compound library.
-- **Logic:** Deterministic physics rules (Volume, Hydrophobicity, Exposure).
-- **Output:** `VALID` | `REJECT` (with reasons).
+These systems optimize *likelihood of activity* but rarely quantify **distance to failure**.
 
-**Key Differentiator:** We do not generate new molecules. We explicitly reject bad ones with auditable reasons.
+In contrast, experimental drug discovery is dominated by **constraint violations**:
+* absence of a stable binding pocket
+* thermodynamic incompatibility
+* lack of biological relevance
 
-## 3. Architecture: The "Best of Open Source" Integration
-Control Atlas integrates best-in-class open tools into a unified, versioned pipeline:
+Control Atlas reframes drug discovery as a **constraint satisfaction and navigation problem**, not a prediction problem.
 
-1.  **Ingress (Sequence → Structure):**
-    - **Engine:** ESMFold API (Meta)
-    - **Value:** Instant structure prediction with uncertainty quantification (pLDDT).
-    
-2.  **Hypothesis Generation (Structure → Pockets):**
-    - **Engine:** fpocket (Discngine)
-    - **Value:** Geometric pocket detection without manual curation.
-    
-3.  **The Gatekeeper (Physics Adjudication):**
-    - **Engine:** Control Atlas Proprietary Grammar
-    - **Value:** Compares compound properties to pocket physics.
-    - **Logic:** Volume constraints, hydrophobic matching, exposure limits.
+---
 
-4.  **Provenance (The Audit Trail):**
-    - **Output:** JSON artifacts for every decision.
-    - **Value:** Reproducible evidence. "Why was this rejected?" is answered instantly.
+## 2. Core Principle: Falsification as Navigation
+We adopt the following axiom:
 
-## 4. Benchmark Performance (LIT-PCBA)
-Validated against the LIT-PCBA dataset (hard, experimental inactives).
+> *The probability of drug discovery success increases primarily through early and rigorous elimination of infeasible hypotheses.*
 
-| Metric | Result | Interpretation |
-|--------|--------|----------------|
-| **EF1%** | **3.0x** | 3x better than random at picking actives in top 1%. |
-| **TNR** | **70.0%** | Rejects 70% of known inactives deterministically. |
-| **FPR** | **30.0%** | Only 30% of inactives pass to downstream tools. |
+Rather than asking *"Which molecule binds best?"*, we ask:
+> **"Which regions of chemical–target space are not yet ruled out by first principles?"**
 
-*Note: Benchmarked on IDH1/TP53 targets. Synthetic verification mode used for logic validation.*
+The surviving region defines the **path of least resistance**.
 
-## 5. Decision Provenance
-Every run produces a cryptographic audit trail:
-```json
-{
-  "decision": "REJECT",
-  "reason": "fragment_too_small",
-  "grammar_version": "1.2",
-  "structure_confidence": 0.932,
-  "pocket_confidence": 0.29
-}
+---
+
+## 3. Layered Constraint Architecture
+Control Atlas decomposes feasibility into four orthogonal but composable layers.
+
+### 3.1 Physics Layer — Geometric Viability
+**Purpose:** Determine whether a stable binding geometry exists.
+**Inputs:** AlphaFold CIF structures, per-residue confidence (pLDDT), pocket geometry (fpocket-derived).
+**Constraint Examples:** Pocket volume bounds, enclosure metrics, structural confidence thresholds.
+**Property:** Deterministic, binary veto, topological collapse on failure. If no physically stable pocket exists, downstream chemistry and biology are undefined.
+
+### 3.2 Chemistry Layer — Energetic and Tractability Constraints
+**Purpose:** Determine whether matter can plausibly occupy the surviving geometric space.
+**Inputs:** Molecular descriptors (LogP, MW, polarity), ensemble conformers (ETKDGv3, MMFF), pocket physicochemical features.
+**Key Design Choice:** Chemistry does **not** predict binding; it falsifies *energetically hostile* hypotheses. Bias-laden metrics (e.g., QED) are treated as **warnings**, not vetoes.
+
+### 3.3 Biology Layer — Functional Relevance
+**Purpose:** Determine whether binding is causally meaningful in a disease context.
+**Inputs:** Essentiality (DepMap proxies), expression context (GTEx/HPA), driver/passenger classification.
+**Interpretation:** A physically and chemically valid interaction is discarded if it lacks biological consequence.
+
+### 3.4 Math Layer — Robustness Integration
+**Purpose:** Quantify **distance to constraint violation**, not predicted success.
+Each layer emits standardized **Constraint objects**:
+* `margin > 0` → feasible
+* `margin ≈ 0` → fragile
+* `margin < 0` → collapse
+
+Robustness is computed as a function of surviving margins across layers. Importantly, failures collapse space; math never resurrects invalid paths.
+
+---
+
+## 4. Constraint Unification: The Critical Advance
+All layers emit a common formal object:
+```python
+Constraint(layer, parameter, threshold, actual, margin, status, collapses_space, provenance)
