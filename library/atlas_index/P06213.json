@@ -1,27 +1,28 @@
 {
   "uniprot_id": "P06213",
   "protein_family": "kinase",
-  "plddt_global": 77.6,
+  "plddt_global": 78.4,
+  "plddt_source": "CIF_gemmi",
   "pockets": [
     {
       "pocket_id": "pocket_84",
       "rank": 4,
       "status": "CANDIDATE",
       "druggability_score": 0.0,
-      "volume": 373.2,
+      "volume": 367.7,
       "exposure": 1.0,
       "hydrophobic_pct": 0.5,
       "confidence": 0.0,
       "residue_count": 8,
       "residues": [
         "A:SER806",
+        "A:LYS804",
         "A:GLU799",
         "A:VAL802",
-        "A:LYS804",
-        "A:LYS800",
-        "A:LEU807",
         "A:VAL808",
-        "A:VAL801"
+        "A:VAL801",
+        "A:LEU807",
+        "A:LYS800"
       ],
       "center": [
         11.24,
@@ -35,21 +36,21 @@
       "rank": 5,
       "status": "CANDIDATE",
       "druggability_score": 0.0,
-      "volume": 183.0,
+      "volume": 183.7,
       "exposure": 1.0,
       "hydrophobic_pct": 0.444,
       "confidence": 0.0,
       "residue_count": 9,
       "residues": [
-        "A:ALA993",
+        "A:LEU991",
+        "A:GLU1206",
         "A:LYS1278",
         "A:THR1214",
         "A:PRO1277",
-        "A:GLU1206",
-        "A:LEU991",
-        "A:VAL1212",
         "A:ASN1276",
-        "A:SER1216"
+        "A:ALA993",
+        "A:SER1216",
+        "A:VAL1212"
       ],
       "center": [
         -30.2,

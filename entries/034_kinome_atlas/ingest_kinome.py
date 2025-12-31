@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Entry 034 — Human Kinome Atlas Ingestion
-FIXED: pLDDT extracted from CIF (authoritative), not PDB.
+FIXED: Uses gemmi to extract pLDDT (authoritative, no string parsing).
 """
 
 import argparse
@@ -21,25 +21,23 @@ ATLAS_DIR = Path(__file__).resolve().parents[2] / "library/atlas_index"
 ATLAS_DIR.mkdir(parents=True, exist_ok=True)
 
 def get_plddt_from_cif(cif_path):
-    """Extract global pLDDT from AlphaFold CIF (authoritative source)."""
+    """Extract global pLDDT from AlphaFold CIF using gemmi (authoritative)."""
+    import gemmi
+    
+    structure = gemmi.read_structure(str(cif_path))
     scores = []
-    with open(cif_path, "r") as f:
-        for line in f:
-            if line.startswith("ATOM"):
-                try:
-                    parts = line.split()
-                    # B-factor is typically the last numeric column before element
-                    b = float(parts[-2])
+    
+    for model in structure:
+        for chain in model:
+            for residue in chain:
+                for atom in residue:
+                    b = atom.b_iso
                     if 0 < b <= 100:
                         scores.append(b)
-                except (ValueError, IndexError):
-                    continue
+    
     return sum(scores) / len(scores) if scores else 0.0
 
 def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
-    """Process a single kinase."""
-    
-    # 1. Fetch (returns both CIF and PDB paths)
     paths = fetch_structure(uniprot_id, data_dir)
     if not paths:
         return {"id": uniprot_id, "status": "DOWNLOAD_FAILED"}
@@ -47,7 +45,6 @@ def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
     cif_path = paths["cif"]
     pdb_path = paths["pdb"]
     
-    # 2. pLDDT from CIF (authoritative)
     raw_plddt = get_plddt_from_cif(cif_path)
     
     if raw_plddt < min_plddt:
@@ -55,25 +52,22 @@ def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
     
     conf = raw_plddt / 100.0
     
-    # 3. Pocket Detection (on PDB for fpocket)
     detector = PocketDetector(max_pockets=5)
     result = detector.detect(pdb_path, structure_confidence=conf)
     
     if result["status"] != "SUCCESS":
         return {"id": uniprot_id, "status": "DETECTION_ERROR"}
     
-    # 4. Filter & Index
     pockets = [p for p in result["pockets"] if p["status"] in ("VALIDATED", "CANDIDATE")]
     
     if not pockets:
         return {"id": uniprot_id, "status": "NO_POCKETS", "plddt": round(raw_plddt, 1)}
     
-    # Save
     entry = {
         "uniprot_id": uniprot_id,
         "protein_family": "kinase",
         "plddt_global": round(raw_plddt, 1),
-        "plddt_source": "CIF",
+        "plddt_source": "CIF_gemmi",
         "pockets": pockets,
         "source": "AlphaFoldDB_v6"
     }
@@ -84,9 +78,9 @@ def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
     return {"id": uniprot_id, "status": "INDEXED", "pockets": len(pockets), "plddt": round(raw_plddt, 1)}
 
 def main():
-    parser = argparse.ArgumentParser(description="Kinome Atlas Ingestion")
-    parser.add_argument("--list", required=True, help="Kinase UniProt ID list")
-    parser.add_argument("--limit", type=int, default=None, help="Limit number")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--list", required=True)
+    parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
     
     data_dir = Path(__file__).parent / "data"
@@ -98,7 +92,7 @@ def main():
     if args.limit:
         kinases = kinases[:args.limit]
     
-    print(f"[*] Processing {len(kinases)} kinases (CIF-first pLDDT)...")
+    print(f"[*] Processing {len(kinases)} kinases (gemmi pLDDT)...")
     print("="*60)
     
     t0 = time()
@@ -120,9 +114,8 @@ def main():
             print(f"✗ {status}")
     
     dt = time() - t0
-    
     print("="*60)
-    print(f"[+] Complete in {dt:.1f}s (CIF-first pLDDT)")
+    print(f"[+] Complete in {dt:.1f}s (gemmi pLDDT extraction)")
     print(f"    INDEXED:        {stats['INDEXED']}")
     print(f"    NO_POCKETS:     {stats['NO_POCKETS']}")
     print(f"    LOW_CONFIDENCE: {stats['LOW_CONFIDENCE']}")
