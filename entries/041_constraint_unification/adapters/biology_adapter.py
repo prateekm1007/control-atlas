@@ -1,14 +1,21 @@
 """
 Maps Biology context → Constraints
 """
-
-from constraint import Constraint
+from ..constraint import Constraint
 
 def essentiality_constraint(score):
     threshold = 0.5
-    margin = (score - threshold) / threshold
-
-    status = "PASS" if score >= threshold else "FAIL"
+    # Margin: How far above 0.5?
+    # 1.0 -> margin 1.0
+    # 0.5 -> margin 0.0
+    # 0.0 -> margin -1.0
+    
+    if score >= threshold:
+        margin = (score - threshold) / (1.0 - threshold)
+        status = "PASS"
+    else:
+        margin = (score - threshold) / threshold
+        status = "FAIL"
 
     return Constraint(
         layer="Biology",
