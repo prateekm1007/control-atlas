@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """
 Entry 034 — Human Kinome Atlas Ingestion
-
-Batch processes human kinases from AlphaFold DB.
-Reuses Entry 033 infrastructure.
+FIXED: pLDDT extracted from CIF (authoritative), not PDB.
 """
 
 import argparse
@@ -12,7 +10,6 @@ import sys
 from pathlib import Path
 from time import time
 
-# Add Entry 033 to path
 BASE = Path(__file__).resolve().parents[2] / "entries"
 sys.path.insert(0, str(BASE / "033_afdb_ingress"))
 sys.path.insert(0, str(BASE / "027_pocket_detection"))
@@ -20,43 +17,45 @@ sys.path.insert(0, str(BASE / "027_pocket_detection"))
 from fetch_afdb import fetch_structure
 from pocket_detector import PocketDetector
 
-# Atlas Directory
 ATLAS_DIR = Path(__file__).resolve().parents[2] / "library/atlas_index"
 ATLAS_DIR.mkdir(parents=True, exist_ok=True)
 
-def get_plddt_from_pdb(pdb_path):
-    """Extract global pLDDT from PDB B-factor column."""
+def get_plddt_from_cif(cif_path):
+    """Extract global pLDDT from AlphaFold CIF (authoritative source)."""
     scores = []
-    with open(pdb_path, 'r') as f:
+    with open(cif_path, "r") as f:
         for line in f:
-            if line.startswith("ATOM") and " CA " in line:
+            if line.startswith("ATOM"):
                 try:
-                    bfactor = float(line[60:66].strip())
-                    if 0 < bfactor <= 100:
-                        scores.append(bfactor)
+                    parts = line.split()
+                    # B-factor is typically the last numeric column before element
+                    b = float(parts[-2])
+                    if 0 < b <= 100:
+                        scores.append(b)
                 except (ValueError, IndexError):
                     continue
-    if not scores:
-        return 0.0
-    return sum(scores) / len(scores)
+    return sum(scores) / len(scores) if scores else 0.0
 
 def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
     """Process a single kinase."""
     
-    # 1. Fetch
-    pdb_path = fetch_structure(uniprot_id, data_dir)
-    if not pdb_path:
+    # 1. Fetch (returns both CIF and PDB paths)
+    paths = fetch_structure(uniprot_id, data_dir)
+    if not paths:
         return {"id": uniprot_id, "status": "DOWNLOAD_FAILED"}
     
-    # 2. pLDDT Check
-    raw_plddt = get_plddt_from_pdb(pdb_path)
+    cif_path = paths["cif"]
+    pdb_path = paths["pdb"]
+    
+    # 2. pLDDT from CIF (authoritative)
+    raw_plddt = get_plddt_from_cif(cif_path)
     
     if raw_plddt < min_plddt:
         return {"id": uniprot_id, "status": "LOW_CONFIDENCE", "plddt": round(raw_plddt, 1)}
     
     conf = raw_plddt / 100.0
     
-    # 3. Pocket Detection
+    # 3. Pocket Detection (on PDB for fpocket)
     detector = PocketDetector(max_pockets=5)
     result = detector.detect(pdb_path, structure_confidence=conf)
     
@@ -74,6 +73,7 @@ def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
         "uniprot_id": uniprot_id,
         "protein_family": "kinase",
         "plddt_global": round(raw_plddt, 1),
+        "plddt_source": "CIF",
         "pockets": pockets,
         "source": "AlphaFoldDB_v6"
     }
@@ -86,7 +86,7 @@ def process_kinase(uniprot_id, data_dir, min_plddt=70.0):
 def main():
     parser = argparse.ArgumentParser(description="Kinome Atlas Ingestion")
     parser.add_argument("--list", required=True, help="Kinase UniProt ID list")
-    parser.add_argument("--limit", type=int, default=None, help="Limit number of kinases")
+    parser.add_argument("--limit", type=int, default=None, help="Limit number")
     args = parser.parse_args()
     
     data_dir = Path(__file__).parent / "data"
@@ -98,7 +98,7 @@ def main():
     if args.limit:
         kinases = kinases[:args.limit]
     
-    print(f"[*] Processing {len(kinases)} kinases...")
+    print(f"[*] Processing {len(kinases)} kinases (CIF-first pLDDT)...")
     print("="*60)
     
     t0 = time()
@@ -113,21 +113,20 @@ def main():
         if status == "INDEXED":
             print(f"✓ {res['pockets']} pockets (pLDDT {res['plddt']})")
         elif status == "NO_POCKETS":
-            print(f"○ No valid pockets (pLDDT {res['plddt']})")
+            print(f"○ No pockets (pLDDT {res['plddt']})")
         elif status == "LOW_CONFIDENCE":
-            print(f"✗ Low confidence (pLDDT {res.get('plddt', 0)})")
+            print(f"✗ Low conf (pLDDT {res.get('plddt', 0)})")
         else:
             print(f"✗ {status}")
     
     dt = time() - t0
     
     print("="*60)
-    print(f"[+] Complete in {dt:.1f}s")
+    print(f"[+] Complete in {dt:.1f}s (CIF-first pLDDT)")
     print(f"    INDEXED:        {stats['INDEXED']}")
     print(f"    NO_POCKETS:     {stats['NO_POCKETS']}")
     print(f"    LOW_CONFIDENCE: {stats['LOW_CONFIDENCE']}")
     print(f"    FAILED:         {stats['DOWNLOAD_FAILED'] + stats['DETECTION_ERROR']}")
-    print(f"\n[+] Atlas: {ATLAS_DIR}")
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Fetch structures from AlphaFold DB using API.
-Converts CIF to PDB for fpocket compatibility.
+AlphaFold DB fetcher (2025 reliable method).
+Returns BOTH CIF (for pLDDT) and PDB (for fpocket).
 """
 import requests
+import gzip
+import shutil
 from pathlib import Path
 
 API_BASE = "https://alphafold.ebi.ac.uk/api/prediction"
@@ -11,7 +13,7 @@ API_BASE = "https://alphafold.ebi.ac.uk/api/prediction"
 def cif_to_pdb(cif_path: Path) -> Path:
     """Convert CIF to PDB using gemmi."""
     pdb_path = cif_path.with_suffix(".pdb")
-    if pdb_path.exists():
+    if pdb_path.exists() and pdb_path.stat().st_size > 10000:
         return pdb_path
     
     try:
@@ -20,25 +22,15 @@ def cif_to_pdb(cif_path: Path) -> Path:
         structure.write_pdb(str(pdb_path))
         print(f"    Converted to PDB: {pdb_path.name}")
         return pdb_path
-    except ImportError:
-        # Fallback: try obabel
-        import subprocess
-        result = subprocess.run(
-            ["obabel", str(cif_path), "-O", str(pdb_path)],
-            capture_output=True
-        )
-        if result.returncode == 0:
-            print(f"    Converted to PDB (obabel): {pdb_path.name}")
-            return pdb_path
-        else:
-            print(f"[!] CIF→PDB conversion failed")
-            return None
     except Exception as e:
-        print(f"[!] Conversion error: {e}")
+        print(f"[!] CIF→PDB conversion failed: {e}")
         return None
 
-def fetch_structure(uniprot_id: str, output_dir: Path) -> str:
-    """Fetch structure and return PDB path."""
+def fetch_structure(uniprot_id: str, output_dir: Path) -> dict:
+    """
+    Fetch structure and return BOTH paths.
+    Returns: {"cif": path, "pdb": path} or None
+    """
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
@@ -62,11 +54,11 @@ def fetch_structure(uniprot_id: str, output_dir: Path) -> str:
             return None
         
         cif_path = output_dir / Path(cif_url).name
-        pdb_path = cif_path.with_suffix(".pdb")
         
-        # Return cached PDB if exists
-        if pdb_path.exists() and pdb_path.stat().st_size > 10000:
-            return str(pdb_path)
+        # Check cache
+        pdb_path = cif_path.with_suffix(".pdb")
+        if cif_path.exists() and pdb_path.exists() and pdb_path.stat().st_size > 10000:
+            return {"cif": str(cif_path), "pdb": str(pdb_path)}
         
         # Download CIF
         cif_response = requests.get(cif_url, timeout=120)
@@ -80,7 +72,10 @@ def fetch_structure(uniprot_id: str, output_dir: Path) -> str:
         
         # Convert to PDB
         pdb_path = cif_to_pdb(cif_path)
-        return str(pdb_path) if pdb_path else None
+        if not pdb_path:
+            return None
+        
+        return {"cif": str(cif_path), "pdb": str(pdb_path)}
         
     except Exception as e:
         print(f"[!] Error for {uniprot_id}: {e}")
