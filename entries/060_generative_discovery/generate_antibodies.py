@@ -1,72 +1,56 @@
 #!/usr/bin/env python3
-"""
-Entry 060 — Antibody Generator
-Proposes candidate sequences for a target antigen.
-"""
-
-import argparse
 import json
 import random
-import sys
-from pathlib import Path
+import argparse
 
-# Add parent path
-sys.path.append(str(Path(__file__).resolve().parent))
-from model_loader import load_model
+ANCHOR_SUFFIX = "FDY"
+FORBIDDEN = ["NG", "NS", "DG"]
 
-def generate_cdr_sequence(length=10):
-    """Generate a random CDR-like sequence (Mock)."""
-    aa = "ACDEFGHIKLMNPQRSTVWY"
-    return "".join(random.choice(aa) for _ in range(length))
+WEIGHTED_POOL = (
+    "Y"*6 +
+    "W"*2 + "F"*2 +
+    "S"*4 + "G"*4 +
+    "V"*2 + "I"*2 + "T"*2 +
+    "ADEHKLNPQR"
+)
 
-def generate_candidates(target_seq, num_candidates=10):
-    """
-    Generate antibody candidates.
-    Real implementation uses PLM masking/infilling.
-    """
-    model, _ = load_model()
-    
-    candidates = []
-    print(f"[*] Generating {num_candidates} candidates for target len={len(target_seq)}...")
-    
-    for i in range(num_candidates):
-        # Template: Trastuzumab framework + randomized CDR3
-        cdr3_h = generate_cdr_sequence(12)
-        heavy = f"EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSR{cdr3_h}WGQGTLVTVSS"
-        
-        cdr3_l = generate_cdr_sequence(9)
-        light = f"DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYC{cdr3_l}TFGQGTKVEIK"
-        
-        candidates.append({
-            "id": f"CAND_{i:04d}",
-            "heavy_chain": heavy,
-            "light_chain": light,
-            "cdr3_h": cdr3_h,
-            "target_antigen_fragment": target_seq[:20] + "..."
-        })
-        
-    return candidates
+def generate_structured_cdr3(target_len=12):
+    core_len = target_len - len(ANCHOR_SUFFIX)
+    while True:
+        core = "".join(random.choice(WEIGHTED_POOL) for _ in range(core_len))
+        cdr3 = core + ANCHOR_SUFFIX
+        if any(m in cdr3 for m in FORBIDDEN):
+            continue
+        if "C" in cdr3:
+            continue
+        return cdr3
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--target", required=True, help="Target antigen sequence or FASTA")
-    parser.add_argument("--num", type=int, default=10, help="Number of candidates")
-    parser.add_argument("--out", default="candidates.json")
+    parser.add_argument("--num", type=int, default=5)
+    parser.add_argument("--out", type=str, default="candidates.json")
     args = parser.parse_args()
-    
-    # Read target
-    if Path(args.target).exists():
-        with open(args.target) as f:
-            target_seq = "".join(line.strip() for line in f if not line.startswith(">"))
-    else:
-        target_seq = args.target
-        
-    candidates = generate_candidates(target_seq, args.num)
-    
+
+    vh_prefix = "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSR"
+    vh_suffix = "WGQGTLVTVSS"
+    vl_seq = "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK"
+
+    candidates = []
+    print(f"[Entry 060c] Generating {args.num} topology-aware candidates")
+
+    for i in range(args.num):
+        cid = f"CAND_v3_{i:04d}"
+        cdr3 = generate_structured_cdr3()
+        candidates.append({
+            "id": cid,
+            "heavy_chain": vh_prefix + cdr3 + vh_suffix,
+            "light_chain": vl_seq,
+            "cdr3": cdr3
+        })
+        print(f"  [+] {cid}: {cdr3}")
+
     with open(args.out, "w") as f:
         json.dump(candidates, f, indent=2)
-        
-    print(f"[+] Saved {len(candidates)} candidates to {args.out}")
 
 if __name__ == "__main__":
     main()

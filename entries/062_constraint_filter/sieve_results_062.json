@@ -1,0 +1,47 @@
+[
+  {
+    "id": "CAND_v3_0000",
+    "decision": "CLEARED_FOR_RFAA (Contextual)",
+    "metrics": {
+      "pass": true,
+      "gravy": -0.285,
+      "liabilities": []
+    }
+  },
+  {
+    "id": "CAND_v3_0001",
+    "decision": "CLEARED_FOR_RFAA (Contextual)",
+    "metrics": {
+      "pass": true,
+      "gravy": -0.3,
+      "liabilities": []
+    }
+  },
+  {
+    "id": "CAND_v3_0002",
+    "decision": "CLEARED_FOR_RFAA (Contextual)",
+    "metrics": {
+      "pass": true,
+      "gravy": -0.229,
+      "liabilities": []
+    }
+  },
+  {
+    "id": "CAND_v3_0003",
+    "decision": "CLEARED_FOR_RFAA (Contextual)",
+    "metrics": {
+      "pass": true,
+      "gravy": -0.285,
+      "liabilities": []
+    }
+  },
+  {
+    "id": "CAND_v3_0004",
+    "decision": "CLEARED_FOR_RFAA (Contextual)",
+    "metrics": {
+      "pass": true,
+      "gravy": -0.253,
+      "liabilities": []
+    }
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "KRAS": {
+    "switch_II": {
+      "start": 60,
+      "end": 75,
+      "sequence": "VIDGETCLLDILDT",
+      "properties": ["ACIDIC", "HYDROPHOBIC"],
+      "complementary_motifs": [
+        "YRY",
+        "RWR",
+        "YKY",
+        "RFR"
+      ]
+    }
+  }
+}

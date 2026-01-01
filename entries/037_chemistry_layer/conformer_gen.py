@@ -1,35 +1,17 @@
 """
 Entry 037 — Chemistry Layer: Dynamics Handling
-Generates low-energy conformers deterministically.
+FAST MODE for Bulk Screening.
 """
-
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-def generate_conformers(mol, num_confs=10, seed=42):
-    """
-    Generate multiple 3D conformers for a molecule.
-    Uses ETKDGv3 (proven scientific standard).
-    Deterministic seeding ensures reproducibility.
-    """
+def generate_conformers(mol, num_confs=1, seed=42): # Reduced to 1 for speed
     try:
         mol_h = Chem.AddHs(mol)
-        
-        # ETKDGv3 is the current best-practice
         params = AllChem.ETKDGv3()
         params.randomSeed = seed
-        params.pruneRmsThresh = 0.5 
-        
+        # Fast embedding
         cids = AllChem.EmbedMultipleConfs(mol_h, numConfs=num_confs, params=params)
-        
-        valid_confs = []
-        for cid in cids:
-            try:
-                if AllChem.MMFFOptimizeMolecule(mol_h, confId=cid) == 0:
-                    valid_confs.append(mol_h)
-            except:
-                continue
-                
-        return valid_confs
-    except Exception:
+        return [mol_h] if cids else []
+    except:
         return []

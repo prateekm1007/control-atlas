@@ -1,0 +1,54 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "Target",
+      "id": "EGFR"
+    },
+    {
+      "type": "Compound",
+      "id": "Mol_X"
+    },
+    {
+      "type": "Hypothesis",
+      "result": "PROVEN FALSE",
+      "id": "EGFR_Mol_X"
+    },
+    {
+      "type": "Constraint",
+      "description": "Vol > 150",
+      "id": "Constraint_Existence"
+    },
+    {
+      "type": "Constraint",
+      "description": "pLDDT > 70",
+      "id": "Constraint_Stability"
+    }
+  ],
+  "links": [
+    {
+      "relation": "PART_OF",
+      "source": "EGFR",
+      "target": "EGFR_Mol_X"
+    },
+    {
+      "relation": "PART_OF",
+      "source": "Mol_X",
+      "target": "EGFR_Mol_X"
+    },
+    {
+      "relation": "VIOLATES",
+      "value": 120,
+      "source": "EGFR_Mol_X",
+      "target": "Constraint_Existence"
+    },
+    {
+      "relation": "SATISFIES",
+      "value": 85,
+      "source": "EGFR_Mol_X",
+      "target": "Constraint_Stability"
+    }
+  ]
+}

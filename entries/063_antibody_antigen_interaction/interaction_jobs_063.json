@@ -1,0 +1,67 @@
+[
+  {
+    "job_id": "CAND_v3_0000_vs_KRAS",
+    "antibody": {
+      "id": "CAND_v3_0000",
+      "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSRYTWYVFDQTFDYWGQGTLVTVSSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+      "cdr3": "YTWYVFDQTFDY"
+    },
+    "antigen": {
+      "name": "KRAS_G12D",
+      "fasta_path": "/home/prateekm1/control-atlas/entries/063_antibody_antigen_interaction/kras.fasta"
+    },
+    "status": "READY_FOR_RFAA"
+  },
+  {
+    "job_id": "CAND_v3_0001_vs_KRAS",
+    "antibody": {
+      "id": "CAND_v3_0001",
+      "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSRQYTYFYSYWFDYWGQGTLVTVSSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+      "cdr3": "QYTYFYSYWFDY"
+    },
+    "antigen": {
+      "name": "KRAS_G12D",
+      "fasta_path": "/home/prateekm1/control-atlas/entries/063_antibody_antigen_interaction/kras.fasta"
+    },
+    "status": "READY_FOR_RFAA"
+  },
+  {
+    "job_id": "CAND_v3_0002_vs_KRAS",
+    "antibody": {
+      "id": "CAND_v3_0002",
+      "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSRVYSHNIIIWFDYWGQGTLVTVSSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+      "cdr3": "VYSHNIIIWFDY"
+    },
+    "antigen": {
+      "name": "KRAS_G12D",
+      "fasta_path": "/home/prateekm1/control-atlas/entries/063_antibody_antigen_interaction/kras.fasta"
+    },
+    "status": "READY_FOR_RFAA"
+  },
+  {
+    "job_id": "CAND_v3_0003_vs_KRAS",
+    "antibody": {
+      "id": "CAND_v3_0003",
+      "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSRAHHWQDSVVFDYWGQGTLVTVSSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+      "cdr3": "AHHWQDSVVFDY"
+    },
+    "antigen": {
+      "name": "KRAS_G12D",
+      "fasta_path": "/home/prateekm1/control-atlas/entries/063_antibody_antigen_interaction/kras.fasta"
+    },
+    "status": "READY_FOR_RFAA"
+  },
+  {
+    "job_id": "CAND_v3_0004_vs_KRAS",
+    "antibody": {
+      "id": "CAND_v3_0004",
+      "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYAMSWVRQAPGKGLEWVAVISYDGSTYYSADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCSRSGYGASPAVFDYWGQGTLVTVSSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+      "cdr3": "SGYGASPAVFDY"
+    },
+    "antigen": {
+      "name": "KRAS_G12D",
+      "fasta_path": "/home/prateekm1/control-atlas/entries/063_antibody_antigen_interaction/kras.fasta"
+    },
+    "status": "READY_FOR_RFAA"
+  }
+]

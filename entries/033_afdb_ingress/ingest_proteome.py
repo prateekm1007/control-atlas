@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
 Entry 033 — AlphaFold DB Ingress & Indexing
+FIXED: Compatible with Entry 034 fetch_structure (returns dict) and gemmi.
 """
 
 import argparse
 import json
 import sys
+import importlib.util
 from pathlib import Path
 
 # Add Entry 027 directory to path
@@ -19,36 +21,40 @@ from fetch_afdb import fetch_structure
 ATLAS_DIR = Path(__file__).resolve().parents[2] / "library/atlas_index"
 ATLAS_DIR.mkdir(parents=True, exist_ok=True)
 
-def get_plddt_from_pdb(pdb_path):
-    """Extract global pLDDT from PDB B-factor column (CA atoms)."""
-    scores = []
-    with open(pdb_path, 'r') as f:
-        for line in f:
-            if line.startswith("ATOM") and " CA " in line:
-                try:
-                    # B-factor is columns 61-66 in PDB format
-                    bfactor = float(line[60:66].strip())
-                    if 0 < bfactor <= 100:
-                        scores.append(bfactor)
-                except (ValueError, IndexError):
-                    continue
+def get_plddt_from_cif(cif_path):
+    """Extract global pLDDT from AlphaFold CIF using gemmi (authoritative)."""
+    import gemmi
     
-    if not scores:
-        return 0.0
-    return sum(scores) / len(scores)
+    structure = gemmi.read_structure(str(cif_path))
+    scores = []
+    
+    for model in structure:
+        for chain in model:
+            for residue in chain:
+                for atom in residue:
+                    b = atom.b_iso
+                    if 0 < b <= 100:
+                        scores.append(b)
+    
+    return sum(scores) / len(scores) if scores else 0.0
 
 def process_protein(uniprot_id, data_dir, min_plddt=70.0):
     """Pipeline for a single protein."""
     
-    # 1. Fetch (returns PDB path after CIF conversion)
-    pdb_path = fetch_structure(uniprot_id, data_dir)
-    if not pdb_path:
+    # 1. Fetch (returns dict with 'cif' and 'pdb')
+    paths = fetch_structure(uniprot_id, data_dir)
+    if not paths:
         return {"id": uniprot_id, "status": "DOWNLOAD_FAILED"}
     
-    # 2. Structure Confidence Check (from PDB B-factors)
-    raw_plddt = get_plddt_from_pdb(pdb_path)
-    print(f"    pLDDT: {raw_plddt:.1f}")
+    cif_path = paths["cif"]
+    pdb_path = paths["pdb"]
     
+    # 2. Structure Confidence Check (from CIF)
+    try:
+        raw_plddt = get_plddt_from_cif(cif_path)
+    except Exception as e:
+        return {"id": uniprot_id, "status": "PLDDT_ERROR", "error": str(e)}
+        
     if raw_plddt < min_plddt:
         return {
             "id": uniprot_id, 
@@ -58,7 +64,7 @@ def process_protein(uniprot_id, data_dir, min_plddt=70.0):
     
     conf_normalized = raw_plddt / 100.0
     
-    # 3. Pocket Detection (Entry 027)
+    # 3. Pocket Detection (Entry 027 on PDB)
     detector = PocketDetector(max_pockets=5)
     result = detector.detect(pdb_path, structure_confidence=conf_normalized)
     
@@ -80,7 +86,7 @@ def process_protein(uniprot_id, data_dir, min_plddt=70.0):
         "plddt_global": raw_plddt,
         "pockets": indexable_pockets,
         "source": "AlphaFoldDB",
-        "model_version": "v6"
+        "model_version": "v6" 
     }
     
     index_path = ATLAS_DIR / f"{uniprot_id}.json"
