@@ -1,34 +1,46 @@
-import json, datetime
+import datetime
 from nkg_enforcer import commit_entry
 
+# FIXED: Using timezone-aware UTC datetime
+now = datetime.datetime.now(datetime.timezone.utc)
+
 entry = {
-    "uuid": f"VAR_YRK_NEAR_MISS_{datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')}Z",
-    "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+    "uuid": f"VAR_YRK_PHYS_04_{now.strftime('%Y%m%d%H%M%S')}Z",
+    "timestamp": now.isoformat().replace("+00:00", "Z"),
     "design_id": "VAR_YRK",
     "failure_class": "INTERACTION_GEOMETRY",
-    "failure_tag": "WARHEAD_NON_ENGAGEMENT",
-    "severity": "NEAR_MISS",
-    "severity_rank": 2,
-    "confidence": 0.95,
-    "override_justification": "Confidence reduced to 0.95 due to high stochastic variance in handshake distance vs stable energetic profile.",
+    "failure_tag": "STERIC_REPULSION_LAUNCH",
+    "severity": "TERMINAL",
+    "severity_rank": 3,
+    "confidence": 0.99,
     "taxonomy_ver": "NKG-TAX-1.0",
     "platform_ver": "v1.8.0-toscanini",
     "context": {
-        "forcefield": "amber14-all", "solvent_model": "tip3pfb",
-        "temperature_K": 310.0, "pH": 7.4, "ionic_strength_M": 0.15,
+        "forcefield": "amber14-all",
+        "solvent_model": "tip3pfb",
+        "temperature_K": 310.0,
+        "pH": 7.4,
+        "ionic_strength_M": 0.15,
         "simulation_duration_ns": 10.0
     },
     "forensics": {
-        "time_ns": 10.0,
+        "time_ns": 0.001,
         "roles": {
-            "ligand": {"region": "CDR3", "resname": "ARG"},
-            "target": {"protein": "KRAS", "resname": "ASP"}
+            "ligand": "CDR3_WARHEAD_YRK",
+            "target": "KRAS_G12D_INTERFACE"
         },
         "metric_snapshot": {
-            "avg_rmsd_A": 6.21, "avg_handshake_A": 56.57
+            "frame0_dist_A": 1.31,
+            "final_dist_A": 56.57,
+            "verdict": "STRICT_STERIC_CLASH"
         }
-    }
+    },
+    "override_justification": (
+        "Initial heavy-atom separation of 1.31 Å constitutes a physical "
+        "impossibility (steric overlap), triggering immediate repulsive "
+        "forces and ballistic separation at simulation start."
+    )
 }
 
 if commit_entry(entry, "nkg_database.json"):
-    print("✅ SOVEREIGN NEAR_MISS RECORDED.")
+    print("✅ SOVEREIGN REFUSAL RECORDED: STERIC_REPULSION_LAUNCH")
