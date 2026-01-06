@@ -1,7 +1,6 @@
 import datetime
 from nkg_enforcer import commit_entry
 
-# FIXED: Using timezone-aware UTC datetime
 now = datetime.datetime.now(datetime.timezone.utc)
 
 entry = {
