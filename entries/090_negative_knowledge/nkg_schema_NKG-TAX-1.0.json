@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://control-atlas.org/schema/NKG-TAX-1.0.json",
+  "title": "NKG-TAX-1.0 Sovereign Compliance",
+  "description": "WARNING: This schema is constitutionally locked. Modification requires a new TAX version and formal doctrine revision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "uuid", "timestamp", "design_id",
+    "failure_class", "failure_tag",
+    "severity", "severity_rank", "confidence",
+    "context", "forensics",
+    "taxonomy_ver", "platform_ver"
+  ],
+  "properties": {
+    "uuid": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "design_id": { "type": "string" },
+    "failure_class": { "type": "string" },
+    "failure_tag": { "type": "string" },
+    "severity": { "enum": ["TERMINAL", "NEAR_MISS", "TRANSIENT"] },
+    "severity_rank": { "type": "integer", "enum": [1, 2, 3] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "taxonomy_ver": { "const": "NKG-TAX-1.0" },
+    "platform_ver": { "const": "v1.8.0-toscanini" },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["forcefield", "solvent_model", "temperature_K", "pH", "ionic_strength_M", "simulation_duration_ns"],
+      "properties": {
+        "forcefield": { "type": "string" },
+        "solvent_model": { "type": "string" },
+        "temperature_K": { "type": "number", "minimum": 250, "maximum": 350 },
+        "pH": { "type": "number" },
+        "ionic_strength_M": { "type": "number" },
+        "simulation_duration_ns": { "type": "number", "minimum": 0 }
+      }
+    },
+    "forensics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_ns", "roles", "metric_snapshot"],
+      "properties": {
+        "time_ns": { "type": "number", "minimum": 0 },
+        "roles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ligand", "target"],
+          "properties": {
+            "ligand": { "type": "object", "additionalProperties": false },
+            "target": { "type": "object", "additionalProperties": false }
+          }
+        },
+        "metric_snapshot": { "type": "object" }
+      }
+    },
+    "override_justification": { "type": "string" }
+  },
+  "allOf": [
+    { "if": { "properties": { "confidence": { "not": { "const": 1.0 } } } }, "then": { "required": ["override_justification"] } },
+    { "if": { "properties": { "confidence": { "const": 1.0 } } }, "then": { "not": { "required": ["override_justification"] } } },
+    { "if": { "properties": { "severity": { "const": "TERMINAL" } } }, "then": { "properties": { "severity_rank": { "const": 3 } } } },
+    { "if": { "properties": { "severity": { "const": "NEAR_MISS" } } }, "then": { "properties": { "severity_rank": { "const": 2 } } } },
+    { "if": { "properties": { "severity": { "const": "TRANSIENT" } } }, "then": { "properties": { "severity_rank": { "const": 1 } } } },
+    { "if": { "properties": { "taxonomy_ver": { "const": "NKG-TAX-1.0" } } }, "then": { "properties": { "platform_ver": { "const": "v1.8.0-toscanini" } } } }
+  ]
+}

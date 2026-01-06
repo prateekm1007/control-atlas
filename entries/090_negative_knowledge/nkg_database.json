@@ -1,0 +1,62 @@
+[
+  {
+    "uuid": "VAR_YRK_HEALTH_2.0NS_20260106121141Z",
+    "timestamp": "2026-01-06T12:11:41.599087Z",
+    "design_id": "VAR_YRK",
+    "failure_class": "HEALTH_CHECK",
+    "failure_tag": "STABLE_EQUILIBRATION",
+    "severity": "TRANSIENT",
+    "severity_rank": 1,
+    "confidence": 1.0,
+    "taxonomy_ver": "NKG-TAX-1.0",
+    "platform_ver": "v1.8.0-toscanini",
+    "context": {
+      "forcefield": "amber14-all",
+      "solvent_model": "tip3pfb",
+      "temperature_K": 310.0,
+      "pH": 7.4,
+      "ionic_strength_M": 0.15,
+      "simulation_duration_ns": 10.0
+    },
+    "forensics": {
+      "time_ns": 2.0,
+      "roles": {
+        "ligand": {},
+        "target": {}
+      },
+      "metric_snapshot": {
+        "potential_energy": -2295599.09
+      }
+    }
+  },
+  {
+    "uuid": "VAR_YRK_HEALTH_5.0NS_20260106121141Z",
+    "timestamp": "2026-01-06T12:11:41.608472Z",
+    "design_id": "VAR_YRK",
+    "failure_class": "HEALTH_CHECK",
+    "failure_tag": "PERSISTENT_SAMPLING",
+    "severity": "TRANSIENT",
+    "severity_rank": 1,
+    "confidence": 1.0,
+    "taxonomy_ver": "NKG-TAX-1.0",
+    "platform_ver": "v1.8.0-toscanini",
+    "context": {
+      "forcefield": "amber14-all",
+      "solvent_model": "tip3pfb",
+      "temperature_K": 310.0,
+      "pH": 7.4,
+      "ionic_strength_M": 0.15,
+      "simulation_duration_ns": 10.0
+    },
+    "forensics": {
+      "time_ns": 5.0,
+      "roles": {
+        "ligand": {},
+        "target": {}
+      },
+      "metric_snapshot": {
+        "potential_energy": -2297598.2
+      }
+    }
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "uuid": "VAR_YRK_HEALTH_2NS_20260104",
+  "timestamp": "2026-01-04T23:30:00Z",
+  "design_id": "VAR_YRK",
+  "failure_class": "HEALTH_CHECK",
+  "failure_tag": "STABLE_BASELINE",
+  "severity": "TRANSIENT",
+  "severity_rank": 1,
+  "confidence": 1.0,
+  "taxonomy_ver": "NKG-TAX-1.0",
+  "platform_ver": "v1.8.0-toscanini",
+  "context": {
+    "forcefield": "amber14-all",
+    "solvent_model": "tip3pfb",
+    "temperature_K": 310.0,
+    "pH": 7.4,
+    "ionic_strength_M": 0.15,
+    "simulation_duration_ns": 10.0
+  },
+  "forensics": {
+    "time_ns": 2.0,
+    "roles": {
+      "ligand": "VAR_YRK_CDR3",
+      "target": "KRAS_G12D_SWITCH2"
+    },
+    "metric_snapshot": {
+      "pe_stable": -2296000.0,
+      "temp_avg": 310.2
+    }
+  }
+}
