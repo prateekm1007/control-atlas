@@ -1,7 +1,32 @@
-venv/
+# --- Control Atlas Governance ---
+
+# Python
 __pycache__/
-*.xtc
-*.dcd
-*.log
-*.tmp
-*.bak
+*.pyc
+
+# Experimental workbenches (not canonical)
+RoseTTAFold/
+entries/060_generative_discovery/
+entries/091_enforcement/
+entries/092_ml_integration/
+entries/093_triangulation/
+entries/094_contrastive_learning/
+entries/095_active_learning/
+entries/096_advancement/
+entries/097_experimental_interface/
+entries/098_portfolio/
+entries/099_compute/
+entries/100_archive/
+entries/101_escape_anticipation/
+entries/102_multimodal/
+entries/103_external_collab/
+entries/104_sentinel/
+
+# Live negative knowledge stream (commit only on sync)
+entries/090_negative_knowledge/nkg_database.json
+
+# Generated data
+*.json
+*.npz
+*.cif
+*.pdb
