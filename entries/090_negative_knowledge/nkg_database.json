@@ -58,5 +58,78 @@
         "potential_energy": -2297598.2
       }
     }
+  },
+  {
+    "uuid": "STAT_REFUSAL_1767717815_15f2af",
+    "timestamp": "2026-01-06T16:43:35Z",
+    "failure_class": "STATISTICAL_REFUSAL_PRIOR",
+    "failure_tag": "MOTIF_SPACE_EXCLUSION",
+    "severity": "ADVISORY",
+    "severity_rank": 1,
+    "confidence": 0.99,
+    "taxonomy_ver": "NKG-TAX-1.0",
+    "platform_ver": "v1.8.0-toscanini",
+    "context": {
+      "screening_scale": 100000,
+      "method": "Tier-0 Motif Veto",
+      "warhead": "YRK"
+    },
+    "forensics": {
+      "refusal_breakdown": {
+        "DG": 40,
+        "RG": 40,
+        "SG": 40
+      },
+      "yield": 0.0788,
+      "law": "Refusal statistics constrain generation, not adjudication"
+    }
+  },
+  {
+    "id": "NKG-110",
+    "target": "CTLA-4",
+    "generator": "CHAI-1",
+    "rule": "PD-L1 anchors do not transfer",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:36:49.271629"
+  },
+  {
+    "id": "NKG-111",
+    "target": "PD-L1",
+    "generator": "CHAI-1",
+    "rule": "Glycine tail length >1 causes geometric collapse",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:36:49.271676"
+  },
+  {
+    "id": "NKG-112",
+    "target": "PD-L1",
+    "generator": "CHAI-1",
+    "rule": "N-terminal Serine buffers forbidden",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:36:49.271738"
+  },
+  {
+    "id": "NKG-110",
+    "target": "CTLA-4",
+    "generator": "CHAI-1",
+    "rule": "PD-L1 anchors do not transfer",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:38:11.581289+00:00"
+  },
+  {
+    "id": "NKG-111",
+    "target": "PD-L1",
+    "generator": "CHAI-1",
+    "rule": "Glycine tail length >1 causes geometric collapse",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:38:11.581322+00:00"
+  },
+  {
+    "id": "NKG-112",
+    "target": "PD-L1",
+    "generator": "CHAI-1",
+    "rule": "N-terminal Serine buffers forbidden",
+    "status": "TERMINAL",
+    "date": "2026-01-06T22:38:11.581326+00:00"
   }
 ]
