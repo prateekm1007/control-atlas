@@ -1,25 +1,47 @@
-import json
 from .load_mdi import load_mdi
+from .scaffold_registry import classify_scaffold
+
+def normalize(s):
+    return s.lower().replace("-", "").replace("_", "") if s else ""
+
+def law_applies(law, candidate):
+    applies = law.get("applies_to", {})
+    tgt = normalize(candidate.get("target"))
+    gen = normalize(candidate.get("generator"))
+
+    if normalize(applies.get("target")) != tgt:
+        return False
+
+    if "generator" in applies and normalize(applies["generator"]) != gen:
+        return False
+
+    if "scaffold_geometry" in applies:
+        info = classify_scaffold(candidate.get("scaffold"))
+        if not info or info.get("geometry") != applies["scaffold_geometry"]:
+            return False
+
+    if "anchor_requires" in applies:
+        # Anchor inspection can be wired later
+        return True
+
+    return True
 
 def violates_mdi(candidate):
-    """
-    candidate = {
-      "target": "KRAS_G12D",
-      "generator": "CHAI-1"
-    }
-    """
-    for law in load_mdi():
-        if (
-            candidate.get("target") in law.get("condition", "")
-            and candidate.get("generator") in law.get("condition", "")
-        ):
+    laws = sorted(load_mdi(), key=lambda l: l.get("priority", 0), reverse=True)
+    for law in laws:
+        if law_applies(law, candidate):
             return law
     return None
 
-if __name__ == "__main__":
-    test = {"target": "KRAS_G12D", "generator": "CHAI-1"}
-    hit = violates_mdi(test)
-    if hit:
-        print(f"⛔ BLOCKED by {hit['doctrine_id']}")
-    else:
-        print("✅ Candidate allowed")
+def all_violations(candidate):
+    """
+    Returns a list of ALL violated laws, sorted by priority.
+    """
+    violations = []
+    laws = sorted(load_mdi(), key=lambda l: l.get("priority", 0), reverse=True)
+
+    for law in laws:
+        if law_applies(law, candidate):
+            violations.append(law)
+
+    return violations

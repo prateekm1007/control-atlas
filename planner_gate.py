@@ -1,7 +1,27 @@
 import sys
-from entries._094_mdi.check_candidate import violates_mdi
+from entries._094_mdi.check_candidate import violates_mdi, all_violations
+
+def parse_args(argv):
+    args = {"target": argv[1], "generator": argv[2]}
+    if "--scaffold" in argv:
+        idx = argv.index("--scaffold")
+        args["scaffold"] = argv[idx + 1]
+    if "--audit" in argv:
+        args["audit"] = True
+    return args
 
 def plan_or_abort(candidate):
+    if candidate.get("audit"):
+        violations = all_violations(candidate)
+        if violations:
+            print("⛔ AUDIT REPORT — MULTIPLE VIOLATIONS")
+            for law in violations:
+                print(f" - {law['doctrine_id']} ({law.get('title')})")
+            sys.exit(1)
+        else:
+            print("✅ AUDIT PASS — no violations")
+            return True
+
     hit = violates_mdi(candidate)
     if hit:
         print("⛔ PLANNER ABORT")
@@ -14,12 +34,5 @@ def plan_or_abort(candidate):
     return True
 
 if __name__ == "__main__":
-    # Example CLI usage
-    # python3 planner_gate.py KRAS_G12D CHAI-1
-    target = sys.argv[1]
-    generator = sys.argv[2]
-
-    plan_or_abort({
-        "target": target,
-        "generator": generator
-    })
+    candidate = parse_args(sys.argv)
+    plan_or_abort(candidate)

@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-MDI_PATH = Path("entries/094_mdi/mdi_v2_4.json")
+MDI_PATH = Path("entries/094_mdi/mdi_v2_9.json")
 
 def load_mdi():
     if not MDI_PATH.exists():
