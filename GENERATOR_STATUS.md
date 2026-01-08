@@ -1,13 +1,8 @@
 # Control Atlas — Generator Status
 
-Status: UNBOUND
+Status: WIRING_IN_PROGRESS
 
-As of this checkpoint, Control Atlas has no atom-minting backend wired.
-All generation is design-only and non-material.
+Backend candidate: Chai / RFdiffusion (TBD)
 
-Implications:
-- No PDBs may be minted
-- Tier-3 MD is disabled by construction
-- All outputs are symbolic / structural intents only
-
-This is an intentional sovereign state.
+Atoms are still FORBIDDEN until backend binding is completed
+and this file is updated to Status: BOUND.
