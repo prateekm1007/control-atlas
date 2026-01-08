@@ -1,8 +1,10 @@
 # Control Atlas — Generator Status
 
-Status: WIRING_IN_PROGRESS
+Status: BOUND
 
-Backend candidate: Chai / RFdiffusion (TBD)
+Backend: RFdiffusion (external CLI)
 
-Atoms are still FORBIDDEN until backend binding is completed
-and this file is updated to Status: BOUND.
+Atoms are now allowed.
+
+Pipeline:
+design → guard → RFdiffusion → PDB → verification → MD
