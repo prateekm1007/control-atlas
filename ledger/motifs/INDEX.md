@@ -11,3 +11,15 @@ Status codes:
 - REJECTED     : Failed geometry or kinetics
 - BLACKLISTED  : Manifold retired
 - PENDING      : Generated, not yet judged
+
+---
+
+## 📊 Week 1 Final Tally (Authoritative)
+
+- **Verified Assets:** 6  
+- **Rejected Motifs:** 21  
+- **Pending Motifs:** 23  
+- **Blacklisted Manifolds:** 3 (LAW-105, LAW-106, LAW-111)
+
+All counts are derived from governed ledger state.
+No raw experimental data is included in this tally.
