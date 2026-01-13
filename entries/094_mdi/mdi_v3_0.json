@@ -1,0 +1,119 @@
+{
+  "mdi_version": "v3.0 (Week-1 Constitutional Close)",
+  "platform_version": "Toscanini v4.3.7",
+  "locked_doctrines": [
+    {
+      "doctrine_id": "LAW-105",
+      "title": "KRAS G12D Manifold Collapse",
+      "verdict": "PERMANENT_VETO"
+    },
+    {
+      "doctrine_id": "LAW-106",
+      "title": "CTLA-4 Peptide Kinetic Floor",
+      "verdict": "PERMANENT_VETO"
+    },
+    {
+      "doctrine_id": "LAW-111",
+      "title": "Globular Scaffold Veto",
+      "verdict": "PERMANENT_VETO"
+    },
+    {
+      "doctrine_id": "LAW-114",
+      "title": "Needle Rigidity Mandate",
+      "verdict": "REQUIREMENT"
+    },
+    {
+      "doctrine_id": "LAW-115",
+      "title": "Ionic Core Advantage",
+      "verdict": "OPTIMIZATION"
+    },
+    {
+      "doctrine_id": "LAW-131",
+      "title": "Chassis Stress Index (CSI)",
+      "verdict": "GATING_METRIC"
+    },
+    {
+      "doctrine_id": "LAW-132",
+      "title": "TIM-3 Hinge-Extension Mandate",
+      "verdict": "REQUIREMENT"
+    },
+    {
+      "doctrine_id": "LAW-133",
+      "title": "The Entropy Paradox (Flexibility Veto)",
+      "verdict": "PERMANENT_VETO"
+    },
+    {
+      "doctrine_id": "LAW-133",
+      "title": "The Entropy Paradox (Flexibility Veto)",
+      "condition": "Modality: Mini-Protein, Linker: > 8 Glycines",
+      "verdict": "PERMANENT_VETO",
+      "rationale": "High-entropy tethers facilitate manifold collapse. Generator optimizes contact density at the expense of Pauli exclusion. Scope Note: Does not apply to intrinsically disordered regions outside steric shelf interfaces.",
+      "enforcement_level": "TIER_0_VETO"
+    },
+    {
+      "doctrine_id": "LAW-134",
+      "title": "Needle Manifold Satiation",
+      "condition": "Target: PD-L1/LAG-3, Architecture: 10-mer Helical Needle",
+      "verdict": "CEASE_OPTIMIZATION",
+      "rationale": "Multi-point aromatic barbs trigger steric collapse (2.11 \u00c5). Manifold has reached its geometric efficiency limit."
+    },
+    {
+      "doctrine_id": "LAW-134",
+      "title": "Beta-Hairpin Topology Incompatibility",
+      "condition": "Target: Shallow Checkpoint Shelves (PD-L1, LAG-3, TIM-3), Architecture: Beta-Hairpin/Sheet",
+      "verdict": "PERMANENT_VETO",
+      "rationale": "Beta-hairpins lack axial standoff. Lateral entry into the shelf causes systematic shoulder collisions and entropic collapse. Planar topologies cannot replace helical needles in this manifold."
+    },
+    {
+      "doctrine_id": "LAW-135",
+      "title": "Axial Standoff Minimum (PD-L1)",
+      "condition": "Target: PD-L1, Architecture: Ionic-Needle",
+      "verdict": "MINIMUM_REQUIREMENT",
+      "rationale": "Clearance requires \u22655 prolines in the hinge. Designs below this threshold systematically violate steric exclusion under static audit. Scope: Needle class only."
+    },
+    {
+      "doctrine_id": "LAW-136",
+      "title": "PD-L1 Proline Phase Resonance",
+      "condition": "Target: PD-L1 | Architecture: Ionic Needle",
+      "verdict": "8P_MANDATE",
+      "rationale": "Discrete clearance phase transition observed uniquely at 8 prolines."
+    },
+    {
+      "doctrine_id": "LAW-137",
+      "title": "TIM-3 Needle Incompatibility",
+      "condition": "Target: TIM-3 | Architecture: Needle",
+      "verdict": "PERMANENT_VETO",
+      "rationale": "Exhaustive hinge sweep failed clearance; topology incompatible."
+    },
+    {
+      "doctrine_id": "LAW-138",
+      "title": "Single-Rod Saturation Limit",
+      "condition": "Target: PD-L1 | Single-Rod Ionic Needles",
+      "verdict": "ENERGY_FLOOR",
+      "rationale": "Energy saturates at -31,000 \u00b1500 kJ/mol; further axial tuning is compute waste."
+    },
+    {
+      "doctrine_id": "LAW-139",
+      "title": "Metastable Basin Bifurcation",
+      "condition": "PD-L1 | Threshold Needles",
+      "verdict": "ARCH_LIMIT",
+      "rationale": "Fold-time basin selection dominates clearance; multiple near-degenerate basins exist."
+    },
+    {
+      "doctrine_id": "LAW-140",
+      "title": "Axial Collapse Dominance",
+      "condition": "Collinear Multi-Arm Extensions",
+      "verdict": "DESIGN_VETO",
+      "rationale": "Collinear mass reinforces rotational collapse torque instead of preventing it."
+    },
+    {
+      "doctrine_id": "LAW-142",
+      "title": "Forensic Triangulation",
+      "condition": "Platform-Wide",
+      "verdict": "MANDATORY",
+      "rationale": "Cross-model disagreement (Chai / AF / RF) required to expose inductive bias ghost spots."
+    }
+  ],
+  "_audit_note": "LAW-133 added: High-entropy tethers facilitate manifold collapse.",
+  "provisional_notes": "TIM-3 currently exceeds the rigidity envelope of the 10-mer Needle instance. Geometry mismatch remains under investigation."
+}
