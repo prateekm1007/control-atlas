@@ -1,13 +1,10 @@
 # Control Atlas — Generator Status
 
-Status: UNBOUND
+Status: BOUND
 
-As of this checkpoint, Control Atlas has no atom-minting backend wired.
-All generation is design-only and non-material.
+Backend: RFdiffusion (external CLI)
 
-Implications:
-- No PDBs may be minted
-- Tier-3 MD is disabled by construction
-- All outputs are symbolic / structural intents only
+Atoms are now allowed.
 
-This is an intentional sovereign state.
+Pipeline:
+design → guard → RFdiffusion → PDB → verification → MD

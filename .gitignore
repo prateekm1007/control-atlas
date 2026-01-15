@@ -48,3 +48,9 @@ entries/090_negative_knowledge/*.sh
 # --- Virtual environments ---
 venv/
 .env/
+
+# Retired RFdiffusion artifacts (v2.3 purge)
+rfdiffusion/
+rfdiffusion_depcheck.py
+se3-transformer-public/
+runs/

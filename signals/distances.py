@@ -1,20 +1,14 @@
 import numpy as np
-from scipy.spatial.distance import euclidean
+from scipy.spatial.distance import cdist
 
-def compute_distance_series(universe, residue_pairs, stride=10):
-    ca = universe.select_atoms("name CA")
-    resid_to_idx = {a.resid: i for i, a in enumerate(ca)}
-    series = {p: [] for p in residue_pairs}
+def compute_interface_density(tar_coords, bin_coords, threshold=5.0):
+    """Calculates the contact density (rho) as per LAW-153."""
+    dists = cdist(tar_coords, bin_coords)
+    contacts = np.sum(dists < threshold)
+    return contacts
 
-    for ts in universe.trajectory[::stride]:
-        pos = ca.positions
-        for i, j in residue_pairs:
-            series[(i, j)].append(
-                euclidean(pos[resid_to_idx[i]], pos[resid_to_idx[j]])
-            )
-
-    for k in series:
-        arr = np.array(series[k])
-        series[k] = arr - arr.mean()
-
-    return series
+def compute_rmsf(trajectory_coords):
+    """Calculates residue-level fluctuation to detect breathing (LAW-150)."""
+    mean_pos = np.mean(trajectory_coords, axis=0)
+    rmsf = np.sqrt(np.mean(np.sum((trajectory_coords - mean_pos)**2, axis=2), axis=0))
+    return rmsf
