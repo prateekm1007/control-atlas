@@ -1,0 +1,18 @@
+{
+  "name": "Control Atlas",
+  "version": "5.0.0-Industrial",
+  "status": "Operational",
+  "data_assets": {
+    "human_kinome_atlas": "entries/034_kinome_atlas/data/ (216 structures)",
+    "screening_checkpoints": "entries/049_atlas_screening/checkpoints/ (High-throughput verification tokens)"
+  },
+  "logic_kernels": {
+    "inference": "backend_chai.py",
+    "kinetics": "md_pipeline.py",
+    "judge": "tools/native_audit.py"
+  },
+  "governance": {
+    "constitution": "entries/094_mdi/mdi_v3_0.json",
+    "law_count": 153
+  }
+}
