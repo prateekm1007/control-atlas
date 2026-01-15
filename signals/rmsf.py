@@ -1,6 +1,9 @@
-from MDAnalysis.analysis.rms import RMSF
+import numpy as np
 
-def compute_rmsf(universe):
-    ca = universe.select_atoms("name CA")
-    rmsf = RMSF(ca).run()
-    return dict(zip(ca.resids, rmsf.rmsf))
+def calculate_rmsf(atom_coords_over_time):
+    """Measures structural 'breathing' to identify metastable basins."""
+    # coords shape: [frames, atoms, 3]
+    avg_coords = np.mean(atom_coords_over_time, axis=0)
+    diff = atom_coords_over_time - avg_coords
+    rmsf = np.sqrt(np.mean(np.sum(diff**2, axis=2), axis=0))
+    return rmsf
