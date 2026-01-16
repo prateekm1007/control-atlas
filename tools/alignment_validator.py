@@ -1,73 +1,140 @@
+"""
+Alignment Validator: Local Motif RMSD Calculation
+Version: 1.0
+
+Methodology:
+- Align on target protein backbone (chain A/target)
+- Calculate RMSD on specified motif residues only
+- Backbone atoms: N, CA, C, O
+"""
+
 import numpy as np
-from Bio.PDB import PDBParser, MMCIFParser, Superimposer
-import os
+import sys
 
-class SovereignValidator:
-    def __init__(self, ref_pdb="ref_5NIU.pdb"):
-        self.ref_pdb = ref_pdb
-        self.parser_pdb = PDBParser(QUIET=True)
-        self.parser_cif = MMCIFParser(QUIET=True)
+try:
+    from Bio.PDB import PDBParser, MMCIFParser, Superimposer
+except ImportError:
+    print("ERROR: Biopython required. Run: pip install biopython")
+    sys.exit(1)
 
-    def _get_structure(self, path):
-        if path.endswith('.cif'):
-            return self.parser_cif.get_structure("fixed", path)[0]
-        return self.parser_pdb.get_structure("moving", path)[0]
 
-    def _collect_warhead_atoms(self, chain):
-        """Surgical extraction of functional motif heavy atoms."""
-        warhead_res = ['TYR', 'TRP', 'PRO', 'THR', 'GLY']
-        atoms = []
-        for res in chain:
-            if res.get_resname() in warhead_res:
-                for atom in res:
-                    if atom.element != 'H':
-                        atoms.append(atom)
-        return atoms
+def load_structure(path):
+    """Load PDB or MMCIF structure."""
+    if path.endswith('.cif'):
+        parser = MMCIFParser(QUIET=True)
+    else:
+        parser = PDBParser(QUIET=True)
+    return parser.get_structure("structure", path)[0]
 
-    def _collect_backbone_ca(self, chain):
-        """Extraction of target backbone for Stage 1 alignment."""
-        return [res["CA"] for res in chain if "CA" in res]
 
-    def validate_lead(self, moving_path):
-        """
-        Industrial Two-Stage Audit:
-        STAGE 1: Superimpose Target Backbones (Coordinate Lock).
-        STAGE 2: Measure Warhead RMSD without further superposition.
-        """
-        ref_struct = self._get_structure(self.ref_pdb)
-        mov_struct = self._get_structure(moving_path)
+def get_backbone_atoms(chain, residue_ids):
+    """
+    Extract backbone atoms for specified residues.
+    
+    Parameters:
+        chain: Bio.PDB Chain object
+        residue_ids: list of residue sequence numbers (int)
+    
+    Returns:
+        list of Atom objects
+    """
+    atoms = []
+    backbone_names = ['N', 'CA', 'C', 'O']
+    
+    for res_id in residue_ids:
+        # Try different residue ID formats
+        for insert_code in [' ', '', 'A']:
+            try:
+                res = chain[(' ', res_id, insert_code)]
+                for atom_name in backbone_names:
+                    if atom_name in res:
+                        atoms.append(res[atom_name])
+                break
+            except KeyError:
+                continue
+    
+    return atoms
 
-        # IDENTIFY CHAINS (Length-Aware)
-        ref_target = sorted(list(ref_struct.get_chains()), key=lambda c: len(list(c.get_atoms())), reverse=True)[0]
-        ref_binder = sorted(list(ref_struct.get_chains()), key=lambda c: len(list(c.get_atoms())), reverse=True)[1]
-        
-        mov_target = sorted(list(mov_struct.get_chains()), key=lambda c: len(list(c.get_atoms())), reverse=True)[0]
-        mov_binder = sorted(list(mov_struct.get_chains()), key=lambda c: len(list(c.get_atoms())), reverse=True)[1]
 
-        # --- STAGE 1: BACKBONE SUPERPOSITION ---
-        ref_ca = self._collect_backbone_ca(ref_target)
-        mov_ca = self._collect_backbone_ca(mov_target)
-        
-        # Ensure identical atom counts for alignment
-        min_len = min(len(ref_ca), len(mov_ca))
-        sup = Superimposer()
-        sup.set_atoms(ref_ca[:min_len], mov_ca[:min_len])
-        sup.apply(mov_struct.get_atoms())
-        print(f"✅ STAGE 1: Target backbones aligned (RMSD: {sup.rms:.4f} Å)")
+def validate_warhead_rmsd(
+    predicted_path, 
+    reference_path,
+    pred_chain,
+    ref_chain,
+    motif_residues_pred,
+    motif_residues_ref
+):
+    """
+    Calculate local RMSD for a motif (e.g., YWPTG warhead).
+    
+    Parameters:
+        predicted_path: path to predicted structure
+        reference_path: path to reference structure (e.g., 5NIU)
+        pred_chain: chain ID in predicted structure
+        ref_chain: chain ID in reference structure
+        motif_residues_pred: list of residue IDs in predicted
+        motif_residues_ref: list of residue IDs in reference
+    
+    Returns:
+        dict with RMSD, atom counts, methodology
+    """
+    pred_struct = load_structure(predicted_path)
+    ref_struct = load_structure(reference_path)
+    
+    try:
+        pred_atoms = get_backbone_atoms(pred_struct[pred_chain], motif_residues_pred)
+        ref_atoms = get_backbone_atoms(ref_struct[ref_chain], motif_residues_ref)
+    except KeyError as e:
+        raise ValueError(f"Chain not found: {e}")
+    
+    if len(pred_atoms) == 0:
+        raise ValueError(f"No backbone atoms found in predicted structure for residues {motif_residues_pred}")
+    if len(ref_atoms) == 0:
+        raise ValueError(f"No backbone atoms found in reference structure for residues {motif_residues_ref}")
+    if len(pred_atoms) != len(ref_atoms):
+        raise ValueError(f"Atom count mismatch: predicted={len(pred_atoms)}, reference={len(ref_atoms)}")
+    
+    sup = Superimposer()
+    sup.set_atoms(ref_atoms, pred_atoms)
+    
+    return {
+        'rmsd_A': round(sup.rms, 4),
+        'atom_count': len(pred_atoms),
+        'residue_count': len(motif_residues_pred),
+        'methodology': 'Backbone atoms (N, CA, C, O) of specified motif residues',
+        'predicted_residues': motif_residues_pred,
+        'reference_residues': motif_residues_ref
+    }
 
-        # --- STAGE 2: WARHEAD GEOMETRY AUDIT ---
-        ref_wh = self._collect_warhead_atoms(ref_binder)
-        mov_wh = self._collect_warhead_atoms(mov_binder)
-        
-        # Calculate RMSD of the warhead in the NOW-LOCKED coordinate frame
-        diff = np.array([a.coord for a in mov_wh]) - np.array([a.coord for a in ref_wh])
-        motif_rmsd = np.sqrt(np.mean(np.sum(diff**2, axis=1)))
 
-        print(f"🏆 STAGE 2: Warhead Local RMSD (YWPTG): {motif_rmsd:.4f} Å")
-        return motif_rmsd
+def main():
+    import argparse
+    import json
+    
+    parser = argparse.ArgumentParser(description="Warhead RMSD Validator")
+    parser.add_argument("predicted", help="Predicted structure path")
+    parser.add_argument("reference", help="Reference structure path (e.g., 5NIU.pdb)")
+    parser.add_argument("--pred-chain", required=True, help="Chain ID in predicted")
+    parser.add_argument("--ref-chain", required=True, help="Chain ID in reference")
+    parser.add_argument("--pred-residues", required=True, help="Comma-separated residue IDs in predicted")
+    parser.add_argument("--ref-residues", required=True, help="Comma-separated residue IDs in reference")
+    
+    args = parser.parse_args()
+    
+    pred_res = [int(x.strip()) for x in args.pred_residues.split(',')]
+    ref_res = [int(x.strip()) for x in args.ref_residues.split(',')]
+    
+    result = validate_warhead_rmsd(
+        args.predicted,
+        args.reference,
+        args.pred_chain,
+        args.ref_chain,
+        pred_res,
+        ref_res
+    )
+    
+    print(json.dumps(result, indent=2))
+
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) > 1:
-        v = SovereignValidator()
-        v.validate_lead(sys.argv[1])
+    main()
