@@ -1,17 +1,11 @@
-# ⚖️ Toscanini MDI Constitution (v5.0.0)
+# ⚖️ Toscanini MDI Constitution (v6.1-Hardened)
 
-## LAW-148: Polyproline Disorder Veto
-- Binders with ≥ 5 consecutive Prolines are VETOED.
-- Reason: Induces systemic disorder (pLDDT < 70) and creates docking artifacts.
+## OBS-153: Avidity Quantification
+- **Status:** ACTIVE.
+- **Metric:** Bipodal success is measured by **Contact Density ($\rho$)**. 
+- **Standard:** Success requires $\rho(Bipod) \ge 2.5 \times \rho(Monopod)$ where $\rho$ is the total count of unique heavy-atom contacts within 4.5 Å.
 
-## LAW-149: Helical Prop Mandate
-- Structural clearance must be enforced by rigid alpha-helical spacers (e.g., AEAAK).
-- Requirement: pLDDT must exceed 80 for structural lead status.
-
-## LAW-151: The Lever Paradox
-- Single-rod rigidity saturates at ~30aa. 
-- Mass added distal to the warhead reinforces axial collapse.
-
-## LAW-153: The Avidity Ceiling
-- Chai-1 scores are capped for symmetric multivalent ligands.
-- Avidity success is audited by Contact Density (ρ > 500) and clearance synchronization.
+## CRIT-154: Structural Admissibility
+- **Status:** ACTIVE.
+- **Metric:** Lead validation requires a **Two-Stage Warhead-RMSD < 1.0 Å** against clinical benchmarks (PDB: 5NIU).
+- **Veto:** Any design relying on non-physical target deformation (steric clash < 1.2 Å) is discarded.
