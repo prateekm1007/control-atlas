@@ -54,3 +54,7 @@ rfdiffusion/
 rfdiffusion_depcheck.py
 se3-transformer-public/
 runs/
+
+# --- TOSCANINI PHYSICAL EVIDENCE EXCEPTION ---
+!ledger/assets/**/*.cif
+!ledger/assets/**/*.pdb
