@@ -1,49 +1,65 @@
-import subprocess
 import json
-import os
+import subprocess
 from pathlib import Path
 
+CODEX = Path(__file__).parent.parent / "core" / "mdi_codex.json"
+
+with open(CODEX) as f:
+    MDI = json.load(f)
+
+LAWS = MDI["laws"]
+
 class SovereignEngine:
-    # Use ABSOLUTE paths to prevent boot-time crashes in Docker
-    BASE_PATH = Path(__file__).parent.parent
-    CODEX_PATH = BASE_PATH / "core" / "mdi_codex.json"
-
-    @classmethod
-    def get_law_library(cls):
-        try:
-            with open(cls.CODEX_PATH, "r") as f:
-                return json.load(f)["laws"]
-        except:
-            return {"LAW-001": {"title": "Error", "note": "Codex Load Failed", "threshold": "N/A"}}
-
     @staticmethod
     def run_audit(file_path: str, target: str, binder: str):
-        audit_script = "/app/tools/native_audit.py"
-        trace = {lid: {"status": 0, "reason": "QUEUED", "title": d["title"], "note": d["note"]} 
-                 for lid, d in SovereignEngine.get_law_library().items()}
+        results = {"laws_violated": []}
 
-        if file_path.endswith('.pdb'):
-            trace["LAW-001"].update({"status": 2, "reason": "TERMINAL_FORMAT_FAILURE"})
-            return {"error": "Format Veto", "trace": trace}
-        
-        trace["LAW-001"].update({"status": 1, "reason": "Verified CIF"})
-        cmd = ["python3", audit_script, file_path, "--target", target, "--binder", binder]
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        
+        # TIER 0 — FORMAT CHECK
+        if not file_path.endswith(".cif"):
+            results["laws_violated"].append("LAW-001")
+            return results
+
+        # INVOKE SOVEREIGN JUDGE
+        proc = subprocess.run(
+            ["python3", "/app/tools/native_audit.py", file_path, "--target", target, "--binder", binder],
+            capture_output=True, text=True
+        )
+
         try:
-            m = json.loads(result.stdout)
-            if m.get('clashes', 0) > 0:
-                trace["LAW-155"] = {"status": 2, "reason": f"Clash: {m.get('min_distance_A')}A", "title": "Steric", "note": "Atoms overlap"}
-            else:
-                trace["LAW-155"] = {"status": 1, "reason": "Verified", "title": "Steric", "note": "Safe"}
-            m['trace'] = trace
-            return m
+            metrics = json.loads(proc.stdout)
         except:
-            return {"error": "Audit crash", "trace": trace}
+            return {"laws_violated": ["ERR_JUDGE_TIMEOUT"]}
+
+        # EXECUTABLE ENFORCEMENT
+        for lid, law in LAWS.items():
+            metric = law.get("metric")
+            
+            # Handling multi-metric logic (e.g. Score-Clearance)
+            if isinstance(metric, list):
+                if all(m in metrics for m in metric):
+                    if metrics[metric[0]] > 80 and metrics[metric[1]] > 0:
+                        results["laws_violated"].append(lid)
+            
+            # Handling threshold-based logic
+            elif metric in metrics:
+                val = metrics[metric]
+                if "threshold_min" in law and val < law["threshold_min"]:
+                    results["laws_violated"].append(lid)
+                if "threshold_max" in law and val > law["threshold_max"]:
+                    results["laws_violated"].append(lid)
+                if "forbidden_range" in law:
+                    lo, hi = law["forbidden_range"]
+                    if lo <= val <= hi:
+                        results["laws_violated"].append(lid)
+
+        return results
 
     @staticmethod
-    def calculate_verdict(metrics: dict):
-        trace = metrics.get('trace', {})
-        if trace.get("LAW-001", {}).get("status") == 2: return "FORMAT_VETO", "LAW-001"
-        if trace.get("LAW-155", {}).get("status") == 2: return "PHYSICS_VETO", "LAW-155"
+    def calculate_verdict(metrics):
+        if metrics["laws_violated"]:
+            # If any VETO level laws are broken, return VETO
+            for lid in metrics["laws_violated"]:
+                if LAWS[lid]["action"] == "VETO":
+                    return "PHYSICS_VETO", lid
+            return "SOVEREIGN_PASS", metrics["laws_violated"][0] # FLAG/WARN
         return "SOVEREIGN_PASS", None
