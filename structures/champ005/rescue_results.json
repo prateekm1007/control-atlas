@@ -6,10 +6,10 @@
     "rho": 199
   },
   "post": {
-    "min_distance": 2.8608596866725513,
+    "min_distance": 2.8127639144639804,
     "clashes_25": 0,
     "clashes_19": 0,
-    "rho": 147
+    "rho": 142
   },
   "verdict": "SOVEREIGN_PASS"
 }

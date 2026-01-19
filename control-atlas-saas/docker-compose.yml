@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: sovereign-db
+    environment:
+      POSTGRES_USER: conductor
+      POSTGRES_PASSWORD: change_me_in_prod
+      POSTGRES_DB: sovereign_sieve
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sieve-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sovereign-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - sieve-network
+
+  api:
+    build: ./backend
+    container_name: sovereign-api
+    volumes:
+      - ./backend:/app
+      - ./tools:/app/tools:ro
+    environment:
+      - DATABASE_URL=postgresql://conductor:change_me_in_prod@db:5432/sovereign_sieve
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    networks:
+      - sieve-network
+
+  worker:
+    build: ./backend
+    container_name: sovereign-worker
+    command: celery -A app.services.worker_app:celery_app worker --loglevel=info
+    volumes:
+      - ./backend:/app
+      - ./tools:/app/tools:ro
+    environment:
+      - DATABASE_URL=postgresql://conductor:change_me_in_prod@db:5432/sovereign_sieve
+      - REDIS_URL=redis://redis:6379/0
+    networks:
+      - sieve-network
+
+  dashboard:
+    build: ./backend
+    container_name: sovereign-dashboard
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      - API_URL=http://api:8000
+    ports:
+      - "8501:8501"
+    # No more inline pip installs. Shared image handles it.
+    command: streamlit run dashboard.py --server.port 8501 --server.address 0.0.0.0
+    networks:
+      - sieve-network
+
+networks:
+  sieve-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
