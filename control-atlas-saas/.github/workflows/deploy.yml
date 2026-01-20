@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Deploy to EC2
@@ -23,13 +23,15 @@ jobs:
             set -e
             cd ~/deployments/toscanini-demo/control-atlas-saas
             
-            # 1. Force Git to align with the push
-            git fetch origin main
-            git reset --hard origin main
-            
-            # 2. Rebuild without cache to ensure v9.5.7 Expanders appear
+            echo "🧼 Enforcing clean Git state"
+            git fetch origin
+            git clean -fd
+            git reset --hard origin/main
+
+            echo "🔨 Rebuilding v9.5 Ledger (No Cache)"
+            docker compose down
             docker compose build --no-cache
             docker compose up -d
             
-            # 3. Clean up old unused images to save space on EC2
+            echo "🧹 Cleaning up unused layers"
             docker image prune -f
