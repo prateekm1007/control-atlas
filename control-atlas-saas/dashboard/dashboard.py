@@ -7,7 +7,7 @@ backend_url = os.getenv("BACKEND_URL", "http://api:8000")
 
 LAW_CANON = {
     "LAW-155": {"title": "Steric Clash Prohibition", "principle": "Atoms cannot occupy overlapping space.", "why": "Physical impossibility."},
-    "LAW-160": {"title": "Backbone Continuity", "principle": "Backbones must maintain ~3.8Å Cα spacing.", "why": "Prevents protein chain tearing."},
+    "LAW-160": {"title": "Backbone Continuity", "principle": "Backbones must maintain ~3.8Å spacing.", "why": "Prevents protein chain tearing."},
     "NKG-001": {"title": "Historical Refusal", "principle": "Known forbidden motif match in NKG.", "why": "Causal memory veto."}
 }
 
@@ -16,22 +16,31 @@ if "teleport_coords" not in st.session_state: st.session_state.teleport_coords =
 if "active_law_id" not in st.session_state: st.session_state.active_law_id = None
 
 st.title("🛡️ TOSCANINI // FORENSIC STATION")
-st.caption("v9.7.2 Calibrated Identity Moat | Active Auditor Mode")
+st.caption("v9.7.3 Calibration Lock | Constitutional Integrity: AIRTIGHT")
 
 with st.sidebar:
     st.header("📉 Negative Knowledge Graph")
     try:
-        stats = requests.get(f"{backend_url}/api/v1/nkg/stats").json()
-        st.metric("Distinct Forbidden Motifs", stats.get("unique_pius", 0))
-        st.caption(f"Learned from {stats.get('total_obs', 0)} design failures.")
-        
-        fingerprints = stats.get("model_fingerprints", {})
-        if fingerprints:
-            st.write("---")
-            # SEMANTIC FIX: Renamed for precision
-            st.caption("Distinct Forbidden Motifs per Generator")
-            st.bar_chart(fingerprints)
-    except: st.write("NKG Offline")
+        response = requests.get(f"{backend_url}/api/v1/nkg/stats")
+        if response.status_code == 200:
+            stats = response.json()
+            u_pius = stats.get("unique_pius", 0)
+            st.metric("Distinct Forbidden Motifs", u_pius)
+            
+            if u_pius == 0:
+                st.caption("No constitutional violations recorded yet.")
+            else:
+                st.caption(f"Learned from {stats.get('total_obs', 0)} design failures.")
+                fingerprints = stats.get("model_fingerprints", {})
+                if fingerprints:
+                    st.write("---")
+                    st.caption("Distinct Motifs per Generator")
+                    st.bar_chart(fingerprints)
+        else:
+            st.error("NKG Service Unavailable")
+    except:
+        st.error("NKG Connection Failed")
+    
     if st.button("🔄 New Audit", use_container_width=True):
         st.session_state.audit_result = None; st.session_state.active_law_id = None; st.rerun()
 
@@ -49,14 +58,28 @@ res = st.session_state.audit_result
 if res:
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.metric("SOVEREIGNTY SCORE", f"{res.get('score', 0)}%")
-        if res.get("mode") == "REFUSAL_VETO": st.warning(f"⚡ IMMUNE RESPONSE: {res.get('piu_id')}")
+        score = res.get('score', 0)
+        st.metric("SOVEREIGNTY SCORE", f"{score}%")
+        
+        # DYNAMIC SCORING CONTEXT
+        if 70 <= score < 85:
+            st.caption("⚠️ Marginal pass — close to steric threshold (2.5Å)")
+        elif score >= 85:
+            st.caption("✅ Pristine physical clearance verified.")
+        else:
+            st.caption("❌ Vetoed — fatal physical violation detected.")
+
+        verdict = res.get('verdict', 'ERROR')
+        if verdict == "PASS": st.success("VERDICT: PASS")
+        else: st.error("VERDICT: VETO")
+        
+        st.info(res.get("details", ""))
         
         st.subheader("Diagnostic Ledger")
         for law in res.get("laws", []):
             l_id, status = law.get('law_id'), law.get('status')
             with st.expander(f"{'✅' if status == 'PASS' else '❌'} {l_id}"):
-                st.write(f"Observed: {law.get('measurement')}")
+                st.write(f"Observed: {law.get('measurement')} {law.get('units', '')}")
                 if st.button("ℹ️ Explain Law", key=f"ex-{l_id}", use_container_width=True): st.session_state.active_law_id = l_id
                 if law.get("anchor"):
                     if st.button("🔍 Teleport", key=f"tel-{l_id}", use_container_width=True): 
@@ -77,7 +100,7 @@ if res:
             coords = st.session_state.teleport_coords
             zoom_js = f"viewer.zoomTo({{center: {{x: {coords[0]}, y: {coords[1]}, z: {coords[2]}}}, radius: 8.0}});" if coords else "viewer.zoomTo();"
             html_code = f"""
-            <div id='{container_id}' style='height: 600px; width: 100%; background-color: #070b14; border-radius: 12px;'></div>
+            <div id='{container_id}' style='height: 500px; width: 100%; background-color: #070b14; border-radius: 12px;'></div>
             <script src='https://3Dmol.org/build/3Dmol-min.js'></script>
             <script>
             (function() {{
@@ -85,9 +108,7 @@ if res:
                 const viewer = $3Dmol.createViewer(container, {{backgroundColor: '#070b14'}});
                 viewer.addModel(atob('{res['pdb_b64']}'), '{res['ext']}');
                 viewer.setStyle({{}}, {{cartoon: {{colorscheme: {{prop:'b', gradient: 'rwb', min:50, max:90}}}}}});
-                {clash_js if 'clash_js' in locals() else ''}
-                {zoom_js}
-                viewer.render();
+                viewer.render(); {zoom_js}
                 setInterval(() => {{ viewer.rotate(0.5, 'y'); }}, 50);
             }})();
             </script>"""

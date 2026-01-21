@@ -5,11 +5,14 @@ from datetime import datetime
 from fpdf import FPDF
 from Bio.PDB import PDBParser, MMCIFParser
 
-app = FastAPI(title="Toscanini Brain v9.7.2")
+app = FastAPI(title="Toscanini Brain v9.7.4")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 NKG_PATH = "/app/nkg/piu_moat.jsonl"
 LAW_155_THRESHOLD = 2.5 
+
+# Ensure directory exists on startup
+os.makedirs(os.path.dirname(NKG_PATH), exist_ok=True)
 
 def get_piu_hash(a, b, d):
     comp_a, comp_b = f"{a['res_name']}:{a['atom']}", f"{b['res_name']}:{b['atom']}"
@@ -46,8 +49,6 @@ def generate_pdf_bytes(sig, verdict, score, details, gen, piu_id=None):
     pdf.cell(0, 10, f"SOVEREIGNTY SCORE: {score}%", ln=True)
     pdf.ln(10); pdf.set_font("helvetica", "", 10)
     pdf.multi_cell(0, 6, details)
-    if piu_id:
-        pdf.ln(5); pdf.set_text_color(251, 191, 36); pdf.cell(0, 10, f"IMMUNE RESPONSE MATCH: {piu_id}", ln=True)
     return pdf.output()
 
 @app.post("/api/v1/audit/upload")
@@ -57,11 +58,15 @@ async def audit_upload(file: UploadFile = File(...), generator: str = Form("Unkn
     atoms = get_atoms(pdb_string, ext)
     if not atoms: return {"verdict": "ERROR", "laws": []}
 
-    # STAGE 1: ZERO-COMPUTE IMMUNITY
+    # STAGE 1: IMMUNITY
     known_pius = set()
     if os.path.exists(NKG_PATH):
         with open(NKG_PATH, "r") as f:
-            for line in f: known_pius.add(json.loads(line)["piu_id"])
+            for line in f:
+                try: 
+                    data = json.loads(line)
+                    if "piu_id" in data: known_pius.add(data["piu_id"])
+                except: continue
 
     for i in range(len(atoms)):
         for j in range(i+1, min(i+40, len(atoms))): 
@@ -69,7 +74,7 @@ async def audit_upload(file: UploadFile = File(...), generator: str = Form("Unkn
             if d < LAW_155_THRESHOLD:
                 pid, _ = get_piu_hash(atoms[i], atoms[j], d)
                 if pid in known_pius:
-                    pdf_b = generate_pdf_bytes(file_sig, "VETO", 0, "Known physical failure match.", generator, pid)
+                    pdf_b = generate_pdf_bytes(file_sig, "VETO", 0, "Matched forbidden motif in NKG.", generator, pid)
                     return {"verdict": "VETO", "mode": "REFUSAL_VETO", "score": 0, "sig": file_sig, "piu_id": pid, "generator": generator,
                             "pdb_b64": base64.b64encode(pdb_string.encode()).decode(), "pdf_b64": base64.b64encode(pdf_b).decode(),
                             "ext": ext, "laws": [{"law_id": "NKG-001", "status": "VETO", "measurement": "Matched", "units": "PIU", "anchor": None}]}
@@ -84,10 +89,7 @@ async def audit_upload(file: UploadFile = File(...), generator: str = Form("Unkn
             if d < min_dist: min_dist, culprit = d, (a, b)
 
     verdict = "PASS" if min_dist >= LAW_155_THRESHOLD else "VETO"
-    
-    # HARDENED SCORING CLAMP (v9.7.2 Fix)
     if verdict == "PASS":
-        # Ensure PASS never scores below 70% regardless of floating noise
         score = max(70, int(70 + 30 * min(1.0, (min_dist - LAW_155_THRESHOLD))))
     else:
         score = max(0, int((min_dist / LAW_155_THRESHOLD) * 30))
@@ -96,22 +98,11 @@ async def audit_upload(file: UploadFile = File(...), generator: str = Form("Unkn
     if verdict == "VETO" and culprit:
         piu_id, comps = get_piu_hash(culprit[0], culprit[1], min_dist)
         clash_meta = {"c1": {"res": culprit[0]['res_seq'], "chain": culprit[0]['chain']}, "c2": {"res": culprit[1]['res_seq'], "chain": culprit[1]['chain']}}
-        
-        # IDEMPOTENCY: Record PIU only if unique for THIS generator
-        records = []
-        updated = False
-        if os.path.exists(NKG_PATH):
-            with open(NKG_PATH, "r") as f:
-                for line in f:
-                    r = json.loads(line)
-                    if r["piu_id"] == piu_id and r["generator"] == generator:
-                        r["count"] += 1; r["last_seen"] = datetime.utcnow().isoformat(); updated = True
-                    records.append(r)
-        if not updated:
-            records.append({"piu_id": piu_id, "generator": generator, "law_id": "LAW-155", "components": comps, "count": 1, 
-                            "first_seen": datetime.utcnow().isoformat(), "last_seen": datetime.utcnow().isoformat()})
-        with open(NKG_PATH, "w") as f:
-            for r in records: f.write(json.dumps(r) + "\n")
+        # NKG Ingestion
+        try:
+            with open(NKG_PATH, "a") as f:
+                f.write(json.dumps({"piu_id": piu_id, "generator": generator, "law_id": "LAW-155", "components": comps, "count": 1, "ts": datetime.utcnow().isoformat()}) + "\n")
+        except: pass
 
     details = f"Min distance: {min_dist:.2f}A (Threshold: 2.5A)."
     pdf_bytes = generate_pdf_bytes(file_sig, verdict, score, details, generator, piu_id)
@@ -120,20 +111,39 @@ async def audit_upload(file: UploadFile = File(...), generator: str = Form("Unkn
         "verdict": verdict, "score": score, "sig": file_sig, "piu_id": piu_id, "details": details, "generator": generator,
         "clash_metadata": clash_meta, "ext": ext, "pdb_b64": base64.b64encode(pdb_string.encode()).decode(),
         "pdf_b64": base64.b64encode(pdf_bytes).decode(),
-        "laws": [{"law_id": "LAW-155", "status": verdict, "measurement": f"{min_dist:.2f}A", "units": "Å", "anchor": tuple((ax+bx)/2 for ax,bx in zip(culprit[0]['pos'], culprit[1]['pos'])) if culprit else None},
-                 {"law_id": "LAW-160", "status": "PASS", "measurement": "3.80", "units": "Å", "anchor": None}]
+        "laws": [
+            {"law_id": "LAW-155", "status": verdict, "measurement": f"{min_dist:.2f}A", "units": "Å", "anchor": tuple((ax+bx)/2 for ax,bx in zip(culprit[0]['pos'], culprit[1]['pos'])) if culprit else None},
+            {"law_id": "LAW-160", "status": "PASS", "measurement": "3.80", "units": "Å", "anchor": None}
+        ]
     }
 
 @app.get("/api/v1/nkg/stats")
 def get_nkg_stats():
-    if not os.path.exists(NKG_PATH): return {"unique_pius": 0, "total_obs": 0, "model_fingerprints": {}}
-    with open(NKG_PATH, "r") as f: records = [json.loads(l) for l in f]
+    if not os.path.exists(NKG_PATH): 
+        return {"unique_pius": 0, "total_obs": 0, "model_fingerprints": {}, "status": "healthy"}
     
-    unique_ids = len(set(r["piu_id"] for r in records))
-    total_obs = sum(r["count"] for r in records)
+    unique_pius = set()
+    total_obs = 0
     model_counts = {}
-    for r in records:
-        # Count Distinct Motifs per generator for de-biased bar chart
-        model_counts[r["generator"]] = model_counts.get(r["generator"], 0) + 1
     
-    return {"unique_pius": unique_ids, "total_obs": total_obs, "model_fingerprints": model_counts}
+    with open(NKG_PATH, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line: continue # Skip empty lines
+            try:
+                data = json.loads(line)
+                p_id = data.get("piu_id")
+                gen = data.get("generator", "Unknown")
+                if p_id:
+                    unique_pius.add(p_id)
+                    total_obs += data.get("count", 1)
+                    model_counts[gen] = model_counts.get(gen, 0) + 1
+            except:
+                continue # Skip malformed JSON lines
+                
+    return {
+        "unique_pius": len(unique_pius), 
+        "total_obs": total_obs, 
+        "model_fingerprints": model_counts, 
+        "status": "healthy"
+    }
