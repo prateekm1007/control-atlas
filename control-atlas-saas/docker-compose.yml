@@ -4,6 +4,8 @@ services:
     container_name: sovereign-api
     volumes:
       - ./nkg:/app/nkg
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     ports:
       - "8000:8000"
     networks:
