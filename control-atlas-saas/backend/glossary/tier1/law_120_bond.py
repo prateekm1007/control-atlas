@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Peptide Bond Sanity", "tier": "HARD", "cutoff": "1.13Å - 1.53Å", "summary": "Peptide C-N bond must be within physically possible range", "rationale": "Resonance average: 1.33Å. Determined by nuclear-nuclear repulsion and orbital overlap. These are fundamental constants of physics."}

@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Steric Clash Detection", "tier": "HARD", "cutoff": "2.5Å", "summary": "Non-bonded atoms cannot occupy overlapping space", "rationale": "The Pauli exclusion principle forbids electron cloud overlap. When atoms approach closer than ~2.5Å, repulsive forces become insurmountable. Energy Barrier: E → ∞ as r → 0."}

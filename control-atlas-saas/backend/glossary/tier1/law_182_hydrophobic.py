@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Hydrophobic Burial", "tier": "HARD", "cutoff": ">30% exposure", "summary": "Hydrophobic residues must be buried for thermodynamic stability", "rationale": "The hydrophobic effect is the dominant driving force in folding. Exposed hydrophobic surface → unfavorable entropy. Threshold: >30% exposure triggers VETO."}

@@ -1,26 +1,19 @@
 services:
-  api:
+  brain:
     build: ./backend
-    container_name: sovereign-api
-    volumes:
-      - ./nkg:/app/nkg
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-    ports:
-      - "8000:8000"
-    networks:
-      - sieve-network
-  dashboard:
+    container_name: toscanini_brain
+    environment: ["GEMINI_API_KEY=${GEMINI_API_KEY}"]
+    ports: ["8000:8000"]
+    volumes: ["./nkg:/app/nkg", "./governance:/app/governance"]
+    restart: always
+
+  face:
     build: ./dashboard
-    container_name: sovereign-dashboard
-    environment:
-      - BACKEND_URL=http://api:8000
-    ports:
-      - "8502:8502"
+    container_name: toscanini_face
+    # WELD: The 'links' directive is a legacy but unstoppable way to connect containers
+    links:
+      - brain
+    ports: ["8502:8501"]
     depends_on:
-      - api
-    networks:
-      - sieve-network
-networks:
-  sieve-network:
-    driver: bridge
+      - brain
+    restart: always

@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Cavity Collapse Detection", "tier": "HARD", "cutoff": "<100Å³", "summary": "Binding pockets must maintain minimum volume for function", "rationale": "Small molecule binding requires ~150-500Å³ pocket volume. Complete collapse means no ligand can bind."}

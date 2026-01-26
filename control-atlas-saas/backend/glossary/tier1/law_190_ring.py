@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Aromatic Ring Planarity", "tier": "HARD", "cutoff": "±0.2Å RMSD", "summary": "Aromatic rings must maintain planarity due to π-bonding", "rationale": "Breaking aromaticity costs ~30-40 kcal/mol. Non-planar rings cannot exist at room temperature."}

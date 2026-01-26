@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Backbone Continuity Check", "tier": "HARD", "cutoff": "3.5Å - 4.2Å", "summary": "Peptide backbone must maintain covalent bond geometry", "rationale": "Resonance stabilization and planarity constraints fix Cα-Cα distance at ~3.8Å. Deviations >4.2Å indicate the chain is physically severed."}

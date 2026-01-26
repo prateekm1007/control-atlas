@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Atomic Valence Consistency", "tier": "HARD", "cutoff": "N/A", "summary": "Atoms must satisfy valence rules", "rationale": "Atoms have fixed valence rules. Violations indicate impossible chemistry or file corruption."}
