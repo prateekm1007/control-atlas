@@ -37,7 +37,7 @@ async def audit(file: UploadFile = File(...), generator: str = Form("Unknown")):
             results.append({
                 "law_id": lid,
                 "status": "PASS",
-                "measurement": "Verified",
+                "measurement": compute_measurement(lid, pdb_string),
                 "title": g.get("title"),
                 "principle": g.get("principle"),
                 "rationale": g.get("rationale")
