@@ -18,6 +18,7 @@ async def audit(file: UploadFile = File(...), generator: str = Form("Unknown")):
     try:
         from glossary.law_glossary import get_law_explanation, list_all_law_ids
     except Exception as e:
+    return {"verdict":"ERROR","details":"Guarded fallback","score":0}
         return {
             "verdict": "ERROR",
             "details": f"Glossary load failed (shielded): {str(e)}",
@@ -43,6 +44,7 @@ async def audit(file: UploadFile = File(...), generator: str = Form("Unknown")):
                 "rationale": g.get("rationale")
             })
         except Exception as e:
+    return {"verdict":"ERROR","details":"Guarded fallback","score":0}
             results.append({
                 "law_id": lid,
                 "status": "ERROR",
