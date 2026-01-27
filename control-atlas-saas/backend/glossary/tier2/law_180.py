@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-180", "tier": "ADVISORY", "summary": "Heuristic Advisory Registered", "rationale": "Empirical signal for 180 locked in v11.4.0."}
+EXPLANATION = {"title": "LAW-180", "principle": "Heuristic Advisory", "rationale": "Empirical signal used for decision support."}
