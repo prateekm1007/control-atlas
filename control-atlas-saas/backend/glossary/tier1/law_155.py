@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Steric Clash Prohibition", "principle": "Atoms cannot overlap overlapping space.", "rationale": "The Pauli exclusion principle forbids electron cloud overlap. When atoms approach closer than 2.5A, repulsive forces become insurmountable. Physically impossible geometry."}
+EXPLANATION = {"title": "Steric Clash Prohibition", "principle": "Atoms cannot overlap overlapping space.", "rationale": "The Pauli exclusion principle forbids electron cloud overlap. Non-bonded atoms approaching closer than 2.5A create physically impossible geometry."}

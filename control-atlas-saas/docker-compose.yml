@@ -4,31 +4,18 @@ services:
     container_name: brain
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./nkg:/app/nkg
-      - ./governance:/app/governance
-    networks:
-      - toscanini_net
+    ports: ["8000:8000"]
+    volumes: ["./nkg:/app/nkg", "./governance:/app/governance"]
+    networks: [sovereign_net]
     restart: always
-
   face:
     build: ./dashboard
     container_name: face
-    # WELD: Direct IP mapping
-    links:
-      - brain
-    environment:
-      - BACKEND_URL=http://brain:8000
-    ports:
-      - "8502:8501"
-    networks:
-      - toscanini_net
-    depends_on:
-      - brain
+    environment: ["BACKEND_URL=http://brain:8000"]
+    ports: ["8502:8501"]
+    networks: [sovereign_net]
+    depends_on: [brain]
     restart: always
-
 networks:
-  toscanini_net:
+  sovereign_net:
     driver: bridge
