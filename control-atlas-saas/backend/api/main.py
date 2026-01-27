@@ -61,7 +61,6 @@ async def audit(file: UploadFile = File(...), generator: str = Form("Unknown")):
         pass
 
     # 📄 Lazy PDF generation
-    pdf_b64 = None
     try:
         from artifacts.pdf_generator import generate_v11_certificate
         pdf = generate_v11_certificate(sig, "PASS", 100, generator, rationale, results)
