@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Atomic Valence Consistency", "tier": "HARD", "cutoff": "N/A", "summary": "Atoms must satisfy valence rules", "rationale": "Atoms have fixed valence rules. Violations indicate impossible chemistry or file corruption."}
+EXPLANATION = {"title": "Atomic Valence Consistency", "principle": "Atoms must satisfy quantum valence rules (C=4, N=3, O=2).", "rationale": "Impossible coordination numbers indicate a total breakdown of chemical logic."}

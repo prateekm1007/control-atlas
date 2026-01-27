@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Beta Strand Registry", "tier": "HARD", "cutoff": "±0.5Å", "summary": "β-strands must align with correct H-bonding pattern", "rationale": "β-sheet stability requires precise registry. Registry shifts destroy the H-bond network."}
+EXPLANATION = {"title": "Beta Strand Registry", "principle": "Beta-sheets require precise H-bond alignment.", "rationale": "Registry shifts destroy the H-bond network, causing the sheet to unfold in solution."}

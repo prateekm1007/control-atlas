@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Helix-Helix Crossing Angles", "tier": "HARD", "cutoff": "±20°", "summary": "α-helix pairs must pack at allowed crossing angles", "rationale": "Allowed crossing angles are dictated by 'ridges-into-grooves' principle. Deviations indicate impossible topology."}
+EXPLANATION = {"title": "Helix-Helix Crossing", "principle": "Alpha-helices must pack at allowed ridges-into-grooves angles.", "rationale": "Deviations from canonical crossing angles indicate impossible secondary structure packing."}

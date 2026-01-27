@@ -1,0 +1,1 @@
+EXPLANATION = {"title": "Peptide Bond Sanity", "principle": "Covalent bond length (1.33A).", "rationale": "Peptide bonds are resonance hybrids. Lengths outside 1.13A-1.53A range violate quantum mechanics."}

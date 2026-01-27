@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-195", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 195 locked in v11.4.0."}
+EXPLANATION = {"title": "Disulfide Bond Geometry", "principle": "Covalent S-S requires 2.05A.", "rationale": "Incorrect S-S geometry prevents proper folding and traps the design in non-functional states."}

@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-220", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 220 locked in v11.4.0."}
+EXPLANATION = { "title": "Beta Strand Registry", "principle": "Precise H-bond alignment.", "rationale": "Beta-sheet stability requires spatial registry. Shifts of +/-1 residue destroy the network."}

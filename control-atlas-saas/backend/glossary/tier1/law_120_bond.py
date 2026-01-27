@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Peptide Bond Sanity", "tier": "HARD", "cutoff": "1.13Å - 1.53Å", "summary": "Peptide C-N bond must be within physically possible range", "rationale": "Resonance average: 1.33Å. Determined by nuclear-nuclear repulsion and orbital overlap. These are fundamental constants of physics."}
+EXPLANATION = {"title": "Peptide Bond Sanity", "principle": "Covalent peptide bonds have fixed chemical lengths (1.33A).", "rationale": "The peptide bond is a resonance hybrid (1.33A). Lengths outside 1.13A-1.53A range violate quantum mechanics."}

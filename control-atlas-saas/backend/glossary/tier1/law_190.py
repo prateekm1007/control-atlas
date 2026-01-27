@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-190", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 190 locked in v11.4.0."}
+EXPLANATION = {"title": "Ring Planarity", "principle": "Aromatic rings must remain flat.", "rationale": "Delocalized pi-bonding enforces planarity. Non-planar rings indicate a catastrophic optimization failure."}

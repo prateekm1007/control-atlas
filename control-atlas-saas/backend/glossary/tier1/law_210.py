@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-210", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 210 locked in v11.4.0."}
+EXPLANATION = {"title": "Helix Crossing", "principle": "Canonical packing angles.", "rationale": "Ridges-into-grooves packing geometry constrains crossing angles."}

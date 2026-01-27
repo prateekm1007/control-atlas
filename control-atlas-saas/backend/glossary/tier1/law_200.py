@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-200", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 200 locked in v11.4.0."}
+EXPLANATION = {"title": "Cavity Collapse", "principle": "Functional pockets must exist.", "rationale": "Binding requires defined cavities (~150A^3). Pocket collapse renders the design functionally dead."}

@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Disulfide Bond Geometry", "tier": "HARD", "cutoff": "2.0Å - 2.1Å", "summary": "CYS-CYS disulfide bonds must have correct geometry", "rationale": "S-S bond length: 2.05Å ± 0.05Å. Incorrect geometry means the protein will not fold correctly."}
+EXPLANATION = {"title": "Disulfide Bond Geometry", "principle": "Covalent S-S crosslinks require precise 2.05A spacing.", "rationale": "Incorrect S-S geometry prevents proper folding and traps the design in non-functional states."}

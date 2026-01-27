@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-230", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text for 230 locked in v11.4.0."}
+EXPLANATION = {"title": "Atomic Valence Consistency", "principle": "Quantum valid coordination.", "rationale": "Atoms have fixed coordination numbers based on electron configuration."}

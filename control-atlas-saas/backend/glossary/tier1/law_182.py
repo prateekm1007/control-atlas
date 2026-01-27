@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "LAW-182", "tier": "HARD", "summary": "Physical Invariant Registered", "rationale": "Verbatim text pending specific law-execution logic."}
+EXPLANATION = {"title": "Hydrophobic Burial", "principle": "Non-polar residues must be buried.", "rationale": "The hydrophobic effect drives folding. Designs with >30% surface exposure will aggregate immediately in solution."}
