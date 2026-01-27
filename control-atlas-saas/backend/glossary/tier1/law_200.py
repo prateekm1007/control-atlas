@@ -1,1 +1,5 @@
-EXPLANATION = {"title": "Cavity Collapse", "principle": "Functional binding pockets must exist.", "rationale": "Binding requires defined cavities (~150A^3). Pocket collapse renders the design functionally dead."}
+EXPLANATION = {
+    "title": "Cavity Collapse Detection", "tier": "HARD", "cutoff": "<100A^3",
+    "principle": "Functional binding pockets must maintain minimum volume.",
+    "rationale": "Binding requires defined cavities. Pocket collapse renders the design functionally dead, making ligand accommodation impossible."
+}

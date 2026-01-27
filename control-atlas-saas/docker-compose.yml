@@ -2,20 +2,24 @@ services:
   brain:
     build: ./backend
     container_name: brain
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    environment: ["GEMINI_API_KEY=${GEMINI_API_KEY}"]
     ports: ["8000:8000"]
-    volumes: ["./nkg:/app/nkg", "./governance:/app/governance"]
-    networks: [sovereign_net]
+    networks:
+      sovereign_net:
+        aliases: ["brain"]
     restart: always
+
   face:
     build: ./dashboard
     container_name: face
+    # WELD: Hard-wired IP mapping for Cloud DNS bypass
+    links: ["brain:brain"]
     environment: ["BACKEND_URL=http://brain:8000"]
     ports: ["8502:8501"]
-    networks: [sovereign_net]
-    depends_on: [brain]
+    networks: ["sovereign_net"]
+    depends_on: ["brain"]
     restart: always
+
 networks:
   sovereign_net:
     driver: bridge
