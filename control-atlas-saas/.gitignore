@@ -2,4 +2,4 @@
 __pycache__/
 *.pyc
 nkg/*.jsonl
-backend/api/main.py.bak
+.DS_Store

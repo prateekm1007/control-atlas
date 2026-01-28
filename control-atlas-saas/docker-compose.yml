@@ -2,9 +2,12 @@ services:
   brain:
     build: ./backend
     container_name: brain
-    environment: ["GEMINI_API_KEY=AIzaSyDqYHXLcT5xTkxh0LytevllKOsDv_jJKMA"]
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     ports: ["8000:8000"]
+    volumes: ["./nkg:/app/nkg", "./governance:/app/governance"]
     networks: [sovereign_net]
+    restart: always
   face:
     build: ./dashboard
     container_name: face
@@ -12,6 +15,7 @@ services:
     ports: ["8502:8501"]
     networks: [sovereign_net]
     depends_on: [brain]
+    restart: always
 networks:
   sovereign_net:
     driver: bridge

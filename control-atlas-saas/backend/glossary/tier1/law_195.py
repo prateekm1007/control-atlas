@@ -1,1 +1,1 @@
-EXPLANATION = {"title": "Disulfide Geometry", "principle": "Covalent S-S requires 2.05A.", "rationale": "Incorrect S-S geometry prevents proper folding."}
+EXPLANATION = {"title": "Disulfide Geometry", "principle": "Covalent S-S requires 2.05A.", "rationale": "Incorrect S-S geometry prevents proper folding and traps the design in non-functional states."}
