@@ -2,10 +2,14 @@ services:
   brain:
     build: ./backend
     container_name: brain
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    environment: ["GEMINI_API_KEY=${GEMINI_API_KEY}"]
     ports: ["8000:8000"]
-    volumes: ["./nkg:/app/nkg", "./governance:/app/governance"]
+    volumes: ["./nkg:/app/nkg"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks: [sovereign_net]
     restart: always
   face:
@@ -13,8 +17,10 @@ services:
     container_name: face
     environment: ["BACKEND_URL=http://brain:8000"]
     ports: ["8502:8501"]
+    depends_on:
+      brain:
+        condition: service_healthy
     networks: [sovereign_net]
-    depends_on: [brain]
     restart: always
 networks:
   sovereign_net:
