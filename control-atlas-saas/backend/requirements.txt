@@ -1,7 +1,8 @@
 fastapi
 uvicorn
 python-multipart
-fpdf2
 biopython
 numpy
+PyYAML
 google-generativeai
+fpdf2
