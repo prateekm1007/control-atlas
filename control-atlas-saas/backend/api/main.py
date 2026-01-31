@@ -1,4 +1,6 @@
 import sys, os
+sys.path.append(os.path.abspath("/app"))
+import sys, os
 sys.path.append("/app")
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
