@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Tuple, Dict, Any
+from typing import Tuple, Dict, Any, Optional
 import numpy as np
 import hashlib
 
@@ -11,22 +11,23 @@ class Atom:
     atom_name: str
     element: str
     pos: Tuple[float, float, float]
-    plddt: float = 0.0
+    plddt: Optional[float] = None
 
 @dataclass(frozen=True)
 class ConfidenceSidecar:
     mean_plddt: float
-    is_low_confidence: bool
-    metrics: Dict[str, Any] = field(default_factory=dict)
+    status: str      # MEASURED, ABSENT, or PLACEHOLDER
+    source: str      # BFACTOR_COLUMN, MA_QA_METRIC, etc.
+    is_low: bool
 
 @dataclass(frozen=True)
 class StructureObject:
     audit_id: str
     source_model: str
-    intent_profile: str
+    source_format: str
     atoms: Tuple[Atom, ...]
     ligands: Tuple[Atom, ...]
-    confidence: ConfidenceSidecar  # RESTORED ATTRIBUTE
+    confidence: ConfidenceSidecar
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def get_coordinate_hash(self) -> str:

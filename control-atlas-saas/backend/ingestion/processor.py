@@ -4,48 +4,53 @@ from .structure_object import StructureObject, Atom, ConfidenceSidecar
 
 class IngestionProcessor:
     @staticmethod
-    def run(file_content: bytes, filename: str, generator: str, intent: str = "General") -> StructureObject:
+    def run(content: bytes, filename: str, gen: str) -> StructureObject:
         ext = filename.split(".")[-1].lower()
-        pdb_string = file_content.decode("utf-8", errors="replace")
-        audit_id = hashlib.sha256(file_content).hexdigest()[:16]
+        if ext not in ["pdb", "cif"]: ext = "pdb"
         
-        with tempfile.NamedTemporaryFile(suffix=f".{ext}", mode='w', delete=False) as tf:
-            tf.write(pdb_string); t_path = tf.name
+        with tempfile.NamedTemporaryFile(suffix=f".{ext}", mode='wb', delete=False) as tf:
+            tf.write(content); t_path = tf.name
         
-        parser = PDBParser(QUIET=True) if ext == "pdb" else MMCIFParser(QUIET=True)
+        parser = PDBParser(QUIET=True) if ext=="pdb" else MMCIFParser(QUIET=True)
         struct = parser.get_structure("CLAIM", t_path); os.remove(t_path)
         
         atoms, ligands, plddts = [], [], []
-        for model in struct:
-            for chain in model:
-                for residue in chain:
-                    is_lig = residue.get_id()[0].strip() != ""
-                    for atom in residue:
-                        if atom.element == "H": continue 
-                        
-                        # Extract pLDDT from bfactor (ML Standard)
-                        conf_val = float(atom.get_bfactor())
-                        if not is_lig: plddts.append(conf_val)
-                        
-                        a_obj = Atom(
-                            res_name=residue.get_resname(), res_seq=residue.get_id()[1],
-                            chain=chain.id, atom_name=atom.get_name(), element=atom.element,
-                            pos=tuple(float(x) for x in atom.get_coord()),
-                            plddt=conf_val
-                        )
-                        if is_lig: ligands.append(a_obj)
-                        else: atoms.append(a_obj)
+        model = struct[0] # Filter for Model 1
         
-        # Calculate Confidence Sidecar
-        mean_plddt = float(np.mean(plddts)) if plddts else 0.0; mean_plddt = mean_plddt * 100 if 0 < mean_plddt <= 1.0 else mean_plddt
-        sidecar = ConfidenceSidecar(
-            mean_plddt=mean_plddt,
-            is_low_confidence=(mean_plddt < 70.0),
-            metrics={"plddt_array_len": len(plddts)}
-        )
+        for chain in model:
+            for residue in chain:
+                is_lig = residue.get_id()[0].strip() != ""
+                for atom in residue:
+                    if atom.get_altloc() not in [" ", "A"]: continue
+                    if atom.element == "H": continue
+                    
+                    val = float(atom.get_bfactor())
+                    plddts.append(val)
+                    
+                    a_obj = Atom(
+                        residue.get_resname(), residue.get_id()[1], chain.id, 
+                        atom.get_name(), atom.element, tuple(float(x) for x in atom.get_coord()), val
+                    )
+                    if is_lig: ligands.append(a_obj)
+                    else: atoms.append(a_obj)
         
+        # --- ENHANCED CONFIDENCE PROVENANCE ---
+        p_arr = np.array(plddts)
+        mean_p = float(np.mean(p_arr)) if len(p_arr) > 0 else 0.0
+        
+        # Detection of placeholders (All 0, All 100, or All 1.0)
+        is_placeholder = len(p_arr) > 0 and (np.all(p_arr == 0) or np.all(p_arr == 100.0) or np.all(p_arr == 1.0))
+        
+        if len(p_arr) == 0:
+            sidecar = ConfidenceSidecar(0.0, "ABSENT", "NONE", False)
+        elif is_placeholder:
+            sidecar = ConfidenceSidecar(mean_p, "PLACEHOLDER", "BFACTOR_STATIC", False)
+        else:
+            if 0 < mean_p <= 1.0: mean_p *= 100 # Auto-scale
+            sidecar = ConfidenceSidecar(mean_p, "MEASURED", "BFACTOR_COLUMN", (mean_p < 70.0))
+            
         return StructureObject(
-            audit_id=audit_id, source_model=generator, intent_profile=intent,
-            atoms=tuple(atoms), ligands=tuple(ligands), confidence=sidecar,
-            metadata={"filename": filename}
+            hashlib.sha256(content).hexdigest()[:16], gen, ext.upper(), 
+            tuple(atoms), tuple(ligands), sidecar, 
+            metadata={"assembly_status": "UNRESOLVED_TECH_DEBT"}
         )

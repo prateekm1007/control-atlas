@@ -3,7 +3,6 @@ import hashlib
 class ForensicSealer:
     @staticmethod
     def canonical_serialize(atoms_list) -> str:
-        """Generates a bit-stable string of coordinates (Chain-Seq-Name sorted)."""
         sorted_atoms = sorted(atoms_list, key=lambda a: (a.chain, a.res_seq, a.atom_name))
         return "".join([f"{a.chain}{a.res_seq}{a.atom_name}{a.pos[0]:.3f}{a.pos[1]:.3f}{a.pos[2]:.3f}" 
                         for a in sorted_atoms])
@@ -13,19 +12,18 @@ class ForensicSealer:
         return hashlib.sha256(canonical_str.encode()).hexdigest()
 
     @staticmethod
-    def seal_pdb(pdb_body: str, audit_id: str, verdict: str, coord_hash: str) -> str:
+    def seal_structure(content_bytes: bytes, audit_id: str, verdict: str, coord_hash: str, ext: str) -> str:
+        """Sovereign Sealing: Handles PDB (REMARK) and CIF (Comment) safely."""
+        # Safe decoding for metadata injection
+        body = content_bytes.decode('utf-8', errors='ignore')
+        
+        prefix = "REMARK" if ext.lower() == "pdb" else "#"
         header = [
-            f"REMARK 900 TOSCANINI FORENSIC SEAL v14.0",
-            f"REMARK 900 AUDIT_ID: {audit_id}",
-            f"REMARK 901 VERDICT: {verdict}",
-            f"REMARK 902 COORD_HASH: {coord_hash}",
-            f"REMARK 903 STATUS: NOTARIZED_SOVEREIGN",
-            "REMARK 903 " + ("="*40)
+            f"{prefix} 900 TOSCANINI FORENSIC SEAL v14.2",
+            f"{prefix} 900 AUDIT_ID: {audit_id}",
+            f"{prefix} 901 VERDICT: {verdict}",
+            f"{prefix} 902 COORD_HASH: {coord_hash}",
+            f"{prefix} 903 STATUS: NOTARIZED_SOVEREIGN",
+            f"{prefix} 903 " + ("="*30)
         ]
-        return "\n".join(header) + "\n" + pdb_body
-
-    @staticmethod
-    def verify_seal(atoms_list, claimed_hash: str) -> bool:
-        """Recalculates the seal from atom objects and compares to claim."""
-        actual_hash = ForensicSealer.generate_hash(ForensicSealer.canonical_serialize(atoms_list))
-        return actual_hash == claimed_hash
+        return "\n".join(header) + "\n" + body
