@@ -2,16 +2,14 @@ import sys
 import os
 from pathlib import Path
 
-# --- ABSOLUTE PATH SOVEREIGNTY ---
-# This identifies the /app directory regardless of how the script started
-ROOT_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(ROOT_DIR))
+# Absolute Path Sovereignty: Force /app into sys.path at line 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 import base64, json, re
 
-# Standard Package Imports (Now guaranteed by ROOT_DIR)
+# Neighborly Imports (Standard & Stable)
 from ingestion.processor import IngestionProcessor
 from engine.tier1_measurements import Tier1Measurements
 from router.intelligence import IntelligenceRouter
@@ -27,6 +25,13 @@ app = FastAPI(); app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_m
 
 @app.get("/health")
 def health(): return {"status": "ALIVE"}
+
+@app.get("/stats")
+def stats():
+    count = 0
+    if os.path.exists("/app/nkg/piu_moat.jsonl"):
+        with open("/app/nkg/piu_moat.jsonl", 'r') as f: count = sum(1 for _ in f)
+    return {"unique_pius": count}
 
 @app.post("/search")
 async def search(query: str = Form(...)): return DiscoveryResolver.resolve(query)

@@ -2,7 +2,6 @@ services:
   brain:
     build: ./backend
     container_name: brain
-    working_dir: /app
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - PYTHONPATH=/app
