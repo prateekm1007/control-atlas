@@ -1,12 +1,17 @@
-import sys, os
-sys.path.append(os.path.abspath("/app"))
-import sys, os
-sys.path.append("/app")
+import sys
+import os
+from pathlib import Path
+
+# --- ABSOLUTE PATH SOVEREIGNTY ---
+# This identifies the /app directory regardless of how the script started
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-import base64, json, sys, os
-sys.path.append("/app")
+import base64, json, re
 
+# Standard Package Imports (Now guaranteed by ROOT_DIR)
 from ingestion.processor import IngestionProcessor
 from engine.tier1_measurements import Tier1Measurements
 from router.intelligence import IntelligenceRouter
@@ -38,8 +43,9 @@ async def ingest(mode: str = Form(...), candidate_id: str = Form(...), file: Upl
         if not content: return {"verdict": "ERROR", "details": label}
 
         structure = IngestionProcessor.run(content, f"origin.{ext}", label)
+        all_atoms = structure.atoms + structure.ligands
+        coord_hash = ForensicSealer.generate_hash(ForensicSealer.canonical_serialize(all_atoms))
         
-        # 1. Physics Audit & Metadata Merge
         s155, m155, a155 = Tier1Measurements.check_law_155_L(structure)
         s160, m160, a160 = Tier1Measurements.check_law_160(structure)
         results = []
@@ -47,21 +53,17 @@ async def ingest(mode: str = Form(...), candidate_id: str = Form(...), file: Upl
             st, me, an = ("PASS", "Verified Invariant", {})
             if lid == "LAW-155": st, me, an = s155, m155, a155
             elif lid == "LAW-160": st, me, an = s160, m160, a160
-            
             expl = get_law_explanation(lid)
             results.append({"law_id": lid, "status": st, "measurement": me, "anchor": an, "title": expl['title'], "principle": expl['principle'], "rationale": expl['rationale']})
         
         verdict = "VETO" if any(r["status"] == "FAIL" for r in results) else "PASS"
         phys_score = 20 if verdict == "VETO" else 100
-        
-        # 2. Safe Confidence Access (CSO Refinement)
         conf_score = getattr(structure.confidence, 'mean_plddt', None)
         conf_display = round(conf_score, 1) if conf_score is not None else "N/A"
         
-        # 3. Narrative & Artifacts
         gemini = GeminiCompiler(os.getenv("GEMINI_API_KEY", "NONE"))
         rat = gemini.synthesize(verdict, phys_score, conf_display, label, results)
-        sealed = ForensicSealer.seal_structure(content, structure.audit_id, verdict, structure.get_coordinate_hash(), ext)
+        sealed = ForensicSealer.seal_structure(content, structure.audit_id, verdict, coord_hash, ext)
         pdf = base64.b64encode(generate_v14_certificate(structure.audit_id, verdict, phys_score, label, rat, results, structure.atoms)).decode()
 
         return {
