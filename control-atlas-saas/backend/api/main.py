@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append("/app")
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 import base64, json, sys, os

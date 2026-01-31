@@ -6,3 +6,4 @@ numpy
 PyYAML
 google-generativeai
 fpdf2
+requests
