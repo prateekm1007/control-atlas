@@ -2,11 +2,15 @@ import sys
 import os
 from pathlib import Path
 
+# Force the current directory into sys.path
+BASE_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(BASE_DIR))
+
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 import base64, json, re
 
-# ABSOLUTE PACKAGE IMPORTS (The Sovereign Lock)
+# PROTECTED NAMESPACE IMPORTS
 import tos.ingestion.processor as processor_mod
 import tos.engine.tier1_measurements as measurements_mod
 import tos.router.intelligence as router_mod
@@ -46,10 +50,10 @@ async def ingest(mode: str = Form(...), candidate_id: str = Form(...), file: Upl
 
         if not content: return {"verdict": "ERROR", "details": label}
 
-        # Ingestion
         structure = processor_mod.IngestionProcessor.run(content, f"origin.{ext}", label)
+        all_atoms = structure.atoms + structure.ligands
+        coord_hash = sealer_mod.ForensicSealer.generate_hash(sealer_mod.ForensicSealer.canonical_serialize(all_atoms))
         
-        # Audit
         s155, m155, a155 = measurements_mod.Tier1Measurements.check_law_155_L(structure)
         s160, m160, a160 = measurements_mod.Tier1Measurements.check_law_160(structure)
         results = []
@@ -64,10 +68,9 @@ async def ingest(mode: str = Form(...), candidate_id: str = Form(...), file: Upl
         phys_score = 20 if verdict == "VETO" else 100
         conf_display = round(structure.confidence.mean_plddt, 1) if hasattr(structure, 'confidence') else "N/A"
         
-        # Narrative & Seal
         gemini = gemini_mod.GeminiCompiler(os.getenv("GEMINI_API_KEY", "NONE"))
         rat = gemini.synthesize(verdict, phys_score, conf_display, label, results)
-        sealed = sealer_mod.ForensicSealer.seal_structure(content, structure.audit_id, verdict, structure.get_coordinate_hash(), ext)
+        sealed = sealer_mod.ForensicSealer.seal_structure(content, structure.audit_id, verdict, coord_hash, ext)
         pdf_b = pdf_mod.generate_v14_certificate(structure.audit_id, verdict, phys_score, label, rat, results, structure.atoms)
 
         return {

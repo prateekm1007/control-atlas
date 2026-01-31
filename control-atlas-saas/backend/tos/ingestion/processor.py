@@ -1,6 +1,7 @@
 import hashlib, os, tempfile, numpy as np
 from Bio.PDB import PDBParser, MMCIFParser
-from .structure_object import StructureObject, Atom, ConfidenceSidecar
+from tos.ingestion.structure_object import StructureObject, Atom, ConfidenceSidecar
+
 class IngestionProcessor:
     @staticmethod
     def run(content: bytes, filename: str, gen: str) -> StructureObject:
