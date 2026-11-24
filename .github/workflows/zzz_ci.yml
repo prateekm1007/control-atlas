@@ -2,6 +2,7 @@ name: ci
 on:
   push:
   workflow_dispatch:
+  repository_dispatch:
 jobs:
   b:
     runs-on: ubuntu-latest
